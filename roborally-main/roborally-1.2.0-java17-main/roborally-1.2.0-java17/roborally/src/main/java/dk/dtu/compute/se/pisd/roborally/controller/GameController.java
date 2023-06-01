@@ -280,6 +280,7 @@ public class GameController {
             else if((space.y< target.y) && (player.getHeading()== NORTH)) {
 
             }
+            // dfsd
 
                 else if (target != null) {
                     // XXX note that this removes an other player from the space, when there
