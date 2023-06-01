@@ -27,7 +27,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Arrays;
 import java.util.List;
 
-import static dk.dtu.compute.se.pisd.roborally.model.Heading.SOUTH;
+import static dk.dtu.compute.se.pisd.roborally.model.Heading.*;
 
 /**
  * ...
@@ -60,10 +60,12 @@ public class GameController {
 
         if (space != null && space.board == board) {
             Player currentPlayer = board.getCurrentPlayer();
-            if (currentPlayer != null && space.getPlayer() == null) {
+
+            if (currentPlayer != null && space.getPlayer() == null ) {
                 currentPlayer.setSpace(space);
                 int playerNumber = turn;
                 board.setCurrentPlayer(board.getPlayer(playerNumber));
+                playerNumber=(playerNumber+1)% board.getPlayersNumber();
             }
         }
 
@@ -263,26 +265,41 @@ public class GameController {
         Heading heading = player.getHeading();
         Space target = board.getNeighbour(space, heading);
 
-        if (player != null && player.board == board && space != null && playerSpace.wallFace(player.getHeading())) {
 
-            if (target != null) {
-                // XXX note that this removes an other player from the space, when there
-                //     is another player on the target. Eventually, this needs to be
-                //     implemented in a way so that other players are pushed away!
+        if (player != null && player.board == board && space != null && playerSpace.wallFace(player.getHeading()) ) {
 
-                robotCollide(target);
+            if((space.x< target.x) && (player.getHeading()== WEST)) {
 
-                target.setPlayer(player);
-                player.setSpace(target);
+                }
+            else if((space.x> target.x) && (player.getHeading()== EAST)) {
 
-                conveyerTransport(player);
-                CheckPointTokener(player);
             }
+            else if((space.y> target.y) && (player.getHeading()== SOUTH)) {
+
+            }
+            else if((space.y< target.y) && (player.getHeading()== NORTH)) {
+
+            }
+
+                else if (target != null) {
+                    // XXX note that this removes an other player from the space, when there
+                    //     is another player on the target. Eventually, this needs to be
+                    //     implemented in a way so that other players are pushed away!
+
+                    robotCollide(target);
+
+                    target.setPlayer(player);
+                    player.setSpace(target);
+
+                    conveyerTransport(player);
+                    CheckPointTokener(player);
+                }
+
             /**
              * Detects the player's heading and check if meets a wall on the same space as the player with a macthing heading.
              * if it is the same it cannot move.(Continue if not).
              */
-        } else if (player != null && player.board == board && space != null) {
+        } else if (player != null && player.board == board && space != null ) {
             int check = 1;
             //int check =1;
             for (int i = 0; i < check; i++) {
@@ -295,6 +312,9 @@ public class GameController {
                 }
             }
 
+
+        }
+        else {
 
         }
     }
