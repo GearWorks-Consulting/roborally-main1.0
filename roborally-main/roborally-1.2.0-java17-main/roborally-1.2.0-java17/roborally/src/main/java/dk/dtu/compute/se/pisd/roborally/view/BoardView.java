@@ -34,10 +34,15 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import org.jetbrains.annotations.NotNull;
 import javafx.scene.Group;
 import javafx.scene.layout.Pane;
+
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.util.Duration;
 
 /**
  * ...
@@ -51,6 +56,7 @@ public class BoardView extends VBox implements ViewObserver {
 
 
     private Pane overlayPane;
+    private Timeline textRemovalTimeline;
 
     private GridPane mainBoardPane;
     private SpaceView[][] spaces;
@@ -158,8 +164,6 @@ public class BoardView extends VBox implements ViewObserver {
                     spaceView.getChildren().add(imageView);
 
                 }
-
-
                 mainBoardPane.add(spaceView, x, y);
                 spaceView.setOnMouseClicked(spaceEventHandler);
 
@@ -167,18 +171,22 @@ public class BoardView extends VBox implements ViewObserver {
         }
         Platform.runLater(() -> {
             text.setText("Hello, how are you?");
-            text.setTextOrigin(VPos.CENTER);
-            text.setStyle("-fx-font-size: 20; -fx-font-weight: bold;");
+
+            text.setStyle("-fx-font-size: 35; -fx-font-weight: bold;");
+            text.setFill(Color.ORANGE);
             overlayPane.getChildren().add(text); // Add the 'text' to the 'overlayPane'
         });
 
         // Set the position of the overlayPane using absolute positioning
         overlayPane.setManaged(false);
-        overlayPane.setLayoutX(150);
-        overlayPane.setLayoutY(150);
-
+        overlayPane.setLayoutX(100);
+        overlayPane.setLayoutY(220);
         // Add the overlayPane on top of the mainBoardPane
         getChildren().add(overlayPane);
+
+        Duration removalDuration = Duration.seconds(5);
+        textRemovalTimeline = new Timeline(new KeyFrame(removalDuration, event -> removeText()));
+        textRemovalTimeline.setCycleCount(1);
 
 
         board.attach(this);
@@ -192,10 +200,13 @@ public class BoardView extends VBox implements ViewObserver {
             conveyorBelt conveyor;
             Phase phase = board.getPhase();
             statusLabel.setText(board.getStatusMessage());
-
+            textRemovalTimeline.playFromStart();
 
 
         }
+    }
+    private void removeText() {
+        overlayPane.getChildren().remove(text);
     }
 
     // XXX this handler and its uses should eventually be deleted! This is just to help test the
@@ -224,5 +235,6 @@ public class BoardView extends VBox implements ViewObserver {
         }
 
     }
+
 
 }
