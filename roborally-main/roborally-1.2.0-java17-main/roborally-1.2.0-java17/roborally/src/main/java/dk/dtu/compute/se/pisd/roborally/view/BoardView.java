@@ -26,6 +26,8 @@ import dk.dtu.compute.se.pisd.roborally.controller.GameController;
 import dk.dtu.compute.se.pisd.roborally.model.*;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
+import javafx.geometry.Pos;
+import javafx.geometry.VPos;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
@@ -35,6 +37,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
 import org.jetbrains.annotations.NotNull;
 import javafx.scene.Group;
+import javafx.scene.layout.Pane;
 
 /**
  * ...
@@ -45,6 +48,9 @@ import javafx.scene.Group;
 public class BoardView extends VBox implements ViewObserver {
 
     private Board board;
+
+
+    private Pane overlayPane;
 
     private GridPane mainBoardPane;
     private SpaceView[][] spaces;
@@ -61,7 +67,9 @@ public class BoardView extends VBox implements ViewObserver {
     public BoardView(@NotNull GameController gameController) {
         board = gameController.board;
 
+
         mainBoardPane = new GridPane();
+        overlayPane = new Pane();
         playersView = new PlayersView(gameController);
         statusLabel = new Label("<no status>");
 
@@ -128,7 +136,6 @@ public class BoardView extends VBox implements ViewObserver {
                     //}
                 }
 
-
                 if (space.getCheckPoint()!=null && space.getCheckPoint().getOrderNo() ==0){
 
                     ImageView imageView = new ImageView();
@@ -149,23 +156,29 @@ public class BoardView extends VBox implements ViewObserver {
                     Image image = new Image("cp3.png",60,60,false,false);
                     imageView.setImage(image);
                     spaceView.getChildren().add(imageView);
+
                 }
 
 
                 mainBoardPane.add(spaceView, x, y);
                 spaceView.setOnMouseClicked(spaceEventHandler);
+
             }
         }
         Platform.runLater(() -> {
             text.setText("Hello, how are you?");
-            text.setX(mainBoardPane.getWidth() / 2);
-            text.setY(mainBoardPane.getHeight() / 2);
+            text.setTextOrigin(VPos.CENTER);
             text.setStyle("-fx-font-size: 20; -fx-font-weight: bold;");
-            Group root = new Group(text);
-            mainBoardPane.getChildren().add(root);
-
+            overlayPane.getChildren().add(text); // Add the 'text' to the 'overlayPane'
         });
 
+        // Set the position of the overlayPane using absolute positioning
+        overlayPane.setManaged(false);
+        overlayPane.setLayoutX(150);
+        overlayPane.setLayoutY(150);
+
+        // Add the overlayPane on top of the mainBoardPane
+        getChildren().add(overlayPane);
 
 
         board.attach(this);
