@@ -68,7 +68,7 @@ public class Board extends Subject {
                 Space space;
                 //Space space = new Space(this, x, y);
                 space = new Space(this, x, y);
-
+//If(Board1,Board2,Board3....){
                 //wall 1 segments.
                 if(x==0 && y==3) {
                     space.addWall(Heading.EAST);

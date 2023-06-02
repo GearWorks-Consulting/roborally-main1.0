@@ -24,6 +24,7 @@ package dk.dtu.compute.se.pisd.roborally.view;
 import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
 import dk.dtu.compute.se.pisd.roborally.controller.GameController;
 import dk.dtu.compute.se.pisd.roborally.model.*;
+import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
@@ -31,7 +32,9 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.text.Text;
 import org.jetbrains.annotations.NotNull;
+import javafx.scene.Group;
 
 /**
  * ...
@@ -50,12 +53,13 @@ public class BoardView extends VBox implements ViewObserver {
 
     private Label statusLabel;
 
+    private Text text = new Text();
+
+
     private SpaceEventHandler spaceEventHandler;
 
     public BoardView(@NotNull GameController gameController) {
         board = gameController.board;
-
-         ;
 
         mainBoardPane = new GridPane();
         playersView = new PlayersView(gameController);
@@ -152,6 +156,16 @@ public class BoardView extends VBox implements ViewObserver {
                 spaceView.setOnMouseClicked(spaceEventHandler);
             }
         }
+        Platform.runLater(() -> {
+            text.setText("Hello, how are you?");
+            text.setX(mainBoardPane.getWidth() / 2);
+            text.setY(mainBoardPane.getHeight() / 2);
+            text.setStyle("-fx-font-size: 20; -fx-font-weight: bold;");
+            Group root = new Group(text);
+            mainBoardPane.getChildren().add(root);
+
+        });
+
 
 
         board.attach(this);
@@ -165,6 +179,7 @@ public class BoardView extends VBox implements ViewObserver {
             conveyorBelt conveyor;
             Phase phase = board.getPhase();
             statusLabel.setText(board.getStatusMessage());
+
 
 
         }
