@@ -138,6 +138,8 @@ conveyorBelt con1 = new conveyorBelt("blue",Heading.SOUTH);
         CheckPoint checkPoint = new CheckPoint(0);
         CheckPoint checkPoint1 = new CheckPoint(1);
         CheckPoint checkPoint2 = new CheckPoint(2);
+        Gear gear1= new Gear(Heading.SOUTH);
+
         // Test for conveyor belt : Delete this later
         spaces[2][0].setConveyor(con1);
         spaces[3][4].setConveyor(con3);
@@ -146,7 +148,8 @@ conveyorBelt con1 = new conveyorBelt("blue",Heading.SOUTH);
         spaces[4][2].setCheckPoint(checkPoint);
         spaces[6][4].setCheckPoint(checkPoint1);
         spaces[7][7].setCheckPoint(checkPoint2);
-
+        spaces[6][4].setCheckPoint(checkPoint1);
+        spaces[2][6].setGear(gear1);
     }
 
     public Board(int width, int height) {

@@ -44,6 +44,7 @@ public class Space extends Subject {
     private Player player;
     private conveyorBelt Conveyor;
     private CheckPoint checkPoint;
+    private Gear Gear;
 
     public Space(Board board, int x, int y) {
         this(board, x, y, new Heading[0]);
@@ -73,6 +74,7 @@ public class Space extends Subject {
     public boolean PlacedWall(Heading playerDirection) {
      return wall.contains(playerDirection);
     }
+
 
 
     public void setPlayer(Player player) {
@@ -126,4 +128,14 @@ public class Space extends Subject {
     public void setCheckPoint(CheckPoint checkPoint) {
         this.checkPoint = checkPoint;
     }
+
+    //getter and setter for gear
+    public Gear getGear() {
+        return Gear;
+    }
+
+    public void setGear(Gear gear) {
+        Gear = gear;
+    }
+
 }
