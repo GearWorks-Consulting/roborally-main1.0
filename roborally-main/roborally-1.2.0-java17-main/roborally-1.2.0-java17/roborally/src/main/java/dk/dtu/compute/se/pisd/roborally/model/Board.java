@@ -46,11 +46,11 @@ public class Board extends Subject {
 
     private Integer gameId;
 
-    private final Space[][] spaces;
+    private  final Space[][] spaces;
 
-    private final List<Player> players = new ArrayList<>();
+    private  final List<Player> players = new ArrayList<>();
 
-    private Player current;
+    private  Player current;
 
     private Phase phase = INITIALISATION;
 

@@ -27,6 +27,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.stream.JsonWriter;
 import dk.dtu.compute.se.pisd.roborally.model.Board;
 import dk.dtu.compute.se.pisd.roborally.model.CheckPoint;
+import dk.dtu.compute.se.pisd.roborally.model.Space;
 import dk.dtu.compute.se.pisd.roborally.model.conveyorBelt;
 
 
@@ -100,6 +101,22 @@ public class LoadBoard {
 
 
     public static void saveBoard(Board board, String name) {
+        BoardTemplate template = new BoardTemplate(board.width, board.height);
+
+        for (int i=0; i<board.width; i++) {
+            for (int j=0; j<board.height; j++) {
+                Space space = board.getSpace(i,j);
+                SpaceTemplate tempSpace = template.spaces[i][j];
+                if (space.getConveyor()!=null) {
+                  tempSpace.Conveyor=space.getConveyor();
+                }
+                if (space.getCheckPoint()!=null) {
+                    tempSpace.checkPoint=space.getCheckPoint();
+                }
+            }
+        }
+
+
 
 
 
@@ -108,12 +125,11 @@ public class LoadBoard {
         //       when the folder "resources" does not exist! But, it does not need
         //       the file "simpleCards.json" to exist!
         String filename =
-                classLoader.getResource(BOARDSFOLDER).getPath() + "/" + name + "." + JSON_EXT;
-        GsonBuilder simpleBuilder = new GsonBuilder()
-                .setPrettyPrinting()
-                .registerTypeAdapter(Board.class, new Adapter<Board>())
-                .registerTypeAdapter(CheckPoint.class, new Adapter<CheckPoint>())
-                .registerTypeAdapter(conveyorBelt.class, new Adapter<conveyorBelt>());
+               "board" + "." + JSON_EXT;
+        GsonBuilder simpleBuilder = new GsonBuilder().
+        registerTypeAdapter(FieldAction.class, new Adapter<FieldAction>()).
+                setPrettyPrinting();
+
         Gson gson = simpleBuilder.create();
 
         FileWriter fileWriter = null;
@@ -121,7 +137,7 @@ public class LoadBoard {
         try {
             fileWriter = new FileWriter(filename);
             writer = gson.newJsonWriter(fileWriter);
-            gson.toJson(board, board.getClass(), writer);
+            gson.toJson(template, template.getClass(), writer);
             writer.close();
         } catch (IOException e1) {
             if (writer != null) {
