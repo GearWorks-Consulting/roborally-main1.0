@@ -38,6 +38,7 @@ public class SpaceTemplate {
     public conveyorBelt Conveyor;
     public CheckPoint checkPoint;
 
+    public Heading wallHeading;
 
     public int x;
     public int y;

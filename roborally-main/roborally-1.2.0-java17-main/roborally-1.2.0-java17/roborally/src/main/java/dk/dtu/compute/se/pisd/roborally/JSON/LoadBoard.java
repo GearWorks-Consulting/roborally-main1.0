@@ -113,6 +113,9 @@ public class LoadBoard {
                 if (space.getCheckPoint()!=null) {
                     tempSpace.checkPoint=space.getCheckPoint();
                 }
+                if(space.getWall()) {
+                    tempSpace.wallHeading =space.getWallFacing();
+                }
             }
         }
 
