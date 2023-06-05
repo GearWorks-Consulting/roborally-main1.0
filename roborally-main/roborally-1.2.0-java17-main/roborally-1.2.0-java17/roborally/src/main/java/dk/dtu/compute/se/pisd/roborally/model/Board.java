@@ -69,7 +69,7 @@ public class Board extends Subject {
                 //Space space = new Space(this, x, y);
                 space = new Space(this, x, y);
 
-                //wall 1 segments.
+              /*  //wall 1 segments.
                 if(x==0 && y==3) {
                     space.addWall(Heading.EAST);
                     space.setWall();
@@ -155,13 +155,13 @@ public class Board extends Subject {
                     space.setWall();
                     space.setWallFacing(Heading.EAST);
                 }
-
+*/
                 spaces[x][y] = space;
 
             }
         }
         this.stepMode = false;
-conveyorBelt con1 = new conveyorBelt("blue",Heading.SOUTH);
+/*conveyorBelt con1 = new conveyorBelt("blue",Heading.SOUTH);
         conveyorBelt con3 = new conveyorBelt("green",Heading.WEST);
         CheckPoint checkPoint = new CheckPoint(0);
         CheckPoint checkPoint1 = new CheckPoint(1);
@@ -174,6 +174,8 @@ conveyorBelt con1 = new conveyorBelt("blue",Heading.SOUTH);
         spaces[4][2].setCheckPoint(checkPoint);
         spaces[6][4].setCheckPoint(checkPoint1);
         spaces[7][7].setCheckPoint(checkPoint2);
+        */
+
 
     }
 

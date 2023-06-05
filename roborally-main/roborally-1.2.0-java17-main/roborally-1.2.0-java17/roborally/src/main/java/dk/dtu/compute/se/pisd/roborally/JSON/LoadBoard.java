@@ -26,16 +26,10 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-import dk.dtu.compute.se.pisd.roborally.model.Board;
-import dk.dtu.compute.se.pisd.roborally.model.CheckPoint;
-import dk.dtu.compute.se.pisd.roborally.model.Space;
-import dk.dtu.compute.se.pisd.roborally.model.conveyorBelt;
+import dk.dtu.compute.se.pisd.roborally.model.*;
 
 
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.*;
 
 /**
  * ...
@@ -51,66 +45,56 @@ public class LoadBoard {
     private static final String DEFAULTBOARD = "defaultboard";
     private static final String JSON_EXT = "json";
 
-   /* public static Board loadBoard(String boardname) {
+    public static Board loadBoard(String boardname) {
         if (boardname == null) {
             boardname = DEFAULTBOARD;
         }
-
-        ClassLoader classLoader = LoadBoard.class.getClassLoader();
-        InputStream inputStream = classLoader.getResourceAsStream(BOARDSFOLDER + "/" + boardname + "." + JSON_EXT);
-        if (inputStream == null) {
-            // TODO these constants should be defined somewhere
-            return new Board(8,8);
-        }
-
-        // In simple cases, we can create a Gson object with new Gson():
-        GsonBuilder simpleBuilder = new GsonBuilder().
-                registerTypeAdapter(FieldAction.class, new Adapter<FieldAction>());
-        Gson gson = simpleBuilder.create();
-
-        Board result;
-        // FileReader fileReader = null;
-        JsonReader reader = null;
+        JsonReader reader;
         try {
+            File file = new File(boardname + "." + JSON_EXT);
+            FileReader fileReader = new FileReader(file);
+
+
+            // In simple cases, we can create a Gson object with new Gson():
+            GsonBuilder simpleBuilder = new GsonBuilder().
+                    registerTypeAdapter(FieldAction.class, new Adapter<FieldAction>());
+            Gson gson = simpleBuilder.create();
+
+            Board result;
+            // FileReader fileReader = null;
+            reader = new JsonReader(fileReader);
+
             // fileReader = new FileReader(filename);
-            reader = gson.newJsonReader(new InputStreamReader(inputStream));
             BoardTemplate template = gson.fromJson(reader, BoardTemplate.class);
 
             result = new Board(template.width, template.height);
-            for (int i=0; i<template.width; i++) {
+            for (int i = 0; i < template.width; i++) {
                 for (int j = 0; j < template.height; j++) {
                     Space space = result.getSpace(i, j);
                     SpaceTemplate temSpace = template.spaces[i][j];
-                    if (temSpace.getConveyor()!=null) {
-                        tempSpace.Conveyor=space.getConveyor();
+                    if (temSpace.Conveyor != null) {
+                        space.setConveyor(temSpace.Conveyor);
                     }
-                    if (temSpace.getCheckPoint()!=null) {
-                        tempSpace.checkPoint=space.getCheckPoint();
+                    if (temSpace.checkPoint != null) {
+                        space.setCheckPoint(temSpace.checkPoint);
                     }
-                    if(temSpace.getWall()) {
-                        tempSpace.wallHeading =space.getWallFacing();
+                    if (temSpace.wallHeading != null) {
+                        space.addWall(temSpace.wallHeading);
+                        space.setWall();
+                        space.setWallFacing(temSpace.wallHeading);
                     }
                 }
             }
             reader.close();
             return result;
         } catch (IOException e1) {
-            if (reader != null) {
-                try {
-                    reader.close();
-                    inputStream = null;
-                } catch (IOException e2) {}
-            }
-            if (inputStream != null) {
-                try {
-                    inputStream.close();
-                } catch (IOException e2) {}
-            }
+
         }
         return null;
+
     }
 
-*/
+
     public static void saveBoard(Board board, String name) {
         BoardTemplate template = new BoardTemplate(board.width, board.height);
 
