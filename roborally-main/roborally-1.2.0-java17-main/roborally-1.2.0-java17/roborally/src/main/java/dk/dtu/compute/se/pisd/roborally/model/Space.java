@@ -41,9 +41,12 @@ public class Space extends Subject {
     public final int x;
     public final int y;
 
+
     private Player player;
+    private Heading wallFacing;
     private conveyorBelt Conveyor;
     private CheckPoint checkPoint;
+   private Boolean isthereawallhere = false;
     private Gear Gear;
 
     public Space(Board board, int x, int y) {
@@ -77,6 +80,12 @@ public class Space extends Subject {
 
 
 
+
+
+
+
+
+
     public void setPlayer(Player player) {
         Player oldPlayer = this.player;
         if (player != oldPlayer &&
@@ -105,6 +114,12 @@ public class Space extends Subject {
         }
     return checkNeighbor.wallFace(wallFace);
     }
+    public boolean getWall() {
+        return isthereawallhere;
+    }
+    public void setWall() {
+        isthereawallhere = true;
+    }
 
     void playerChanged() {
         // This is a minor hack; since some views that are registered with the space
@@ -127,6 +142,14 @@ public class Space extends Subject {
 
     public void setCheckPoint(CheckPoint checkPoint) {
         this.checkPoint = checkPoint;
+    }
+
+    public Heading getWallFacing() {
+        return wallFacing;
+    }
+
+    public void setWallFacing(Heading wallFacing) {
+        this.wallFacing = wallFacing;
     }
 
     //getter and setter for gear
