@@ -46,11 +46,11 @@ public class Board extends Subject {
 
     private Integer gameId;
 
-    private final Space[][] spaces;
+    private  final Space[][] spaces;
 
-    private final List<Player> players = new ArrayList<>();
+    private  final List<Player> players = new ArrayList<>();
 
-    private Player current;
+    private  Player current;
 
     private Phase phase = INITIALISATION;
 
@@ -72,25 +72,37 @@ public class Board extends Subject {
                 //wall 1 segments.
                 if(x==0 && y==3) {
                     space.addWall(Heading.EAST);
+                    space.setWall();
+                    space.setWallFacing(Heading.EAST);
                 }
                     if(x==1 && y==3) {
                         space.addWall(Heading.WEST);
+                        space.setWall();
+                        space.setWallFacing(Heading.WEST);
                     }
                     //Wall 2.
                 if(x==1 && y==2) {
                     space.addWall(Heading.SOUTH);
+                    space.setWall();
+                    space.setWallFacing(Heading.SOUTH);
                 }
                 if(x==1 && y==3) {
                     space.addWall(Heading.NORTH);
+                    space.setWall();
+                    space.setWallFacing(Heading.NORTH);
                 }
 
 
 
                 if(x==2 && y==2) {
                     space.addWall(Heading.EAST);
+                    space.setWall();
+                    space.setWallFacing(Heading.EAST);
                 }
                 if(x==3 && y==2) {
                     space.addWall(Heading.WEST);
+                    space.setWall();
+                    space.setWallFacing(Heading.WEST);
                 }
 
                 //Wall 3
@@ -99,9 +111,13 @@ public class Board extends Subject {
 
                 if(x==2 && y==2) {
                     space.addWall(Heading.SOUTH);
+                    space.setWall();
+                    space.setWallFacing(Heading.SOUTH);
                 }
                 if(x==2 && y==3) {
                     space.addWall(Heading.NORTH);
+                    space.setWall();
+                    space.setWallFacing(Heading.NORTH);
                 }
 
 
@@ -110,22 +126,34 @@ public class Board extends Subject {
 
                 if(x==5 && y==3) {
                     space.addWall(Heading.WEST);
+                    space.setWall();
+                    space.setWallFacing(Heading.WEST);
                 }
                 if(x==4 && y==3) {
                     space.addWall(Heading.EAST);
+                    space.setWall();
+                    space.setWallFacing(Heading.EAST);
                 }
 
                 if(x==5 && y==4) {
                     space.addWall(Heading.WEST);
+                    space.setWall();
+                    space.setWallFacing(Heading.WEST);
                 }
                 if(x==4 && y==4) {
                     space.addWall(Heading.EAST);
+                    space.setWall();
+                    space.setWallFacing(Heading.EAST);
                 }
                 if(x==5 && y==5) {
                     space.addWall(Heading.WEST);
+                    space.setWall();
+                    space.setWallFacing(Heading.WEST);
                 }
                 if(x==4 && y==5) {
                     space.addWall(Heading.EAST);
+                    space.setWall();
+                    space.setWallFacing(Heading.EAST);
                 }
 
                 spaces[x][y] = space;
@@ -151,6 +179,8 @@ conveyorBelt con1 = new conveyorBelt("blue",Heading.SOUTH);
         spaces[6][4].setCheckPoint(checkPoint1);
         spaces[2][6].setGear(gear1);
     }
+
+
 
     public Board(int width, int height) {
         this(width, height, "defaultboard");
