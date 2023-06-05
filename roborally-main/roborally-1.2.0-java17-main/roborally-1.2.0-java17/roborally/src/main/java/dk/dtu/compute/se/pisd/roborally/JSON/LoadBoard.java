@@ -24,6 +24,7 @@ package dk.dtu.compute.se.pisd.roborally.JSON;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 import dk.dtu.compute.se.pisd.roborally.model.Board;
 import dk.dtu.compute.se.pisd.roborally.model.CheckPoint;
@@ -33,6 +34,8 @@ import dk.dtu.compute.se.pisd.roborally.model.conveyorBelt;
 
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 
 /**
  * ...
@@ -62,7 +65,7 @@ public class LoadBoard {
 
         // In simple cases, we can create a Gson object with new Gson():
         GsonBuilder simpleBuilder = new GsonBuilder().
-                registerTypeAdapter(FieldAction.class, new Adapter<T>());
+                registerTypeAdapter(FieldAction.class, new Adapter<FieldAction>());
         Gson gson = simpleBuilder.create();
 
         Board result;
@@ -74,11 +77,19 @@ public class LoadBoard {
             BoardTemplate template = gson.fromJson(reader, BoardTemplate.class);
 
             result = new Board(template.width, template.height);
-            for (SpaceTemplate spaceTemplate: template.spaces) {
-                Space space = result.getSpace(spaceTemplate.x, spaceTemplate.y);
-                if (space != null) {
-                    space.getActions().addAll(spaceTemplate.actions);
-                    space.getWalls().addAll(spaceTemplate.walls);
+            for (int i=0; i<template.width; i++) {
+                for (int j = 0; j < template.height; j++) {
+                    Space space = result.getSpace(i, j);
+                    SpaceTemplate temSpace = template.spaces[i][j];
+                    if (temSpace.getConveyor()!=null) {
+                        tempSpace.Conveyor=space.getConveyor();
+                    }
+                    if (temSpace.getCheckPoint()!=null) {
+                        tempSpace.checkPoint=space.getCheckPoint();
+                    }
+                    if(temSpace.getWall()) {
+                        tempSpace.wallHeading =space.getWallFacing();
+                    }
                 }
             }
             reader.close();
@@ -97,9 +108,9 @@ public class LoadBoard {
             }
         }
         return null;
-    }*/
+    }
 
-
+*/
     public static void saveBoard(Board board, String name) {
         BoardTemplate template = new BoardTemplate(board.width, board.height);
 
@@ -128,7 +139,7 @@ public class LoadBoard {
         //       when the folder "resources" does not exist! But, it does not need
         //       the file "simpleCards.json" to exist!
         String filename =
-               "board" + "." + JSON_EXT;
+               name + "." + JSON_EXT;
         GsonBuilder simpleBuilder = new GsonBuilder().
         registerTypeAdapter(FieldAction.class, new Adapter<FieldAction>()).
                 setPrettyPrinting();
