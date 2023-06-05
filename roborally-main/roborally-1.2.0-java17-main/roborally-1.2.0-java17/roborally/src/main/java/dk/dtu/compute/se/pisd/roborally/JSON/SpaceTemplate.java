@@ -21,6 +21,7 @@
  */
 package dk.dtu.compute.se.pisd.roborally.JSON;
 import dk.dtu.compute.se.pisd.roborally.model.CheckPoint;
+import dk.dtu.compute.se.pisd.roborally.model.Gear;
 import dk.dtu.compute.se.pisd.roborally.model.Heading;
 import dk.dtu.compute.se.pisd.roborally.model.conveyorBelt;
 
@@ -39,6 +40,7 @@ public class SpaceTemplate {
     public CheckPoint checkPoint;
 
     public Heading wallHeading;
+    public Gear gearRotation;
 
     public int x;
     public int y;
