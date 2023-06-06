@@ -108,8 +108,6 @@ public class AppController implements Observer {
 
 
     public Board loadGame() {
-        // XXX needs to be implememted eventually
-        // for now, we just create a new game
         if (gameController == null) {
           return LoadBoard.loadBoard("level 2");
 

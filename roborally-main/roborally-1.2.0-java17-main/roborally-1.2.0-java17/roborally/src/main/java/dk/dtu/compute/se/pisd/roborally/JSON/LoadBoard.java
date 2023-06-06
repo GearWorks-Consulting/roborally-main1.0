@@ -106,7 +106,7 @@ public class LoadBoard {
                         space.setWallFacing(temSpace.wallHeading);
                     }
                     if (temSpace.gearRotation != null) {
-                        space.setGear(temSpace.gearRotation);
+                        space.setGear(temSpace.checkPoint);
                     }
 
 
