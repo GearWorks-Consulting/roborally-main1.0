@@ -67,7 +67,29 @@ public class LoadBoard {
             // fileReader = new FileReader(filename);
             BoardTemplate template = gson.fromJson(reader, BoardTemplate.class);
 
+
             result = new Board(template.width, template.height);
+
+            result.setGameId(template.gameId);
+            for(int i=0;i<template.getPlayersNumber();i++) {
+                Player playerAmount = new Player(result,template.getPlayer(i).color,template.getPlayer(i).name);
+                playerAmount.setTokens(template.getPlayer(i).tokens);
+                playerAmount.setSpace(template.getPlayer(i).space);
+                playerAmount.setHeading(template.getPlayer(i).heading);
+                playerAmount.getSpace().setPlayer(playerAmount);
+                if(template.current.name.equals(template.getPlayer(i).name)){
+                    result.setCurrentPlayer(playerAmount);
+                }
+            }
+
+            result.setCurrentPlayer((Player) template.players);
+            result.setPhase(template.phase);
+            result.setStep(template.step);
+            result.setStepMode(template.stepMode);
+            result.setGameId(template.gameId);
+
+
+
             for (int i = 0; i < template.width; i++) {
                 for (int j = 0; j < template.height; j++) {
                     Space space = result.getSpace(i, j);
@@ -102,6 +124,28 @@ public class LoadBoard {
 
     public static void saveBoard(Board board, String name) {
         BoardTemplate template = new BoardTemplate(board.width, board.height);
+        for(int i=0;i<board.getPlayersNumber();i++) {
+            PlayerTemplate playerAmount = new PlayerTemplate();
+            playerAmount.name=board.getPlayer(i).getName();
+            playerAmount.color=board.getPlayer(i).getColor();
+            playerAmount.tokens=board.getPlayer(i).getTokens();
+            playerAmount.heading=board.getPlayer(i).getHeading();
+            template.players.add(playerAmount);
+            if(board.getCurrentPlayer().getName().equals(board.getPlayer(i).getName())){
+                template.current =playerAmount;
+            }
+
+        }
+
+
+
+
+        template.gameId=board.getGameId();
+        template.phase=board.getPhase();
+        template.step=board.getStep();
+        template.stepMode=board.stepMode;
+
+
 
         for (int i=0; i<board.width; i++) {
             for (int j=0; j<board.height; j++) {
@@ -119,7 +163,10 @@ public class LoadBoard {
                 if(space.getGear()!=null){
                     tempSpace.gearRotation=space.getGear();
                 }
+
             }
+
+
         }
 
 

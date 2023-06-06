@@ -44,19 +44,19 @@ public class Board extends Subject {
 
     public final String boardName;
 
-    private Integer gameId;
+    public Integer gameId;
 
-    private  final Space[][] spaces;
+    public  Space[][] spaces;
 
-    private  final List<Player> players = new ArrayList<>();
+    public List<Player> players = new ArrayList<>();
 
-    private  Player current;
+    public  Player current;
 
-    private Phase phase = INITIALISATION;
+    public Phase phase = INITIALISATION;
 
-    private int step = 0;
+    public int step = 0;
 
-    private boolean stepMode;
+    public boolean stepMode;
 
     public Board(int width, int height, @NotNull String boardName) {
         this.boardName = boardName;
