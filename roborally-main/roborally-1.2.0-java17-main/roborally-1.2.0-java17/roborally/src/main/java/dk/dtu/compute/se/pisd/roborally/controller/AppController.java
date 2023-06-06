@@ -50,6 +50,7 @@ import dk.dtu.compute.se.pisd.roborally.JSON.LoadBoard;
 public class AppController implements Observer {
 
     final private List<Integer> PLAYER_NUMBER_OPTIONS = Arrays.asList(2, 3, 4, 5, 6);
+    final private List<Integer> BOARD_NUMBER_OPTION = Arrays.asList(1,2,3);
     final private List<String> PLAYER_COLORS = Arrays.asList("red", "green", "blue", "orange", "grey", "magenta");
 
     final private RoboRally roboRally;
@@ -63,12 +64,17 @@ public class AppController implements Observer {
 
     public void newGame() {
 
-        ChoiceDialog<Integer> dialog = new ChoiceDialog<>(PLAYER_NUMBER_OPTIONS.get(0), PLAYER_NUMBER_OPTIONS);
-        dialog.setTitle("Player number");
-        dialog.setHeaderText("Select number of players");
-        Optional<Integer> result = dialog.showAndWait();
+        ChoiceDialog<Integer> playerdialog = new ChoiceDialog<>(PLAYER_NUMBER_OPTIONS.get(0), PLAYER_NUMBER_OPTIONS);
+        playerdialog.setTitle("Player number");
+        playerdialog.setHeaderText("Select number of players");
+        Optional<Integer> result = playerdialog.showAndWait();
 
-        if (result.isPresent()) {
+        ChoiceDialog<Integer> boardDialog = new ChoiceDialog<>(BOARD_NUMBER_OPTION.get(0), BOARD_NUMBER_OPTION);
+        boardDialog.setTitle("Board number");
+        boardDialog.setHeaderText("Select Board");
+        Optional<Integer> result2 = boardDialog.showAndWait();
+
+        if (result.isPresent() && result2.isPresent()) {
             if (gameController != null) {
                 // The UI should not allow this, but in case this happens anyway.
                 // give the user the option to save the game or abort this operation!
@@ -76,17 +82,9 @@ public class AppController implements Observer {
                     return;
                 }
             }
-
             // XXX the board should eventually be created programmatically or loaded from a file
             //     here we just create an empty board with the required number of players.
             Board board = new Board(8,8);
-
-
-
-
-
-
-
             gameController = new GameController(board);
             int no = result.get();
             for (int i = 0; i < no; i++) {
@@ -111,10 +109,8 @@ public class AppController implements Observer {
         // for now, we just create a new game
         if (gameController == null) {
             newGame();
-
         }
     }
-
     /**
      * Stop playing the current game, giving the user the option to save
      * the game or to cancel stopping the game. The method returns true
