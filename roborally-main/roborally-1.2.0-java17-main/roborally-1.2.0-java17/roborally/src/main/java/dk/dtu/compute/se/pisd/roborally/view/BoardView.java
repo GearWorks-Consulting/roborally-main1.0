@@ -182,20 +182,17 @@ public class BoardView extends VBox implements ViewObserver {
             statusLabel.setText(board.getStatusMessage());
             if(gameController.board.getCurrentPlayer().getMessage()) {
                 Platform.runLater(() -> {
-                    text.setText("You need Checkpoint 1's flag first!");
+                    text.setText("You need a previous Checkpoint's flag first!");
                     text.setStyle("-fx-font-size: 25; -fx-font-weight: bold;");
                     text.setFill(Color.ORANGE);
                     overlayPane.getChildren().add(text); // Add the 'text' to the 'overlayPane'
                 });
-
                 overlayPane.setManaged(false);
                 overlayPane.setLayoutX(100);
                 overlayPane.setLayoutY(220);
 
                 // Add the overlayPane on top of the mainBoardPane
                 //Start Timer for Removal of text after displaying.
-
-
                 textRemovalTimeline.setCycleCount(1);
                 gameController.board.getCurrentPlayer().setMessagefalse();
             }

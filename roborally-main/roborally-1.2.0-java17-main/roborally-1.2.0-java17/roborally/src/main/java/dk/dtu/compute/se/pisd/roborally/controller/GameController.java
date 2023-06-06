@@ -467,7 +467,7 @@ public class GameController {
                 CheckPoint checkPoint = space.getCheckPoint();
                 if (checkPoint != null && player.getTokens() == checkPoint.orderNo) {
                     player.setTokens(player.getTokens() + 1);
-                }else{
+                }else if (checkPoint != null){
                     player.setMessage();
                 }
             }
