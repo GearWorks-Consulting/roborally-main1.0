@@ -170,13 +170,7 @@ public class SpaceView extends StackPane implements ViewObserver {
         }
 
 
-
-
-
-
         Player player = space.getPlayer();
-
-
 
 
         if (player != null) {

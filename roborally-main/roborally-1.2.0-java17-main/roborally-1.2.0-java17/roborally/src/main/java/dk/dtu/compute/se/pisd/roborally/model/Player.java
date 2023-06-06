@@ -22,7 +22,14 @@
 package dk.dtu.compute.se.pisd.roborally.model;
 
 import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
+import dk.dtu.compute.se.pisd.roborally.view.Texts;
+import javafx.animation.Timeline;
+import javafx.application.Platform;
+import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
 import org.jetbrains.annotations.NotNull;
+
 
 import static dk.dtu.compute.se.pisd.roborally.model.Heading.SOUTH;
 
@@ -39,6 +46,8 @@ public class Player extends Subject {
 
     final public Board board;
 
+    boolean getPlayerMessage = false;
+
     private String name;
     private String color;
     private int tokens;
@@ -53,6 +62,7 @@ public class Player extends Subject {
 
     private Space space;
     private Heading heading = SOUTH;
+    Texts texts;
 
     private CommandCardField[] program;
     private CommandCardField[] cards;
@@ -61,7 +71,7 @@ public class Player extends Subject {
         this.board = board;
         this.name = name;
         this.color = color;
-
+        texts = new Texts(board);
         this.space = null;
 
         program = new CommandCardField[NO_REGISTERS];
@@ -134,6 +144,21 @@ public class Player extends Subject {
         }
     }
 
+    public void setMessage(){
+    texts.textDisplay();
+    getPlayerMessage=true;
+    }
+
+    public boolean getMessage(){
+        return getPlayerMessage;
+
+    }
+
+    public void setMessagefalse(){
+
+        getPlayerMessage=false;
+    }
+
     public CommandCardField getProgramField(int i) {
         return program[i];
     }
@@ -141,5 +166,4 @@ public class Player extends Subject {
     public CommandCardField getCardField(int i) {
         return cards[i];
     }
-
 }

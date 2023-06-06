@@ -83,9 +83,6 @@ public class Board extends Subject {
                 if(x==1 && y==3) {
                     space.addWall(Heading.NORTH);
                 }
-
-
-
                 if(x==2 && y==2) {
                     space.addWall(Heading.EAST);
                 }
@@ -95,18 +92,12 @@ public class Board extends Subject {
 
                 //Wall 3
 
-
-
                 if(x==2 && y==2) {
                     space.addWall(Heading.SOUTH);
                 }
                 if(x==2 && y==3) {
                     space.addWall(Heading.NORTH);
                 }
-
-
-
-
 
                 if(x==5 && y==3) {
                     space.addWall(Heading.WEST);
@@ -124,9 +115,9 @@ public class Board extends Subject {
                 if(x==5 && y==5) {
                     space.addWall(Heading.WEST);
                 }
-                if(x==4 && y==5) {
-                    space.addWall(Heading.EAST);
-                }
+               // if(x==4 && y==5) {
+                 //   space.addWall(Heading.EAST);
+                //}
 
                 spaces[x][y] = space;
 
@@ -138,6 +129,8 @@ conveyorBelt con1 = new conveyorBelt("blue",Heading.SOUTH);
         CheckPoint checkPoint = new CheckPoint(0);
         CheckPoint checkPoint1 = new CheckPoint(1);
         CheckPoint checkPoint2 = new CheckPoint(2);
+
+        //spaces[4][5].addWall(Heading.EAST);
         // Test for conveyor belt : Delete this later
         spaces[2][0].setConveyor(con1);
         spaces[3][4].setConveyor(con3);
