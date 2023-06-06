@@ -111,6 +111,9 @@ public class LoadBoard {
                 if(space.getWall()) {
                     tempSpace.wallHeading =space.getWallFacing();
                 }
+                if(space.getGear()!=null){
+                    tempSpace.gearRotation=space.getGear();
+                }
             }
         }
 

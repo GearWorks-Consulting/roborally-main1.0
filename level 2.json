@@ -107,6 +107,9 @@
         "y": 5
       },
       {
+        "gearRotation": {
+          "direction": "SOUTH"
+        },
         "x": 2,
         "y": 6
       },

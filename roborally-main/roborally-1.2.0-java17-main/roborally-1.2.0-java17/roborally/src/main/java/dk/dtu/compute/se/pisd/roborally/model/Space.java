@@ -47,6 +47,8 @@ public class Space extends Subject {
     private conveyorBelt Conveyor;
     private CheckPoint checkPoint;
    private Boolean isthereawallhere = false;
+    private Gear Gear;
+
     public Space(Board board, int x, int y) {
         this(board, x, y, new Heading[0]);
     }
@@ -142,4 +144,14 @@ public class Space extends Subject {
     public void setWallFacing(Heading wallFacing) {
         this.wallFacing = wallFacing;
     }
+
+    //getter and setter for gear
+    public Gear getGear() {
+        return Gear;
+    }
+
+    public void setGear(Gear gear) {
+        Gear = gear;
+    }
+
 }
