@@ -69,24 +69,51 @@ public class Board extends Subject {
                 //Space space = new Space(this, x, y);
                 space = new Space(this, x, y);
 
-              /*  //wall 1 segments.
-                if(x==0 && y==3) {
+                //wall 1 segments.
+                if(x==3 && y==0) {
                     space.addWall(Heading.EAST);
                     space.setWall();
                     space.setWallFacing(Heading.EAST);
                 }
-                    if(x==1 && y==3) {
-                        space.addWall(Heading.WEST);
-                        space.setWall();
-                        space.setWallFacing(Heading.WEST);
-                    }
-                    //Wall 2.
-                if(x==1 && y==2) {
+
+                if(x==4 && y==0) {
+                    space.addWall(Heading.WEST);
+                    space.setWall();
+                    space.setWallFacing(Heading.WEST);
+                }
+
+                if(x== 4 && y== 0) {
                     space.addWall(Heading.SOUTH);
                     space.setWall();
                     space.setWallFacing(Heading.SOUTH);
                 }
-                if(x==1 && y==3) {
+
+                if(x==4 && y==1) {
+                    space.addWall(Heading.NORTH);
+                    space.setWall();
+                    space.setWallFacing(Heading.NORTH);
+                }
+
+                if(x==4 && y==5) {
+                    space.addWall(Heading.EAST);
+                    space.setWall();
+                    space.setWallFacing(Heading.EAST);
+                }
+
+                if(x==5 && y==5) {
+                    space.addWall(Heading.WEST);
+                    space.setWall();
+                    space.setWallFacing(Heading.WEST);
+                }
+
+
+                //Wall 2.
+                if(x==2 && y==5) {
+                    space.addWall(Heading.SOUTH);
+                    space.setWall();
+                    space.setWallFacing(Heading.SOUTH);
+                }
+                if(x==2 & y==6) {
                     space.addWall(Heading.NORTH);
                     space.setWall();
                     space.setWallFacing(Heading.NORTH);
@@ -94,12 +121,12 @@ public class Board extends Subject {
 
 
 
-                if(x==2 && y==2) {
+                if(x==6 && y==5) {
                     space.addWall(Heading.EAST);
                     space.setWall();
                     space.setWallFacing(Heading.EAST);
                 }
-                if(x==3 && y==2) {
+                if(x==7 && y==5) {
                     space.addWall(Heading.WEST);
                     space.setWall();
                     space.setWallFacing(Heading.WEST);
@@ -109,77 +136,63 @@ public class Board extends Subject {
 
 
 
-                if(x==2 && y==2) {
-                    space.addWall(Heading.SOUTH);
-                    space.setWall();
-                    space.setWallFacing(Heading.SOUTH);
-                }
-                if(x==2 && y==3) {
-                    space.addWall(Heading.NORTH);
-                    space.setWall();
-                    space.setWallFacing(Heading.NORTH);
-                }
 
-
-
-
-
-                if(x==5 && y==3) {
-                    space.addWall(Heading.WEST);
-                    space.setWall();
-                    space.setWallFacing(Heading.WEST);
-                }
-                if(x==4 && y==3) {
-                    space.addWall(Heading.EAST);
-                    space.setWall();
-                    space.setWallFacing(Heading.EAST);
-                }
-
-                if(x==5 && y==4) {
-                    space.addWall(Heading.WEST);
-                    space.setWall();
-                    space.setWallFacing(Heading.WEST);
-                }
-                if(x==4 && y==4) {
-                    space.addWall(Heading.EAST);
-                    space.setWall();
-                    space.setWallFacing(Heading.EAST);
-                }
-                if(x==5 && y==5) {
-                    space.addWall(Heading.WEST);
-                    space.setWall();
-                    space.setWallFacing(Heading.WEST);
-                }
-                if(x==4 && y==5) {
-                    space.addWall(Heading.EAST);
-                    space.setWall();
-                    space.setWallFacing(Heading.EAST);
-                }
-*/
                 spaces[x][y] = space;
-
             }
         }
+
         this.stepMode = false;
-/*conveyorBelt con1 = new conveyorBelt("blue",Heading.SOUTH);
-        conveyorBelt con3 = new conveyorBelt("green",Heading.WEST);
-        CheckPoint checkPoint = new CheckPoint(0);
+
+        conveyorBelt con1 = new conveyorBelt("green",Heading.EAST);
+        conveyorBelt con2 = new conveyorBelt("green",Heading.NORTH);
+        conveyorBelt con3 = new conveyorBelt("green",Heading.EAST);
+        conveyorBelt con4 = new conveyorBelt("green",Heading.SOUTH);
+        conveyorBelt con5 = new conveyorBelt("green",Heading.SOUTH);
+        conveyorBelt con6 = new conveyorBelt("green",Heading.EAST);
+        conveyorBelt con7 = new conveyorBelt("green",Heading.NORTH);
+        conveyorBelt con8 = new conveyorBelt("green",Heading.SOUTH);
+        conveyorBelt con9 = new conveyorBelt("green",Heading.SOUTH);
+        conveyorBelt con10 = new conveyorBelt("green",Heading.NORTH);
+        conveyorBelt con11 = new conveyorBelt("green",Heading.NORTH);
+        conveyorBelt con12 = new conveyorBelt("green",Heading.NORTH);
+        conveyorBelt con13 = new conveyorBelt("green",Heading.WEST);
+        conveyorBelt con14 = new conveyorBelt("green",Heading.SOUTH);
+        conveyorBelt con15 = new conveyorBelt("green",Heading.NORTH);
+        conveyorBelt con16 = new conveyorBelt("green",Heading.EAST);
+        conveyorBelt con17 = new conveyorBelt("green",Heading.WEST);
+
+        CheckPoint checkPoint0 = new CheckPoint(0);
         CheckPoint checkPoint1 = new CheckPoint(1);
         CheckPoint checkPoint2 = new CheckPoint(2);
-        // Test for conveyor belt : Delete this later
-        spaces[2][0].setConveyor(con1);
-        spaces[3][4].setConveyor(con3);
-        spaces[0][5].setConveyor(con1);
-        spaces[5][7].setConveyor(con3);
-        spaces[4][2].setCheckPoint(checkPoint);
-        spaces[6][4].setCheckPoint(checkPoint1);
-        spaces[7][7].setCheckPoint(checkPoint2);
-        */
+        Gear gear1 = new Gear(Heading.SOUTH);
+        Gear gear2 = new Gear(Heading.SOUTH);
 
+        // Test for conveyor belt : Delete this later
+        spaces[3][0].setConveyor(con1);
+        spaces[4][1].setConveyor(con2);
+        spaces[6][1].setConveyor(con3);
+        spaces[0][2].setConveyor(con4);
+        spaces[2][2].setConveyor(con5);
+        spaces[4][3].setConveyor(con6);
+        spaces[6][3].setConveyor(con7);
+        spaces[0][4].setConveyor(con8);
+        spaces[3][4].setConveyor(con9);
+        spaces[5][4].setConveyor(con10);
+        spaces[1][5].setConveyor(con11);
+        spaces[4][5].setConveyor(con12);
+        spaces[3][6].setConveyor(con13);
+        spaces[5][6].setConveyor(con14);
+        spaces[1][7].setConveyor(con15);
+        spaces[3][7].setConveyor(con16);
+        spaces[1][7].setConveyor(con17);
+
+        spaces[2][7].setCheckPoint(checkPoint0);
+        spaces[5][5].setCheckPoint(checkPoint1);
+        spaces[4][0].setCheckPoint(checkPoint2);
+
+        spaces[7][7].setGear(gear1);
 
     }
-
-
 
     public Board(int width, int height) {
         this(width, height, "defaultboard");
