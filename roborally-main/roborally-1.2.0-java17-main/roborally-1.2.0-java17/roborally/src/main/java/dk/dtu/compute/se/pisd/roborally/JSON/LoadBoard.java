@@ -83,6 +83,11 @@ public class LoadBoard {
                         space.setWall();
                         space.setWallFacing(temSpace.wallHeading);
                     }
+                    if (temSpace.gearRotation != null) {
+                        space.setGear(temSpace.gearRotation);
+                    }
+
+
                 }
             }
             reader.close();
