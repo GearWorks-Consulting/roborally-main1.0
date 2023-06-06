@@ -73,9 +73,14 @@ public class BoardView extends VBox implements ViewObserver {
         playersView = new PlayersView(gameController);
         statusLabel = new Label("<no status>");
 
+        //This is a timer for the text duration.
+        Duration removalDuration = Duration.seconds(4);
+        textRemovalTimeline = new Timeline(new KeyFrame(removalDuration, event -> removeText()));
+
         this.getChildren().add(mainBoardPane);
         this.getChildren().add(playersView);
         this.getChildren().add(statusLabel);
+        this.getChildren().add(overlayPane);
 
 
         spaces = new SpaceView[board.width][board.height];
@@ -167,6 +172,7 @@ public class BoardView extends VBox implements ViewObserver {
     }
     private void removeText() {
         overlayPane.getChildren().remove(text);
+
     }
     @Override
     public void updateView(Subject subject) {
@@ -185,16 +191,17 @@ public class BoardView extends VBox implements ViewObserver {
                 overlayPane.setManaged(false);
                 overlayPane.setLayoutX(100);
                 overlayPane.setLayoutY(220);
-                this.getChildren().add(overlayPane);
+
                 // Add the overlayPane on top of the mainBoardPane
                 //Start Timer for Removal of text after displaying.
-                Duration removalDuration = Duration.seconds(5);
-                textRemovalTimeline = new Timeline(new KeyFrame(removalDuration, event -> removeText()));
+
+
                 textRemovalTimeline.setCycleCount(1);
                 gameController.board.getCurrentPlayer().setMessagefalse();
             }
-            //textRemovalTimeline.playFromStart();
+
         }
+        textRemovalTimeline.playFromStart();
     }
     // XXX this handler and its uses should eventually be deleted! This is just to help test the
     //     behaviour of the game by being able to explicitly move the players on the board!
