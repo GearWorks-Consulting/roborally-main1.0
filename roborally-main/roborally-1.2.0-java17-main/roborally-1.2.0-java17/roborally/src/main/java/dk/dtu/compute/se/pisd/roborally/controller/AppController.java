@@ -50,7 +50,7 @@ import dk.dtu.compute.se.pisd.roborally.JSON.LoadBoard;
 public class AppController implements Observer {
 
     final private List<Integer> PLAYER_NUMBER_OPTIONS = Arrays.asList(2, 3, 4, 5, 6);
-    final private List<Integer> BOARD_NUMBER_OPTION = Arrays.asList(1,2,3);
+    final private List<String> BOARD_NUMBER_OPTION = Arrays.asList("Map 1 - Small","Map 2 - Small","Map 3 - Large");
     final private List<String> PLAYER_COLORS = Arrays.asList("red", "green", "blue", "orange", "grey", "magenta");
 
     final private RoboRally roboRally;
@@ -69,10 +69,10 @@ public class AppController implements Observer {
         playerdialog.setHeaderText("Select number of players");
         Optional<Integer> result = playerdialog.showAndWait();
 
-        ChoiceDialog<Integer> boardDialog = new ChoiceDialog<>(BOARD_NUMBER_OPTION.get(0), BOARD_NUMBER_OPTION);
+        ChoiceDialog<String> boardDialog = new ChoiceDialog<>(BOARD_NUMBER_OPTION.get(0), BOARD_NUMBER_OPTION);
         boardDialog.setTitle("Board number");
         boardDialog.setHeaderText("Select Board");
-        Optional<Integer> result2 = boardDialog.showAndWait();
+        Optional<String> result2 = boardDialog.showAndWait();
 
         if (result.isPresent() && result2.isPresent()) {
             if (gameController != null) {
