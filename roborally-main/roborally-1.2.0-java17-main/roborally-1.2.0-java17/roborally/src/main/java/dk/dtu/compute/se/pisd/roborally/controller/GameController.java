@@ -290,7 +290,7 @@ public class GameController {
 
                     target.setPlayer(player);
                     player.setSpace(target);
-
+                    GearRotation(player);
                     conveyerTransport(player);
                     CheckPointTokener(player);
                 }
@@ -437,6 +437,15 @@ public class GameController {
                     }
                     continuePrograms();
             }
+
+
+            public void GearRotation(Player player){
+                Space space3 = player.getSpace();
+                Gear gear = space3.getGear();
+                if(gear!=null){
+                    turnRight(player);
+                    }
+                }
 
             public void conveyerTransport(Player player){
                 Space space3 = player.getSpace();

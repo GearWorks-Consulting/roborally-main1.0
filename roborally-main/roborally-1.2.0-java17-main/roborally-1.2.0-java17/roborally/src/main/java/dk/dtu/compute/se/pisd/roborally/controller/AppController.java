@@ -21,6 +21,7 @@
  */
 package dk.dtu.compute.se.pisd.roborally.controller;
 
+
 import dk.dtu.compute.se.pisd.designpatterns.observer.Observer;
 import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
 
@@ -39,7 +40,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
-
+import dk.dtu.compute.se.pisd.roborally.JSON.LoadBoard;
 /**
  * ...
  *
@@ -52,6 +53,7 @@ public class AppController implements Observer {
     final private List<String> PLAYER_COLORS = Arrays.asList("red", "green", "blue", "orange", "grey", "magenta");
 
     final private RoboRally roboRally;
+
 
     private GameController gameController;
 
@@ -78,6 +80,13 @@ public class AppController implements Observer {
             // XXX the board should eventually be created programmatically or loaded from a file
             //     here we just create an empty board with the required number of players.
             Board board = new Board(8,8);
+
+
+
+
+
+
+
             gameController = new GameController(board);
             int no = result.get();
             for (int i = 0; i < no; i++) {
@@ -89,13 +98,12 @@ public class AppController implements Observer {
             // XXX: V2
             // board.setCurrentPlayer(board.getPlayer(0));
             gameController.startProgrammingPhase();
-
             roboRally.createBoardView(gameController);
         }
     }
 
     public void saveGame() {
-        // XXX needs to be implemented eventually
+    LoadBoard.saveBoard(gameController.board,"level 2");
     }
 
     public void loadGame() {
@@ -103,6 +111,7 @@ public class AppController implements Observer {
         // for now, we just create a new game
         if (gameController == null) {
             newGame();
+
         }
     }
 
