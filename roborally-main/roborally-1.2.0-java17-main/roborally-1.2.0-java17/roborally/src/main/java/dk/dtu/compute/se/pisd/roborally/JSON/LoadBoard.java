@@ -26,16 +26,10 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-import dk.dtu.compute.se.pisd.roborally.model.Board;
-import dk.dtu.compute.se.pisd.roborally.model.CheckPoint;
-import dk.dtu.compute.se.pisd.roborally.model.Space;
-import dk.dtu.compute.se.pisd.roborally.model.conveyorBelt;
+import dk.dtu.compute.se.pisd.roborally.model.*;
 
 
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.*;
 
 /**
  * ...
@@ -51,75 +45,163 @@ public class LoadBoard {
     private static final String DEFAULTBOARD = "defaultboard";
     private static final String JSON_EXT = "json";
 
-   /* public static Board loadBoard(String boardname) {
+    public static Board loadBoard(String boardname) {
         if (boardname == null) {
             boardname = DEFAULTBOARD;
         }
-
-        ClassLoader classLoader = LoadBoard.class.getClassLoader();
-        InputStream inputStream = classLoader.getResourceAsStream(BOARDSFOLDER + "/" + boardname + "." + JSON_EXT);
-        if (inputStream == null) {
-            // TODO these constants should be defined somewhere
-            return new Board(8,8);
-        }
-
-        // In simple cases, we can create a Gson object with new Gson():
-        GsonBuilder simpleBuilder = new GsonBuilder().
-                registerTypeAdapter(FieldAction.class, new Adapter<FieldAction>());
-        Gson gson = simpleBuilder.create();
-
-        Board result;
-        // FileReader fileReader = null;
-        JsonReader reader = null;
+        JsonReader reader;
         try {
+            File file = new File(boardname + "." + JSON_EXT);
+            FileReader fileReader = new FileReader(file);
+
+
+            // In simple cases, we can create a Gson object with new Gson():
+            GsonBuilder simpleBuilder = new GsonBuilder().
+                    registerTypeAdapter(FieldAction.class, new Adapter<FieldAction>());
+            Gson gson = simpleBuilder.create();
+
+            Board result;
+            // FileReader fileReader = null;
+            reader = new JsonReader(fileReader);
+
             // fileReader = new FileReader(filename);
-            reader = gson.newJsonReader(new InputStreamReader(inputStream));
             BoardTemplate template = gson.fromJson(reader, BoardTemplate.class);
 
+
             result = new Board(template.width, template.height);
-            for (int i=0; i<template.width; i++) {
+            for (int i = 0; i < template.width; i++) {
                 for (int j = 0; j < template.height; j++) {
                     Space space = result.getSpace(i, j);
                     SpaceTemplate temSpace = template.spaces[i][j];
-                    if (temSpace.getConveyor()!=null) {
-                        tempSpace.Conveyor=space.getConveyor();
+                    if (temSpace.Conveyor != null) {
+                        space.setConveyor(temSpace.Conveyor);
                     }
-                    if (temSpace.getCheckPoint()!=null) {
-                        tempSpace.checkPoint=space.getCheckPoint();
+                    if (temSpace.checkPoint != null) {
+                        space.setCheckPoint(temSpace.checkPoint);
                     }
-                    if(temSpace.getWall()) {
-                        tempSpace.wallHeading =space.getWallFacing();
+                    if (temSpace.wallHeading != null) {
+                        space.addWall(temSpace.wallHeading);
+                        space.setWall();
+                        space.setWallFacing(temSpace.wallHeading);
                     }
+                    if (temSpace.gearRotation != null) {
+                        space.setGear(temSpace.gearRotation);
+                    }
+
+
+                }
+            }
+
+
+
+            result.setGameId(template.gameId);
+            for(int i=0;i<template.getPlayersNumber();i++) {
+                Player playerAmount = new Player(result,template.getPlayer(i).color,template.getPlayer(i).name);
+
+                playerAmount.setTokens(template.getPlayer(i).tokens);
+                playerAmount.setSpace(result.getSpace(template.getPlayer(i).space.x,template.getPlayer(i).space.y));
+                playerAmount.setHeading(template.getPlayer(i).heading);
+                playerAmount.getSpace().setPlayer(playerAmount);
+                result.addPlayer(playerAmount);
+                for (int k=0;k<template.getPlayer(i).cards.length;k++){
+                    playerAmount.getCardField(k).setCard(template.getPlayer(i).cards[k].card);
+                    playerAmount.getCardField(k).setVisible(template.getPlayer(i).cards[k].visible);
+
+                }
+                for (int k=0;k<template.getPlayer(i).program.length;k++){
+                    playerAmount.getProgramField(k).setCard(template.getPlayer(i).program[k].card);
+                    playerAmount.getProgramField(k).setVisible(template.getPlayer(i).program[k].visible);
+                }
+
+                if(template.current.name.equals(playerAmount.getName())){
+                    result.setCurrentPlayer(playerAmount);
+                }
+
+
+            }
+
+
+            result.setPhase(template.phase);
+            result.setStep(template.step);
+            result.setStepMode(template.stepMode);
+
+
+
+
+
+
+
+            reader.close();
+            return result;
+        } catch (IOException e1) {
+
+        }
+        return null;
+
+    }
+    public static Board loadMap(String boardname) {
+        if (boardname == null) {
+            boardname = DEFAULTBOARD;
+        }
+        JsonReader reader;
+        try {
+            File file = new File(boardname + "." + JSON_EXT);
+            FileReader fileReader = new FileReader(file);
+
+
+            // In simple cases, we can create a Gson object with new Gson():
+            GsonBuilder simpleBuilder = new GsonBuilder().
+                    registerTypeAdapter(FieldAction.class, new Adapter<FieldAction>());
+            Gson gson = simpleBuilder.create();
+
+            Board result;
+            // FileReader fileReader = null;
+            reader = new JsonReader(fileReader);
+
+            // fileReader = new FileReader(filename);
+            BoardTemplate template = gson.fromJson(reader, BoardTemplate.class);
+
+            result = new Board(template.width, template.height);
+            for (int i = 0; i < template.width; i++) {
+                for (int j = 0; j < template.height; j++) {
+                    Space space = result.getSpace(i, j);
+                    SpaceTemplate temSpace = template.spaces[i][j];
+                    if (temSpace.Conveyor != null) {
+                        space.setConveyor(temSpace.Conveyor);
+                    }
+                    if (temSpace.checkPoint != null) {
+                        space.setCheckPoint(temSpace.checkPoint);
+                    }
+                    if (temSpace.wallHeading != null) {
+                        space.addWall(temSpace.wallHeading);
+                        space.setWall();
+                        space.setWallFacing(temSpace.wallHeading);
+                    }
+                    if (temSpace.gearRotation != null) {
+                        space.setGear(temSpace.gearRotation);
+                    }
+
+
                 }
             }
             reader.close();
             return result;
         } catch (IOException e1) {
-            if (reader != null) {
-                try {
-                    reader.close();
-                    inputStream = null;
-                } catch (IOException e2) {}
-            }
-            if (inputStream != null) {
-                try {
-                    inputStream.close();
-                } catch (IOException e2) {}
-            }
+
         }
         return null;
+
     }
 
-*/
+
     public static void saveBoard(Board board, String name) {
         BoardTemplate template = new BoardTemplate(board.width, board.height);
-
         for (int i=0; i<board.width; i++) {
             for (int j=0; j<board.height; j++) {
                 Space space = board.getSpace(i,j);
                 SpaceTemplate tempSpace = template.spaces[i][j];
                 if (space.getConveyor()!=null) {
-                  tempSpace.Conveyor=space.getConveyor();
+                    tempSpace.Conveyor=space.getConveyor();
                 }
                 if (space.getCheckPoint()!=null) {
                     tempSpace.checkPoint=space.getCheckPoint();
@@ -127,8 +209,46 @@ public class LoadBoard {
                 if(space.getWall()) {
                     tempSpace.wallHeading =space.getWallFacing();
                 }
+                if(space.getGear()!=null){
+                    tempSpace.gearRotation=space.getGear();
+                }
             }
         }
+        for(int i=0;i<board.getPlayersNumber();i++) {
+            PlayerTemplate playerAmount = new PlayerTemplate();
+            playerAmount.name=board.getPlayer(i).getName();
+            playerAmount.color=board.getPlayer(i).getColor();
+            playerAmount.tokens=board.getPlayer(i).getTokens();
+            playerAmount.heading=board.getPlayer(i).getHeading();
+            template.players.add(playerAmount);
+            playerAmount.space=template.spaces[board.getPlayer(i).getSpace().x][board.getPlayer(i).getSpace().y];
+
+         for (int k=0;k<board.getPlayer(i).getCards().length;k++){
+             playerAmount.cards[k].card= board.getPlayer(i).getCardField(k).getCard();
+             playerAmount.cards[k].visible=board.getPlayer(i).getCardField(k).isVisible();
+         }
+            for (int k=0;k<board.getPlayer(i).getProgram().length;k++){
+                playerAmount.program[k].card=board.getPlayer(i).getProgramField(k).getCard();
+                playerAmount.program[k].visible=board.getPlayer(i).getProgramField(k).isVisible();
+            }
+
+            if(board.getCurrentPlayer().getName().equals(board.getPlayer(i).getName())){
+                template.current =playerAmount;
+            }
+
+        }
+
+
+
+
+
+        template.phase=board.getPhase();
+        template.step=board.getStep();
+        template.stepMode=board.stepMode;
+
+
+
+
 
 
 

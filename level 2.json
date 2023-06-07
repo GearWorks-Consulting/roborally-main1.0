@@ -14,7 +14,6 @@
         "y": 2
       },
       {
-        "wallHeading": "EAST",
         "x": 0,
         "y": 3
       },
@@ -23,10 +22,6 @@
         "y": 4
       },
       {
-        "Conveyor": {
-          "direction": "SOUTH",
-          "colour": "blue"
-        },
         "x": 0,
         "y": 5
       },
@@ -37,6 +32,14 @@
       {
         "x": 0,
         "y": 7
+      },
+      {
+        "x": 0,
+        "y": 8
+      },
+      {
+        "x": 0,
+        "y": 9
       }
     ],
     [
@@ -49,12 +52,10 @@
         "y": 1
       },
       {
-        "wallHeading": "SOUTH",
         "x": 1,
         "y": 2
       },
       {
-        "wallHeading": "NORTH",
         "x": 1,
         "y": 3
       },
@@ -73,14 +74,18 @@
       {
         "x": 1,
         "y": 7
+      },
+      {
+        "x": 1,
+        "y": 8
+      },
+      {
+        "x": 1,
+        "y": 9
       }
     ],
     [
       {
-        "Conveyor": {
-          "direction": "SOUTH",
-          "colour": "blue"
-        },
         "x": 2,
         "y": 0
       },
@@ -89,12 +94,10 @@
         "y": 1
       },
       {
-        "wallHeading": "SOUTH",
         "x": 2,
         "y": 2
       },
       {
-        "wallHeading": "NORTH",
         "x": 2,
         "y": 3
       },
@@ -113,6 +116,14 @@
       {
         "x": 2,
         "y": 7
+      },
+      {
+        "x": 2,
+        "y": 8
+      },
+      {
+        "x": 2,
+        "y": 9
       }
     ],
     [
@@ -125,7 +136,6 @@
         "y": 1
       },
       {
-        "wallHeading": "WEST",
         "x": 3,
         "y": 2
       },
@@ -134,10 +144,6 @@
         "y": 3
       },
       {
-        "Conveyor": {
-          "direction": "WEST",
-          "colour": "green"
-        },
         "x": 3,
         "y": 4
       },
@@ -152,6 +158,14 @@
       {
         "x": 3,
         "y": 7
+      },
+      {
+        "x": 3,
+        "y": 8
+      },
+      {
+        "x": 3,
+        "y": 9
       }
     ],
     [
@@ -164,24 +178,18 @@
         "y": 1
       },
       {
-        "checkPoint": {
-          "orderNo": 0
-        },
         "x": 4,
         "y": 2
       },
       {
-        "wallHeading": "EAST",
         "x": 4,
         "y": 3
       },
       {
-        "wallHeading": "EAST",
         "x": 4,
         "y": 4
       },
       {
-        "wallHeading": "EAST",
         "x": 4,
         "y": 5
       },
@@ -192,6 +200,14 @@
       {
         "x": 4,
         "y": 7
+      },
+      {
+        "x": 4,
+        "y": 8
+      },
+      {
+        "x": 4,
+        "y": 9
       }
     ],
     [
@@ -208,17 +224,14 @@
         "y": 2
       },
       {
-        "wallHeading": "WEST",
         "x": 5,
         "y": 3
       },
       {
-        "wallHeading": "WEST",
         "x": 5,
         "y": 4
       },
       {
-        "wallHeading": "WEST",
         "x": 5,
         "y": 5
       },
@@ -227,12 +240,16 @@
         "y": 6
       },
       {
-        "Conveyor": {
-          "direction": "WEST",
-          "colour": "green"
-        },
         "x": 5,
         "y": 7
+      },
+      {
+        "x": 5,
+        "y": 8
+      },
+      {
+        "x": 5,
+        "y": 9
       }
     ],
     [
@@ -253,9 +270,6 @@
         "y": 3
       },
       {
-        "checkPoint": {
-          "orderNo": 1
-        },
         "x": 6,
         "y": 4
       },
@@ -270,6 +284,14 @@
       {
         "x": 6,
         "y": 7
+      },
+      {
+        "x": 6,
+        "y": 8
+      },
+      {
+        "x": 6,
+        "y": 9
       }
     ],
     [
@@ -302,14 +324,283 @@
         "y": 6
       },
       {
-        "checkPoint": {
-          "orderNo": 2
-        },
         "x": 7,
         "y": 7
+      },
+      {
+        "x": 7,
+        "y": 8
+      },
+      {
+        "x": 7,
+        "y": 9
       }
     ]
   ],
   "width": 8,
-  "height": 8
+  "height": 10,
+  "gameId": 0,
+  "players": [
+    {
+      "heading": "EAST",
+      "NO_REGISTERS": 0,
+      "name": "Player 1",
+      "color": "red",
+      "tokens": 0,
+      "space": {
+        "x": 7,
+        "y": 4
+      },
+      "program": [
+        {
+          "visible": true
+        },
+        {
+          "visible": true
+        },
+        {
+          "visible": true
+        },
+        {
+          "visible": true
+        },
+        {
+          "visible": true
+        }
+      ],
+      "cards": [
+        {
+          "card": {
+            "command": "FORWARD",
+            "observers": []
+          },
+          "visible": true
+        },
+        {
+          "card": {
+            "command": "OPTION_LEFT_RIGHT",
+            "observers": []
+          },
+          "visible": true
+        },
+        {
+          "card": {
+            "command": "FAST_FORWARD",
+            "observers": []
+          },
+          "visible": true
+        },
+        {
+          "card": {
+            "command": "FORWARD",
+            "observers": []
+          },
+          "visible": true
+        },
+        {
+          "card": {
+            "command": "LEFT",
+            "observers": []
+          },
+          "visible": true
+        },
+        {
+          "card": {
+            "command": "FAST_FORWARD",
+            "observers": []
+          },
+          "visible": true
+        },
+        {
+          "card": {
+            "command": "RIGHT",
+            "observers": []
+          },
+          "visible": true
+        },
+        {
+          "card": {
+            "command": "FAST_FORWARD",
+            "observers": []
+          },
+          "visible": true
+        }
+      ]
+    },
+    {
+      "heading": "EAST",
+      "NO_REGISTERS": 0,
+      "name": "Player 2",
+      "color": "green",
+      "tokens": 0,
+      "space": {
+        "x": 2,
+        "y": 0
+      },
+      "program": [
+        {
+          "visible": true
+        },
+        {
+          "visible": true
+        },
+        {
+          "visible": true
+        },
+        {
+          "visible": true
+        },
+        {
+          "visible": true
+        }
+      ],
+      "cards": [
+        {
+          "card": {
+            "command": "UTURN",
+            "observers": []
+          },
+          "visible": true
+        },
+        {
+          "card": {
+            "command": "UTURN",
+            "observers": []
+          },
+          "visible": true
+        },
+        {
+          "card": {
+            "command": "FORWARD",
+            "observers": []
+          },
+          "visible": true
+        },
+        {
+          "card": {
+            "command": "OPTION_LEFT_RIGHT",
+            "observers": []
+          },
+          "visible": true
+        },
+        {
+          "card": {
+            "command": "OPTION_LEFT_RIGHT",
+            "observers": []
+          },
+          "visible": true
+        },
+        {
+          "card": {
+            "command": "FAST_FORWARD",
+            "observers": []
+          },
+          "visible": true
+        },
+        {
+          "card": {
+            "command": "UTURN",
+            "observers": []
+          },
+          "visible": true
+        },
+        {
+          "card": {
+            "command": "UTURN",
+            "observers": []
+          },
+          "visible": true
+        }
+      ]
+    }
+  ],
+  "current": {
+    "heading": "EAST",
+    "NO_REGISTERS": 0,
+    "name": "Player 1",
+    "color": "red",
+    "tokens": 0,
+    "space": {
+      "x": 7,
+      "y": 4
+    },
+    "program": [
+      {
+        "visible": true
+      },
+      {
+        "visible": true
+      },
+      {
+        "visible": true
+      },
+      {
+        "visible": true
+      },
+      {
+        "visible": true
+      }
+    ],
+    "cards": [
+      {
+        "card": {
+          "command": "FORWARD",
+          "observers": []
+        },
+        "visible": true
+      },
+      {
+        "card": {
+          "command": "OPTION_LEFT_RIGHT",
+          "observers": []
+        },
+        "visible": true
+      },
+      {
+        "card": {
+          "command": "FAST_FORWARD",
+          "observers": []
+        },
+        "visible": true
+      },
+      {
+        "card": {
+          "command": "FORWARD",
+          "observers": []
+        },
+        "visible": true
+      },
+      {
+        "card": {
+          "command": "LEFT",
+          "observers": []
+        },
+        "visible": true
+      },
+      {
+        "card": {
+          "command": "FAST_FORWARD",
+          "observers": []
+        },
+        "visible": true
+      },
+      {
+        "card": {
+          "command": "RIGHT",
+          "observers": []
+        },
+        "visible": true
+      },
+      {
+        "card": {
+          "command": "FAST_FORWARD",
+          "observers": []
+        },
+        "visible": true
+      }
+    ]
+  },
+  "phase": "PROGRAMMING",
+  "step": 0,
+  "stepMode": false
 }

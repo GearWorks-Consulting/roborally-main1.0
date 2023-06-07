@@ -44,19 +44,19 @@ public class Board extends Subject {
 
     public final String boardName;
 
-    private Integer gameId;
+    public Integer gameId;
 
-    private  final Space[][] spaces;
+    public  Space[][] spaces;
 
-    private  final List<Player> players = new ArrayList<>();
+    public List<Player> players = new ArrayList<>();
 
-    private  Player current;
+    public  Player current;
 
-    private Phase phase = INITIALISATION;
+    public Phase phase = INITIALISATION;
 
-    private int step = 0;
+    public int step = 0;
 
-    private boolean stepMode;
+    public boolean stepMode;
 
     public Board(int width, int height, @NotNull String boardName) {
         this.boardName = boardName;
@@ -69,7 +69,7 @@ public class Board extends Subject {
                 //Space space = new Space(this, x, y);
                 space = new Space(this, x, y);
 
-                //wall 1 segments.
+              /*  //wall 1 segments.
                 if(x==0 && y==3) {
                     space.addWall(Heading.EAST);
                     space.setWall();
@@ -155,19 +155,17 @@ public class Board extends Subject {
                     space.setWall();
                     space.setWallFacing(Heading.EAST);
                 }
-
+*/
                 spaces[x][y] = space;
 
             }
         }
         this.stepMode = false;
-conveyorBelt con1 = new conveyorBelt("blue",Heading.SOUTH);
+/*conveyorBelt con1 = new conveyorBelt("blue",Heading.SOUTH);
         conveyorBelt con3 = new conveyorBelt("green",Heading.WEST);
         CheckPoint checkPoint = new CheckPoint(0);
         CheckPoint checkPoint1 = new CheckPoint(1);
         CheckPoint checkPoint2 = new CheckPoint(2);
-        Gear gear1= new Gear(Heading.SOUTH);
-
         // Test for conveyor belt : Delete this later
         spaces[2][0].setConveyor(con1);
         spaces[3][4].setConveyor(con3);
@@ -176,8 +174,9 @@ conveyorBelt con1 = new conveyorBelt("blue",Heading.SOUTH);
         spaces[4][2].setCheckPoint(checkPoint);
         spaces[6][4].setCheckPoint(checkPoint1);
         spaces[7][7].setCheckPoint(checkPoint2);
-        spaces[6][4].setCheckPoint(checkPoint1);
-        spaces[2][6].setGear(gear1);
+        */
+
+
     }
 
 

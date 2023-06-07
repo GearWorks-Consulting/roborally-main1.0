@@ -24,7 +24,6 @@ package dk.dtu.compute.se.pisd.roborally.model;
 import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
 import org.jetbrains.annotations.NotNull;
 
-
 import static dk.dtu.compute.se.pisd.roborally.model.Heading.SOUTH;
 
 /**
@@ -56,7 +55,6 @@ public class Player extends Subject {
 
     private Space space;
     private Heading heading = SOUTH;
-
 
     private CommandCardField[] program;
     private CommandCardField[] cards;
@@ -153,6 +151,22 @@ public class Player extends Subject {
         getPlayerMessage=false;
     }
 
+    public CommandCardField[] getProgram() {
+        return program;
+    }
+
+    public void setProgram(CommandCardField[] program) {
+        this.program = program;
+    }
+
+    public CommandCardField[] getCards() {
+        return cards;
+    }
+
+    public void setCards(CommandCardField[] cards) {
+        this.cards = cards;
+    }
+
     public CommandCardField getProgramField(int i) {
         return program[i];
     }
@@ -160,4 +174,5 @@ public class Player extends Subject {
     public CommandCardField getCardField(int i) {
         return cards[i];
     }
+
 }

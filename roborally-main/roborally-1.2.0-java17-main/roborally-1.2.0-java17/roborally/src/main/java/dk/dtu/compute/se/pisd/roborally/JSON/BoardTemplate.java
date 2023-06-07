@@ -21,12 +21,13 @@
  */
 package dk.dtu.compute.se.pisd.roborally.JSON;
 
+import dk.dtu.compute.se.pisd.roborally.model.Phase;
 import dk.dtu.compute.se.pisd.roborally.model.Player;
-import dk.dtu.compute.se.pisd.roborally.model.Space;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static dk.dtu.compute.se.pisd.roborally.model.Phase.INITIALISATION;
 
 
 /**
@@ -37,10 +38,23 @@ import java.util.List;
  */
 public class BoardTemplate {
 
-    public    SpaceTemplate[][] spaces;
+    public SpaceTemplate[][] spaces;
     public int width;
     public int height;
 
+    public String boardName;
+
+    public int gameId;
+
+    public List<PlayerTemplate> players = new ArrayList<>();
+
+    public PlayerTemplate current;
+
+    public Phase phase = INITIALISATION;
+
+    public int step = 0;
+
+    public boolean stepMode;
 
     public BoardTemplate(int width, int height) {
     spaces = new SpaceTemplate[width][height];
@@ -56,5 +70,15 @@ public class BoardTemplate {
     this.width=width;
     this.height=height;
 }
-
+    public PlayerTemplate getPlayer(int i) {
+        if (i >= 0 && i < players.size()) {
+            return players.get(i);
+        } else {
+            return null;
+        }
+    }
+    public int getPlayersNumber() {
+        return players.size();
+    }
 }
+
