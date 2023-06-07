@@ -43,6 +43,8 @@ public class GameController {
     final public Board board;
     final private List<String> OPTIONS_Interactive = Arrays.asList("Left","Right");
     int turn=0;
+
+
     public GameController(@NotNull Board board) {
         this.board = board;
     }
@@ -68,7 +70,6 @@ public class GameController {
                 playerNumber=(playerNumber+1)% board.getPlayersNumber();
             }
         }
-
     }
 
     // XXX: V2
@@ -157,8 +158,6 @@ public class GameController {
     // XXX: V2
     private void executeNextStep() {
         Player currentPlayer = board.getCurrentPlayer();
-
-
 
         if (board.getPhase() == Phase.ACTIVATION && currentPlayer != null) {
             int step = board.getStep();
@@ -470,21 +469,17 @@ public class GameController {
                     Player old = target.getPlayer();
                     moveForward(old);
                 }
-
-
             }
-            public void CheckPointTokener(Player player){
-            Space space=player.getSpace();
-              CheckPoint checkPoint = space.getCheckPoint();
-              if(checkPoint!=null && player.getTokens()==checkPoint.orderNo ){
-                player.setTokens(player.getTokens()+1);
-               }
+            public void CheckPointTokener(Player player) {
+                Space space = player.getSpace();
 
-
-
-             }
-
-
+                CheckPoint checkPoint = space.getCheckPoint();
+                if (checkPoint != null && player.getTokens() == checkPoint.orderNo) {
+                    player.setTokens(player.getTokens() + 1);
+                }else if (checkPoint != null){
+                    player.setMessage();
+                }
+            }
 
 
 

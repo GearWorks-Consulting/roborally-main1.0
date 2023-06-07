@@ -30,6 +30,8 @@ import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.scene.text.Text;
+import javafx.scene.Group;
 
 /**
  * ...
@@ -86,6 +88,8 @@ public class RoboRally extends Application {
             // create and add view for new board
             BoardView boardView = new BoardView(gameController);
             boardRoot.setCenter(boardView);
+            //displayTextScene();
+
         }
 
         stage.sizeToScene();
@@ -99,6 +103,22 @@ public class RoboRally extends Application {
         //     but right now the only way for the user to exit the app
         //     is delegated to the exit() method in the AppController,
         //     so that the AppController can take care of that.
+    }
+
+    public void displayTextScene() {
+        // Create a new Text node and set its properties
+        Text text = new Text("Hello, how are you?");
+        text.setX(50);
+        text.setY(50);
+
+        // Get the root of the primary scene
+        VBox vbox = (VBox) stage.getScene().getRoot();
+
+        // Clear the existing children of the root
+        vbox.getChildren().clear();
+
+        // Add the new Text node to the root
+        vbox.getChildren().add(text);
     }
 
     public static void main(String[] args) {

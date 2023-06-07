@@ -24,15 +24,24 @@ package dk.dtu.compute.se.pisd.roborally.view;
 import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
 import dk.dtu.compute.se.pisd.roborally.controller.GameController;
 import dk.dtu.compute.se.pisd.roborally.model.*;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.event.EventHandler;
+import javafx.geometry.Pos;
+import javafx.geometry.VPos;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
+import javafx.scene.layout.Pane;
+import javafx.util.Duration;
 import org.jetbrains.annotations.NotNull;
-
+import javafx.scene.Group;
 /**
  * ...
  *
@@ -49,21 +58,30 @@ public class BoardView extends VBox implements ViewObserver {
     private PlayersView playersView;
 
     private Label statusLabel;
-
+    private GameController gameController;
     private SpaceEventHandler spaceEventHandler;
+
+    private Text text = new Text();
+    public Pane overlayPane;
+    private Timeline textRemovalTimeline;
 
     public BoardView(@NotNull GameController gameController) {
         board = gameController.board;
-
-         ;
-
+        this.gameController = gameController;
+        overlayPane = new Pane();
         mainBoardPane = new GridPane();
         playersView = new PlayersView(gameController);
         statusLabel = new Label("<no status>");
 
+        //This is a timer for the text duration.
+        Duration removalDuration = Duration.seconds(4);
+        textRemovalTimeline = new Timeline(new KeyFrame(removalDuration, event -> removeText()));
+
         this.getChildren().add(mainBoardPane);
         this.getChildren().add(playersView);
         this.getChildren().add(statusLabel);
+        this.getChildren().add(overlayPane);
+
 
         spaces = new SpaceView[board.width][board.height];
 
@@ -124,7 +142,6 @@ public class BoardView extends VBox implements ViewObserver {
                     //}
                 }
 
-
                 if (space.getCheckPoint()!=null && space.getCheckPoint().getOrderNo() ==0){
 
                     ImageView imageView = new ImageView();
@@ -146,30 +163,43 @@ public class BoardView extends VBox implements ViewObserver {
                     imageView.setImage(image);
                     spaceView.getChildren().add(imageView);
                 }
-
-
                 mainBoardPane.add(spaceView, x, y);
                 spaceView.setOnMouseClicked(spaceEventHandler);
             }
         }
-
-
         board.attach(this);
         update(board);
+    }
+    private void removeText() {
+        overlayPane.getChildren().remove(text);
 
     }
-
     @Override
     public void updateView(Subject subject) {
         if (subject == board) {
             conveyorBelt conveyor;
             Phase phase = board.getPhase();
             statusLabel.setText(board.getStatusMessage());
+            if(gameController.board.getCurrentPlayer().getMessage()) {
+                Platform.runLater(() -> {
+                    text.setText("You need a previous Checkpoint's flag first!");
+                    text.setStyle("-fx-font-size: 25; -fx-font-weight: bold;");
+                    text.setFill(Color.ORANGE);
+                    overlayPane.getChildren().add(text); // Add the 'text' to the 'overlayPane'
+                });
+                overlayPane.setManaged(false);
+                overlayPane.setLayoutX(100);
+                overlayPane.setLayoutY(220);
 
+                // Add the overlayPane on top of the mainBoardPane
+                //Start Timer for Removal of text after displaying.
+                textRemovalTimeline.setCycleCount(1);
+                gameController.board.getCurrentPlayer().setMessagefalse();
+            }
 
         }
+        textRemovalTimeline.playFromStart();
     }
-
     // XXX this handler and its uses should eventually be deleted! This is just to help test the
     //     behaviour of the game by being able to explicitly move the players on the board!
     private class SpaceEventHandler implements EventHandler<MouseEvent> {
@@ -188,6 +218,8 @@ public class BoardView extends VBox implements ViewObserver {
                 Space space = spaceView.space;
                 Board board = space.board;
 
+
+
                 if (board == gameController.board) {
                     gameController.moveCurrentPlayerToSpace(space);
                     event.consume();
@@ -196,5 +228,6 @@ public class BoardView extends VBox implements ViewObserver {
         }
 
     }
+
 
 }

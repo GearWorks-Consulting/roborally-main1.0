@@ -28,6 +28,7 @@ import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
 import dk.dtu.compute.se.pisd.roborally.RoboRally;
 
 import dk.dtu.compute.se.pisd.roborally.model.Board;
+import dk.dtu.compute.se.pisd.roborally.model.Command;
 import dk.dtu.compute.se.pisd.roborally.model.Player;
 
 import javafx.application.Platform;
@@ -50,6 +51,7 @@ import dk.dtu.compute.se.pisd.roborally.JSON.LoadBoard;
 public class AppController implements Observer {
 
     final private List<Integer> PLAYER_NUMBER_OPTIONS = Arrays.asList(2, 3, 4, 5, 6);
+    final private List<String> BOARD_NUMBER_OPTION = Arrays.asList("Map 1 - Small","Map 2 - Small","Map 3 - Large");
     final private List<String> PLAYER_COLORS = Arrays.asList("red", "green", "blue", "orange", "grey", "magenta");
 
     final private RoboRally roboRally;
@@ -62,12 +64,19 @@ public class AppController implements Observer {
     }
 
     public void newGame() {
-        ChoiceDialog<Integer> dialog = new ChoiceDialog<>(PLAYER_NUMBER_OPTIONS.get(0), PLAYER_NUMBER_OPTIONS);
-        dialog.setTitle("Player number");
-        dialog.setHeaderText("Select number of players");
-        Optional<Integer> result = dialog.showAndWait();
 
-        if (result.isPresent()) {
+        ChoiceDialog<Integer> playerdialog = new ChoiceDialog<>(PLAYER_NUMBER_OPTIONS.get(0), PLAYER_NUMBER_OPTIONS);
+        playerdialog.setTitle("Player number");
+        playerdialog.setHeaderText("Select number of players");
+        Optional<Integer> result = playerdialog.showAndWait();
+
+        ChoiceDialog<String> boardDialog = new ChoiceDialog<>(BOARD_NUMBER_OPTION.get(0), BOARD_NUMBER_OPTION);
+        boardDialog.setTitle("Board number");
+        boardDialog.setHeaderText("Select Board");
+        Optional<String> result2 = boardDialog.showAndWait();
+        String selectedBoard = result2.get();
+
+        if (result.isPresent() && result2.isPresent()) {
             if (gameController != null) {
                 // The UI should not allow this, but in case this happens anyway.
                 // give the user the option to save the game or abort this operation!
@@ -75,48 +84,75 @@ public class AppController implements Observer {
                     return;
                 }
             }
-
             // XXX the board should eventually be created programmatically or loaded from a file
             //     here we just create an empty board with the required number of players.
-            Board board = new Board(8,10);
-            //Board board = loadGame();
 
 
+            switch (selectedBoard) {
+                case "Map 1 - Small":
+                    // Logic for Map 1
+                    Board board = new Board(8,10);
+                    gameController = new GameController(board);
+                    int no = result.get();
+                    for (int i = 0; i < no; i++) {
+                        Player player = new Player(board, PLAYER_COLORS.get(i), "Player " + (i + 1));
+                        board.addPlayer(player);
 
-
-
-
-            gameController = new GameController(board);
-            int no = result.get();
-            for (int i = 0; i < no; i++) {
-                Player player = new Player(board, PLAYER_COLORS.get(i), "Player " + (i + 1));
-                board.addPlayer(player);
-                player.setSpace(board.getSpace(i % board.width, i));
+                        player.setSpace(board.getSpace(i, 0));
+                    }
+                    // XXX: V2
+                    // board.setCurrentPlayer(board.getPlayer(0));
+                    gameController.startProgrammingPhase();
+                    roboRally.createBoardView(gameController);
+                    break;
+                default:
+                case "Map 2 - Small":
+                    // Logic for Map 2
+                    Board board2 = new Board(8,10);
+                    gameController = new GameController(board2);
+                    int no2 = result.get();
+                    for (int i = 0; i < no2; i++) {
+                        Player player = new Player(board2, PLAYER_COLORS.get(i), "Player " + (i + 1));
+                        board2.addPlayer(player);
+                        //Original settings below.
+                        //player.setSpace(board.getSpace(i % board.width, i));
+                        player.setSpace(board2.getSpace(0, i));
+                    }
+                    // XXX: V2
+                    // board.setCurrentPlayer(board.getPlayer(0));
+                    gameController.startProgrammingPhase();
+                    roboRally.createBoardView(gameController);
+                    break;
+                case "Map 3 - Large":
+                    // Logic for Map 3
+                    Board board3 = new Board(12,10);
+                    gameController = new GameController(board3);
+                    int no3 = result.get();
+                    for (int i = 0; i < no3; i++) {
+                        Player player = new Player(board3, PLAYER_COLORS.get(i), "Player " + (i + 1));
+                        board3.addPlayer(player);
+                        //Original settings below.
+                        //player.setSpace(board.getSpace(i % board.width, i));
+                        player.setSpace(board3.getSpace(i, 0));
+                    }
+                    gameController.startProgrammingPhase();
+                    roboRally.createBoardView(gameController);
+                    break;
             }
-
-            // XXX: V2
-            // board.setCurrentPlayer(board.getPlayer(0));
-            gameController.startProgrammingPhase();
-            roboRally.createBoardView(gameController);
         }
-    }
+        }
 
     public void saveGame() {
-    LoadBoard.saveBoard(gameController.board,"Board 2");
+    LoadBoard.saveBoard(gameController.board,"level 2");
+    }
 
-        }
-
-
-
-    public Board loadGame() {
+    public void loadGame() {
         // XXX needs to be implememted eventually
         // for now, we just create a new game
         if (gameController == null) {
-          return LoadBoard.loadBoard("Board 3");
-
+            newGame();
+        }
     }
-    else return null;}
-
     /**
      * Stop playing the current game, giving the user the option to save
      * the game or to cancel stopping the game. The method returns true
