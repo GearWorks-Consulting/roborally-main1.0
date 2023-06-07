@@ -40,6 +40,14 @@
       {
         "x": 0,
         "y": 7
+      },
+      {
+        "x": 0,
+        "y": 8
+      },
+      {
+        "x": 0,
+        "y": 9
       }
     ],
     [
@@ -82,6 +90,14 @@
         },
         "x": 1,
         "y": 7
+      },
+      {
+        "x": 1,
+        "y": 8
+      },
+      {
+        "x": 1,
+        "y": 9
       }
     ],
     [
@@ -118,146 +134,164 @@
         "wallHeading": "NORTH",
         "x": 2,
         "y": 6
-      },
-      {
-        "checkPoint": {
-          "orderNo": 0
-        },
-        "x": 2,
-        "y": 7
-      }
-    ],
-    [
-      {
-        "Conveyor": {
-          "direction": "EAST",
-          "colour": "green"
-        },
-        "wallHeading": "EAST",
-        "x": 3,
-        "y": 0
-      },
-      {
-        "x": 3,
-        "y": 1
-      },
-      {
-        "x": 3,
-        "y": 2
-      },
-      {
-        "x": 3,
-        "y": 3
-      },
-      {
-        "Conveyor": {
-          "direction": "SOUTH",
-          "colour": "green"
-        },
-        "x": 3,
-        "y": 4
-      },
-      {
-        "x": 3,
-        "y": 5
-      },
-      {
-        "Conveyor": {
-          "direction": "WEST",
-          "colour": "green"
-        },
-        "x": 3,
-        "y": 6
-      },
-      {
-        "Conveyor": {
-          "direction": "EAST",
-          "colour": "green"
-        },
-        "x": 3,
-        "y": 7
-      }
-    ],
-    [
-      {
-        "checkPoint": {
-          "orderNo": 2
-        },
-        "wallHeading": "SOUTH",
-        "x": 4,
-        "y": 0
-      },
-      {
-        "Conveyor": {
-          "direction": "NORTH",
-          "colour": "green"
-        },
-        "wallHeading": "NORTH",
-        "x": 4,
-        "y": 1
-      },
-      {
-        "x": 4,
-        "y": 2
-      },
-      {
-        "Conveyor": {
-          "direction": "EAST",
-          "colour": "green"
-        },
-        "x": 4,
-        "y": 3
-      },
-      {
-        "x": 4,
-        "y": 4
-      },
-      {
-        "Conveyor": {
-          "direction": "NORTH",
-          "colour": "green"
-        },
-        "wallHeading": "EAST",
-        "x": 4,
-        "y": 5
-      },
-      {
-        "x": 4,
-        "y": 6
-      },
-      {
-        "x": 4,
-        "y": 7
-      }
-    ],
-    [
-      {
-        "x": 5,
-        "y": 0
-      },
-      {
-        "x": 5,
-        "y": 1
-      },
-      {
-        "x": 5,
-        "y": 2
-      },
-      {
-        "x": 5,
-        "y": 3
-      },
-      {
-        "Conveyor": {
-          "direction": "NORTH",
-          "colour": "green"
-        },
-        "x": 5,
-        "y": 4
       },
       {
         "checkPoint": {
           "orderNo": 1
+        },
+        "x": 2,
+        "y": 7
+      },
+      {
+        "x": 2,
+        "y": 8
+      },
+      {
+        "x": 2,
+        "y": 9
+      }
+    ],
+    [
+      {
+        "x": 3,
+        "y": 0
+      },
+      {
+        "x": 3,
+        "y": 1
+      },
+      {
+        "x": 3,
+        "y": 2
+      },
+      {
+        "x": 3,
+        "y": 3
+      },
+      {
+        "Conveyor": {
+          "direction": "SOUTH",
+          "colour": "green"
+        },
+        "x": 3,
+        "y": 4
+      },
+      {
+        "x": 3,
+        "y": 5
+      },
+      {
+        "Conveyor": {
+          "direction": "WEST",
+          "colour": "green"
+        },
+        "x": 3,
+        "y": 6
+      },
+      {
+        "Conveyor": {
+          "direction": "EAST",
+          "colour": "green"
+        },
+        "x": 3,
+        "y": 7
+      },
+      {
+        "x": 3,
+        "y": 8
+      },
+      {
+        "Conveyor": {
+          "direction": "EAST",
+          "colour": "green"
+        },
+        "x": 3,
+        "y": 9
+      }
+    ],
+    [
+      {
+        "x": 4,
+        "y": 0
+      },
+      {
+        "x": 4,
+        "y": 1
+      },
+      {
+        "x": 4,
+        "y": 2
+      },
+      {
+        "Conveyor": {
+          "direction": "EAST",
+          "colour": "green"
+        },
+        "x": 4,
+        "y": 3
+      },
+      {
+        "x": 4,
+        "y": 4
+      },
+      {
+        "Conveyor": {
+          "direction": "NORTH",
+          "colour": "green"
+        },
+        "wallHeading": "EAST",
+        "x": 4,
+        "y": 5
+      },
+      {
+        "x": 4,
+        "y": 6
+      },
+      {
+        "x": 4,
+        "y": 7
+      },
+      {
+        "x": 4,
+        "y": 8
+      },
+      {
+        "x": 4,
+        "y": 9
+      }
+    ],
+    [
+      {
+        "x": 5,
+        "y": 0
+      },
+      {
+        "x": 5,
+        "y": 1
+      },
+      {
+        "Conveyor": {
+          "direction": "NORTH",
+          "colour": "green"
+        },
+        "x": 5,
+        "y": 2
+      },
+      {
+        "x": 5,
+        "y": 3
+      },
+      {
+        "Conveyor": {
+          "direction": "NORTH",
+          "colour": "green"
+        },
+        "x": 5,
+        "y": 4
+      },
+      {
+        "checkPoint": {
+          "orderNo": 0
         },
         "wallHeading": "WEST",
         "x": 5,
@@ -274,6 +308,14 @@
       {
         "x": 5,
         "y": 7
+      },
+      {
+        "x": 5,
+        "y": 8
+      },
+      {
+        "x": 5,
+        "y": 9
       }
     ],
     [
@@ -282,10 +324,6 @@
         "y": 0
       },
       {
-        "Conveyor": {
-          "direction": "EAST",
-          "colour": "green"
-        },
         "x": 6,
         "y": 1
       },
@@ -317,6 +355,18 @@
       {
         "x": 6,
         "y": 7
+      },
+      {
+        "Conveyor": {
+          "direction": "NORTH",
+          "colour": "green"
+        },
+        "x": 6,
+        "y": 8
+      },
+      {
+        "x": 6,
+        "y": 9
       }
     ],
     [
@@ -329,6 +379,10 @@
         "y": 1
       },
       {
+        "Conveyor": {
+          "direction": "EAST",
+          "colour": "green"
+        },
         "x": 7,
         "y": 2
       },
@@ -355,9 +409,219 @@
         },
         "x": 7,
         "y": 7
+      },
+      {
+        "x": 7,
+        "y": 8
+      },
+      {
+        "x": 7,
+        "y": 9
+      }
+    ],
+    [
+      {
+        "x": 8,
+        "y": 0
+      },
+      {
+        "x": 8,
+        "y": 1
+      },
+      {
+        "x": 8,
+        "y": 2
+      },
+      {
+        "x": 8,
+        "y": 3
+      },
+      {
+        "Conveyor": {
+          "direction": "SOUTH",
+          "colour": "green"
+        },
+        "x": 8,
+        "y": 4
+      },
+      {
+        "x": 8,
+        "y": 5
+      },
+      {
+        "x": 8,
+        "y": 6
+      },
+      {
+        "x": 8,
+        "y": 7
+      },
+      {
+        "x": 8,
+        "y": 8
+      },
+      {
+        "x": 8,
+        "y": 9
+      }
+    ],
+    [
+      {
+        "x": 9,
+        "y": 0
+      },
+      {
+        "x": 9,
+        "y": 1
+      },
+      {
+        "Conveyor": {
+          "direction": "EAST",
+          "colour": "green"
+        },
+        "x": 9,
+        "y": 2
+      },
+      {
+        "x": 9,
+        "y": 3
+      },
+      {
+        "x": 9,
+        "y": 4
+      },
+      {
+        "Conveyor": {
+          "direction": "NORTH",
+          "colour": "green"
+        },
+        "x": 9,
+        "y": 5
+      },
+      {
+        "x": 9,
+        "y": 6
+      },
+      {
+        "x": 9,
+        "y": 7
+      },
+      {
+        "wallHeading": "EAST",
+        "x": 9,
+        "y": 8
+      },
+      {
+        "x": 9,
+        "y": 9
+      }
+    ],
+    [
+      {
+        "x": 10,
+        "y": 0
+      },
+      {
+        "x": 10,
+        "y": 1
+      },
+      {
+        "x": 10,
+        "y": 2
+      },
+      {
+        "x": 10,
+        "y": 3
+      },
+      {
+        "x": 10,
+        "y": 4
+      },
+      {
+        "x": 10,
+        "y": 5
+      },
+      {
+        "x": 10,
+        "y": 6
+      },
+      {
+        "Conveyor": {
+          "direction": "SOUTH",
+          "colour": "green"
+        },
+        "x": 10,
+        "y": 7
+      },
+      {
+        "checkPoint": {
+          "orderNo": 2
+        },
+        "wallHeading": "SOUTH",
+        "x": 10,
+        "y": 8
+      },
+      {
+        "wallHeading": "NORTH",
+        "x": 10,
+        "y": 9
+      }
+    ],
+    [
+      {
+        "x": 11,
+        "y": 0
+      },
+      {
+        "x": 11,
+        "y": 1
+      },
+      {
+        "x": 11,
+        "y": 2
+      },
+      {
+        "Conveyor": {
+          "direction": "SOUTH",
+          "colour": "green"
+        },
+        "x": 11,
+        "y": 3
+      },
+      {
+        "x": 11,
+        "y": 4
+      },
+      {
+        "Conveyor": {
+          "direction": "WEST",
+          "colour": "green"
+        },
+        "x": 11,
+        "y": 5
+      },
+      {
+        "x": 11,
+        "y": 6
+      },
+      {
+        "x": 11,
+        "y": 7
+      },
+      {
+        "Conveyor": {
+          "direction": "NORTH",
+          "colour": "green"
+        },
+        "x": 11,
+        "y": 8
+      },
+      {
+        "x": 11,
+        "y": 9
       }
     ]
   ],
-  "width": 8,
-  "height": 8
+  "width": 12,
+  "height": 10
 }
