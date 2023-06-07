@@ -182,13 +182,7 @@ public class SpaceView extends StackPane implements ViewObserver {
 
 
 
-
-
-
-
         Player player = space.getPlayer();
-
-
 
 
         if (player != null) {
@@ -204,14 +198,11 @@ public class SpaceView extends StackPane implements ViewObserver {
             arrow.setRotate((90*player.getHeading().ordinal())%360);
             this.getChildren().add(arrow);
         }
-
     }
-
     @Override
     public void updateView(Subject subject) {
         if (subject == this.space) {
             updatePlayer();
         }
     }
-
 }

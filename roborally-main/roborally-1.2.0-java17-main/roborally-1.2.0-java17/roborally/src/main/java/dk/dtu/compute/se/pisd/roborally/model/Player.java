@@ -37,17 +37,13 @@ public class Player extends Subject {
     final public static int NO_REGISTERS = 5;
     final public static int NO_CARDS = 8;
 
-
     final public Board board;
+
+    boolean getPlayerMessage = false;
 
     private String name;
     private String color;
     private int tokens;
-    private Space space;
-    private Heading heading = SOUTH;
-
-    private CommandCardField[] program;
-    private CommandCardField[] cards;
 
     public int getTokens() {
         return tokens;
@@ -57,7 +53,11 @@ public class Player extends Subject {
         this.tokens = tokens;
     }
 
+    private Space space;
+    private Heading heading = SOUTH;
 
+    private CommandCardField[] program;
+    private CommandCardField[] cards;
 
     public Player(@NotNull Board board, String color, @NotNull String name) {
         this.board = board;
@@ -134,6 +134,21 @@ public class Player extends Subject {
                 space.playerChanged();
             }
         }
+    }
+
+    public void setMessage(){
+
+    getPlayerMessage=true;
+    }
+
+    public boolean getMessage(){
+        return getPlayerMessage;
+
+    }
+
+    public void setMessagefalse(){
+
+        getPlayerMessage=false;
     }
 
     public CommandCardField[] getProgram() {
