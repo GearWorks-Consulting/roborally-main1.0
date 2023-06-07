@@ -22,9 +22,9 @@ public class PlayerTemplate {
     public CommandCardFieldTemplate[] program;
     public CommandCardFieldTemplate[] cards;
 
-     public    CommandCardFieldTemplate programtest;
+
     public PlayerTemplate() {
-         programtest = new CommandCardFieldTemplate();
+
         program = new CommandCardFieldTemplate[NO_REGISTERS2];
         cards = new CommandCardFieldTemplate[NO_CARDS2];
 

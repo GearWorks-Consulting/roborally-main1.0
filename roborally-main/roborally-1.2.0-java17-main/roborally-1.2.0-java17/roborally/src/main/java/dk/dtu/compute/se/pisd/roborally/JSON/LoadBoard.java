@@ -139,6 +139,59 @@ public class LoadBoard {
         return null;
 
     }
+    public static Board loadMap(String boardname) {
+        if (boardname == null) {
+            boardname = DEFAULTBOARD;
+        }
+        JsonReader reader;
+        try {
+            File file = new File(boardname + "." + JSON_EXT);
+            FileReader fileReader = new FileReader(file);
+
+
+            // In simple cases, we can create a Gson object with new Gson():
+            GsonBuilder simpleBuilder = new GsonBuilder().
+                    registerTypeAdapter(FieldAction.class, new Adapter<FieldAction>());
+            Gson gson = simpleBuilder.create();
+
+            Board result;
+            // FileReader fileReader = null;
+            reader = new JsonReader(fileReader);
+
+            // fileReader = new FileReader(filename);
+            BoardTemplate template = gson.fromJson(reader, BoardTemplate.class);
+
+            result = new Board(template.width, template.height);
+            for (int i = 0; i < template.width; i++) {
+                for (int j = 0; j < template.height; j++) {
+                    Space space = result.getSpace(i, j);
+                    SpaceTemplate temSpace = template.spaces[i][j];
+                    if (temSpace.Conveyor != null) {
+                        space.setConveyor(temSpace.Conveyor);
+                    }
+                    if (temSpace.checkPoint != null) {
+                        space.setCheckPoint(temSpace.checkPoint);
+                    }
+                    if (temSpace.wallHeading != null) {
+                        space.addWall(temSpace.wallHeading);
+                        space.setWall();
+                        space.setWallFacing(temSpace.wallHeading);
+                    }
+                    if (temSpace.gearRotation != null) {
+                        space.setGear(temSpace.gearRotation);
+                    }
+
+
+                }
+            }
+            reader.close();
+            return result;
+        } catch (IOException e1) {
+
+        }
+        return null;
+
+    }
 
 
     public static void saveBoard(Board board, String name) {
@@ -159,10 +212,7 @@ public class LoadBoard {
                 if(space.getGear()!=null){
                     tempSpace.gearRotation=space.getGear();
                 }
-
             }
-
-
         }
         for(int i=0;i<board.getPlayersNumber();i++) {
             PlayerTemplate playerAmount = new PlayerTemplate();
@@ -181,10 +231,6 @@ public class LoadBoard {
                 playerAmount.program[k].card=board.getPlayer(i).getProgramField(k).getCard();
                 playerAmount.program[k].visible=board.getPlayer(i).getProgramField(k).isVisible();
             }
-
-
-
-
 
             if(board.getCurrentPlayer().getName().equals(board.getPlayer(i).getName())){
                 template.current =playerAmount;

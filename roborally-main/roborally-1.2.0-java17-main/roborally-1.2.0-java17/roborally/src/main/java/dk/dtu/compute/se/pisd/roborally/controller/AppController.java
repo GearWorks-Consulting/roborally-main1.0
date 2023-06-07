@@ -88,28 +88,30 @@ public class AppController implements Observer {
             // XXX the board should eventually be created programmatically or loaded from a file
             //     here we just create an empty board with the required number of players.
            // Board board = new Board(8,8);
-            Board board1=loadGame();
-
 
 
             switch (selectedBoard) {
                 case "Map 1 - Small":
                     // Logic for Map 1
-                    Board board = new Board(8,10);
+                   // Board board = new Board(8,10);
+                    Board board = loadGame();
                     gameController = new GameController(board);
-                    int no = result.get();
+                    /*int no = result.get();
                     for (int i = 0; i < no; i++) {
                         Player player = new Player(board, PLAYER_COLORS.get(i), "Player " + (i + 1));
                         board.addPlayer(player);
 
                         player.setSpace(board.getSpace(i, 0));
+
                     }
                     // XXX: V2
                     // board.setCurrentPlayer(board.getPlayer(0));
-                    gameController.startProgrammingPhase();
+
+                     */
+                   // gameController.startProgrammingPhase();
                     roboRally.createBoardView(gameController);
                     break;
-                default:
+
                 case "Map 2 - Small":
                     // Logic for Map 2
                     Board board2 = new Board(8,10);
