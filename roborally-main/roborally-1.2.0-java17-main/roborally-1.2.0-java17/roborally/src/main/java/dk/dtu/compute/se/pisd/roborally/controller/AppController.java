@@ -55,6 +55,7 @@ public class AppController implements Observer {
     final private List<String> PLAYER_COLORS = Arrays.asList("red", "green", "blue", "orange", "grey", "magenta");
 
     final private RoboRally roboRally;
+    Board board;
 
 
     private GameController gameController;
@@ -87,64 +88,38 @@ public class AppController implements Observer {
 
             // XXX the board should eventually be created programmatically or loaded from a file
             //     here we just create an empty board with the required number of players.
-           // Board board = new Board(8,8);
+
+
+
+
 
 
             switch (selectedBoard) {
                 case "Map 1 - Small":
-                    // Logic for Map 1
-                   // Board board = new Board(8,10);
-                    Board board = new Board(8,10);
-                    gameController = new GameController(board);
-                    int no = result.get();
-                    for (int i = 0; i < no; i++) {
-                        Player player = new Player(board, PLAYER_COLORS.get(i), "Player " + (i + 1));
-                        board.addPlayer(player);
-
-                        player.setSpace(board.getSpace(i, 0));
-
-                    }
-                    // XXX: V2
-                    // board.setCurrentPlayer(board.getPlayer(0));
-
-
-                    gameController.startProgrammingPhase();
-                    roboRally.createBoardView(gameController);
+                 board = LoadBoard.loadMap("Board 1");
                     break;
 
                 case "Map 2 - Small":
                     // Logic for Map 2
-                    Board board2 = new Board(8,10);
-                    gameController = new GameController(board2);
-                    int no2 = result.get();
-                    for (int i = 0; i < no2; i++) {
-                        Player player = new Player(board2, PLAYER_COLORS.get(i), "Player " + (i + 1));
-                        board2.addPlayer(player);
-                        //Original settings below.
-                        //player.setSpace(board.getSpace(i % board.width, i));
-                        player.setSpace(board2.getSpace(0, i));
-                    }
-                    // XXX: V2
-                    // board.setCurrentPlayer(board.getPlayer(0));
-                    gameController.startProgrammingPhase();
-                    roboRally.createBoardView(gameController);
+                    board = LoadBoard.loadMap("Board 2");
+
+
                     break;
                 case "Map 3 - Large":
                     // Logic for Map 3
-                    Board board3 = new Board(12,10);
-                    gameController = new GameController(board3);
-                    int no3 = result.get();
-                    for (int i = 0; i < no3; i++) {
-                        Player player = new Player(board3, PLAYER_COLORS.get(i), "Player " + (i + 1));
-                        board3.addPlayer(player);
-                        //Original settings below.
-                        //player.setSpace(board.getSpace(i % board.width, i));
-                        player.setSpace(board3.getSpace(i, 0));
-                    }
-                    gameController.startProgrammingPhase();
-                    roboRally.createBoardView(gameController);
+                    board = LoadBoard.loadMap("Board 3");
                     break;
             }
+            gameController = new GameController(board);
+            int no = result.get();
+            for (int i = 0; i < no; i++) {
+                Player player = new Player(board, PLAYER_COLORS.get(i), "Player " + (i + 1));
+                board.addPlayer(player);
+
+                player.setSpace(board.getSpace(i, 0));
+            }
+            gameController.startProgrammingPhase();
+            roboRally.createBoardView(gameController);
         }
     }
 
