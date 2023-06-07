@@ -94,9 +94,9 @@ public class AppController implements Observer {
                 case "Map 1 - Small":
                     // Logic for Map 1
                    // Board board = new Board(8,10);
-                    Board board = loadGame();
+                    Board board = new Board(8,10);
                     gameController = new GameController(board);
-                    /*int no = result.get();
+                    int no = result.get();
                     for (int i = 0; i < no; i++) {
                         Player player = new Player(board, PLAYER_COLORS.get(i), "Player " + (i + 1));
                         board.addPlayer(player);
@@ -107,8 +107,8 @@ public class AppController implements Observer {
                     // XXX: V2
                     // board.setCurrentPlayer(board.getPlayer(0));
 
-                     */
-                   // gameController.startProgrammingPhase();
+
+                    gameController.startProgrammingPhase();
                     roboRally.createBoardView(gameController);
                     break;
 
@@ -149,17 +149,20 @@ public class AppController implements Observer {
     }
 
     public void saveGame() {
-    LoadBoard.saveBoard(gameController.board,"level 2");
+    LoadBoard.saveBoard(gameController.board,"Last Game");
     }
 
 
 
-    public Board loadGame() {
+    public void loadGame() {
         if (gameController == null) {
-          return LoadBoard.loadBoard("level 2");
+            Board board = LoadBoard.loadBoard("Last Game");
+            gameController = new GameController(board);
+
+            roboRally.createBoardView(gameController);
 
     }
-    else return null;}
+    }
 
     /**
      * Stop playing the current game, giving the user the option to save

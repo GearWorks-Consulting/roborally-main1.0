@@ -342,7 +342,7 @@
   "gameId": 0,
   "players": [
     {
-      "heading": "EAST",
+      "heading": "WEST",
       "NO_REGISTERS": 0,
       "name": "Player 1",
       "color": "red",
@@ -371,6 +371,27 @@
       "cards": [
         {
           "card": {
+            "command": "FAST_FORWARD",
+            "observers": []
+          },
+          "visible": true
+        },
+        {
+          "card": {
+            "command": "LEFT",
+            "observers": []
+          },
+          "visible": true
+        },
+        {
+          "card": {
+            "command": "UTURN",
+            "observers": []
+          },
+          "visible": true
+        },
+        {
+          "card": {
             "command": "FORWARD",
             "observers": []
           },
@@ -379,20 +400,6 @@
         {
           "card": {
             "command": "OPTION_LEFT_RIGHT",
-            "observers": []
-          },
-          "visible": true
-        },
-        {
-          "card": {
-            "command": "FAST_FORWARD",
-            "observers": []
-          },
-          "visible": true
-        },
-        {
-          "card": {
-            "command": "FORWARD",
             "observers": []
           },
           "visible": true
@@ -413,14 +420,7 @@
         },
         {
           "card": {
-            "command": "RIGHT",
-            "observers": []
-          },
-          "visible": true
-        },
-        {
-          "card": {
-            "command": "FAST_FORWARD",
+            "command": "OPTION_LEFT_RIGHT",
             "observers": []
           },
           "visible": true
@@ -457,14 +457,49 @@
       "cards": [
         {
           "card": {
-            "command": "UTURN",
+            "command": "RIGHT",
             "observers": []
           },
           "visible": true
         },
         {
           "card": {
-            "command": "UTURN",
+            "command": "OPTION_LEFT_RIGHT",
+            "observers": []
+          },
+          "visible": true
+        },
+        {
+          "card": {
+            "command": "OPTION_LEFT_RIGHT",
+            "observers": []
+          },
+          "visible": true
+        },
+        {
+          "card": {
+            "command": "OPTION_LEFT_RIGHT",
+            "observers": []
+          },
+          "visible": true
+        },
+        {
+          "card": {
+            "command": "RIGHT",
+            "observers": []
+          },
+          "visible": true
+        },
+        {
+          "card": {
+            "command": "LEFT",
+            "observers": []
+          },
+          "visible": true
+        },
+        {
+          "card": {
+            "command": "OPTION_LEFT_RIGHT",
             "observers": []
           },
           "visible": true
@@ -475,41 +510,6 @@
             "observers": []
           },
           "visible": true
-        },
-        {
-          "card": {
-            "command": "OPTION_LEFT_RIGHT",
-            "observers": []
-          },
-          "visible": true
-        },
-        {
-          "card": {
-            "command": "OPTION_LEFT_RIGHT",
-            "observers": []
-          },
-          "visible": true
-        },
-        {
-          "card": {
-            "command": "FAST_FORWARD",
-            "observers": []
-          },
-          "visible": true
-        },
-        {
-          "card": {
-            "command": "UTURN",
-            "observers": []
-          },
-          "visible": true
-        },
-        {
-          "card": {
-            "command": "UTURN",
-            "observers": []
-          },
-          "visible": true
         }
       ]
     }
@@ -517,12 +517,12 @@
   "current": {
     "heading": "EAST",
     "NO_REGISTERS": 0,
-    "name": "Player 1",
-    "color": "red",
+    "name": "Player 2",
+    "color": "green",
     "tokens": 0,
     "space": {
-      "x": 7,
-      "y": 4
+      "x": 2,
+      "y": 0
     },
     "program": [
       {
@@ -544,7 +544,7 @@
     "cards": [
       {
         "card": {
-          "command": "FORWARD",
+          "command": "RIGHT",
           "observers": []
         },
         "visible": true
@@ -558,28 +558,14 @@
       },
       {
         "card": {
-          "command": "FAST_FORWARD",
+          "command": "OPTION_LEFT_RIGHT",
           "observers": []
         },
         "visible": true
       },
       {
         "card": {
-          "command": "FORWARD",
-          "observers": []
-        },
-        "visible": true
-      },
-      {
-        "card": {
-          "command": "LEFT",
-          "observers": []
-        },
-        "visible": true
-      },
-      {
-        "card": {
-          "command": "FAST_FORWARD",
+          "command": "OPTION_LEFT_RIGHT",
           "observers": []
         },
         "visible": true
@@ -593,7 +579,21 @@
       },
       {
         "card": {
-          "command": "FAST_FORWARD",
+          "command": "LEFT",
+          "observers": []
+        },
+        "visible": true
+      },
+      {
+        "card": {
+          "command": "OPTION_LEFT_RIGHT",
+          "observers": []
+        },
+        "visible": true
+      },
+      {
+        "card": {
+          "command": "FORWARD",
           "observers": []
         },
         "visible": true
@@ -601,6 +601,6 @@
     ]
   },
   "phase": "PROGRAMMING",
-  "step": 0,
+  "step": 1,
   "stepMode": false
 }
