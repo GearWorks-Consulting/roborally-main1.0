@@ -28,6 +28,7 @@ import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
 import dk.dtu.compute.se.pisd.roborally.RoboRally;
 
 import dk.dtu.compute.se.pisd.roborally.model.Board;
+import dk.dtu.compute.se.pisd.roborally.model.Command;
 import dk.dtu.compute.se.pisd.roborally.model.Player;
 
 import javafx.application.Platform;
@@ -73,6 +74,7 @@ public class AppController implements Observer {
         boardDialog.setTitle("Board number");
         boardDialog.setHeaderText("Select Board");
         Optional<String> result2 = boardDialog.showAndWait();
+        String selectedBoard = result2.get();
 
         if (result.isPresent() && result2.isPresent()) {
             if (gameController != null) {
@@ -84,21 +86,61 @@ public class AppController implements Observer {
             }
             // XXX the board should eventually be created programmatically or loaded from a file
             //     here we just create an empty board with the required number of players.
-            Board board = new Board(8,8);
-            gameController = new GameController(board);
-            int no = result.get();
-            for (int i = 0; i < no; i++) {
-                Player player = new Player(board, PLAYER_COLORS.get(i), "Player " + (i + 1));
-                board.addPlayer(player);
-                player.setSpace(board.getSpace(i % board.width, i));
-            }
 
-            // XXX: V2
-            // board.setCurrentPlayer(board.getPlayer(0));
-            gameController.startProgrammingPhase();
-            roboRally.createBoardView(gameController);
+
+            switch (selectedBoard) {
+                case "Map 1 - Small":
+                    // Logic for Map 1
+                    Board board = new Board(8,10);
+                    gameController = new GameController(board);
+                    int no = result.get();
+                    for (int i = 0; i < no; i++) {
+                        Player player = new Player(board, PLAYER_COLORS.get(i), "Player " + (i + 1));
+                        board.addPlayer(player);
+
+                        player.setSpace(board.getSpace(i, 0));
+                    }
+                    // XXX: V2
+                    // board.setCurrentPlayer(board.getPlayer(0));
+                    gameController.startProgrammingPhase();
+                    roboRally.createBoardView(gameController);
+                    break;
+                default:
+                case "Map 2 - Small":
+                    // Logic for Map 2
+                    Board board2 = new Board(8,10);
+                    gameController = new GameController(board2);
+                    int no2 = result.get();
+                    for (int i = 0; i < no2; i++) {
+                        Player player = new Player(board2, PLAYER_COLORS.get(i), "Player " + (i + 1));
+                        board2.addPlayer(player);
+                        //Original settings below.
+                        //player.setSpace(board.getSpace(i % board.width, i));
+                        player.setSpace(board2.getSpace(0, i));
+                    }
+                    // XXX: V2
+                    // board.setCurrentPlayer(board.getPlayer(0));
+                    gameController.startProgrammingPhase();
+                    roboRally.createBoardView(gameController);
+                    break;
+                case "Map 3 - Large":
+                    // Logic for Map 3
+                    Board board3 = new Board(12,10);
+                    gameController = new GameController(board3);
+                    int no3 = result.get();
+                    for (int i = 0; i < no3; i++) {
+                        Player player = new Player(board3, PLAYER_COLORS.get(i), "Player " + (i + 1));
+                        board3.addPlayer(player);
+                        //Original settings below.
+                        //player.setSpace(board.getSpace(i % board.width, i));
+                        player.setSpace(board3.getSpace(i, 0));
+                    }
+                    gameController.startProgrammingPhase();
+                    roboRally.createBoardView(gameController);
+                    break;
+            }
         }
-    }
+        }
 
     public void saveGame() {
     LoadBoard.saveBoard(gameController.board,"level 2");
