@@ -281,17 +281,17 @@ public class GameController {
             }
             // dfsd
 
-                else if (target != null&& !target.getPlayer().getHeading().next().next().equals(heading)) {
+                else if (target != null) {
 
 
-                    robotCollide(target);
+                    if(robotCollide(target,heading)){
 
                     target.setPlayer(player);
                     player.setSpace(target);
                     GearRotation(player);
                     conveyerTransport(player);
                     CheckPointTokener(player);
-                }
+                }}
 
             /**
              * Detects the player's heading and check if meets a wall on the same space as the player with a macthing heading.
@@ -462,11 +462,17 @@ public class GameController {
 
                 }
             }
-            public void robotCollide(Space target){
-                if (target.getPlayer() != null ) {
+            public boolean robotCollide(Space target,Heading heading){
+                if (target.getPlayer() != null && !target.getPlayer().getHeading().next().next().equals(heading)) {
                     Player old = target.getPlayer();
                     moveForward(old);
+
                 }
+
+          else if(target.getPlayer() != null && target.getPlayer().getHeading().next().next().equals(heading))
+              return false;
+                return true;
+
             }
             public void CheckPointTokener(Player player) {
                 Space space = player.getSpace();
