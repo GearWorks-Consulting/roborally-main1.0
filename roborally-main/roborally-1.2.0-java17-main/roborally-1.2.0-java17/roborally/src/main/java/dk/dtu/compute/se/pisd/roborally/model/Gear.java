@@ -7,7 +7,7 @@ import java.util.Vector;
 
 //this class defines the gear action field, gear rotation, which turns the gear action, to the right.
 
-public class Gear implements Observer {
+public class Gear {
     private Heading direction;
     public Gear(Heading heading ){
 
@@ -18,8 +18,5 @@ public class Gear implements Observer {
         return direction;
     }
 
-    @Override
-    public void update(Subject subject) {
 
-    }
 }
