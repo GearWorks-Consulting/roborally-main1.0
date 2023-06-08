@@ -150,8 +150,7 @@ public class SpaceView extends StackPane implements ViewObserver {
             imageView.setImage(image);
             this.getChildren().add(imageView);
         }
-
-        if (space.getConveyor()!=null && space.getConveyor().getColour()=="blue") {
+            if (space.getConveyor() != null && space.getConveyor().getColour().equals("blue")) {
             ImageView imageView = new ImageView();
             Image image = null;
             if(space.getConveyor().getDirection() == Heading.WEST) {
@@ -171,7 +170,7 @@ public class SpaceView extends StackPane implements ViewObserver {
             //}
         }
 
-        else if (space.getConveyor()!=null && space.getConveyor().getColour()=="green") {
+        else if (space.getConveyor() != null && space.getConveyor().getColour().equals("green")) {
             ImageView imageView = new ImageView();
             Image image = null;
             if(space.getConveyor().getDirection() == Heading.WEST) {
@@ -184,9 +183,6 @@ public class SpaceView extends StackPane implements ViewObserver {
                 image = new Image("Green.png", 60, 60, false, false);
             }
             imageView.setImage(image);
-            //if (space.getConveyor().getDirection() == Heading.EAST) {
-            //   ImageView.setRotate((90*space.getConveyor().getDirection().ordinal())%360);
-
             this.getChildren().add(imageView);
             //}
 
