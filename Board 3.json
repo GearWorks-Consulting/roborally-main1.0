@@ -30,6 +30,9 @@
         "y": 4
       },
       {
+        "checkPoint": {
+          "orderNo": 4
+        },
         "x": 0,
         "y": 5
       },
@@ -102,6 +105,7 @@
     ],
     [
       {
+        "wallHeading": "EAST",
         "x": 2,
         "y": 0
       },
@@ -153,6 +157,7 @@
     ],
     [
       {
+        "wallHeading": "WEST",
         "x": 3,
         "y": 0
       },
@@ -203,7 +208,7 @@
       {
         "Conveyor": {
           "direction": "EAST",
-          "colour": "green"
+          "colour": "blue"
         },
         "x": 3,
         "y": 9
@@ -215,10 +220,12 @@
         "y": 0
       },
       {
+        "wallHeading": "SOUTH",
         "x": 4,
         "y": 1
       },
       {
+        "wallHeading": "NORTH",
         "x": 4,
         "y": 2
       },
@@ -272,7 +279,7 @@
       {
         "Conveyor": {
           "direction": "NORTH",
-          "colour": "green"
+          "colour": "blue"
         },
         "x": 5,
         "y": 2
@@ -300,7 +307,7 @@
       {
         "Conveyor": {
           "direction": "SOUTH",
-          "colour": "green"
+          "colour": "blue"
         },
         "x": 5,
         "y": 6
@@ -314,12 +321,19 @@
         "y": 8
       },
       {
+        "checkPoint": {
+        "orderNo": 5
+        },
         "x": 5,
         "y": 9
       }
     ],
     [
       {
+        "Conveyor": {
+          "direction": "WEST",
+          "colour": "green"
+        },
         "x": 6,
         "y": 0
       },
@@ -371,10 +385,12 @@
     ],
     [
       {
+        "wallHeading": "SOUTH",
         "x": 7,
         "y": 0
       },
       {
+        "wallHeading": "NORTH",
         "x": 7,
         "y": 1
       },
@@ -421,10 +437,12 @@
     ],
     [
       {
+        "wallHeading": "SOUTH",
         "x": 8,
         "y": 0
       },
       {
+        "wallHeading": "NORTH",
         "x": 8,
         "y": 1
       },
@@ -461,6 +479,10 @@
         "y": 8
       },
       {
+        "Conveyor": {
+        "direction": "EAST",
+        "colour": "blue"
+        },
         "x": 8,
         "y": 9
       }
@@ -518,10 +540,14 @@
     ],
     [
       {
+        "checkPoint": {
+          "orderNo": 3
+        },
         "x": 10,
         "y": 0
       },
       {
+        "wallHeading": "EAST",
         "x": 10,
         "y": 1
       },
@@ -573,6 +599,7 @@
         "y": 0
       },
       {
+        "wallHeading": "WEST",
         "x": 11,
         "y": 1
       },

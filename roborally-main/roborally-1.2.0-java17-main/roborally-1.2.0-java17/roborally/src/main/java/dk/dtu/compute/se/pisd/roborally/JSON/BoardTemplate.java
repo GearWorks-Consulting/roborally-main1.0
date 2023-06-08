@@ -44,7 +44,7 @@ public class BoardTemplate {
 
     public String boardName;
 
-    public int gameId;
+    public Integer gameId;
 
     public List<PlayerTemplate> players = new ArrayList<>();
 

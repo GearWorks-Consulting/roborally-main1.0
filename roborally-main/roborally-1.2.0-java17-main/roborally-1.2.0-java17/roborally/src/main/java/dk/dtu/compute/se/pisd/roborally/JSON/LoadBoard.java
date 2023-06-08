@@ -93,7 +93,7 @@ public class LoadBoard {
             }
 
 
-
+if(template.gameId!=null)
             result.setGameId(template.gameId);
             for(int i=0;i<template.getPlayersNumber();i++) {
                 Player playerAmount = new Player(result,template.getPlayer(i).color,template.getPlayer(i).name);
@@ -120,6 +120,8 @@ public class LoadBoard {
 
             }
 
+            if(template.gameId != null)
+                result.setGameId(template.gameId);
 
             result.setPhase(template.phase);
             result.setStep(template.step);
@@ -239,7 +241,8 @@ public class LoadBoard {
         }
 
 
-
+if(board.getGameId()!=null)
+    template.gameId=board.getGameId();
 
 
         template.phase=board.getPhase();
