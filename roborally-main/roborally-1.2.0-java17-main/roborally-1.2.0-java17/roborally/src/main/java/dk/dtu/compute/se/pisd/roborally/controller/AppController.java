@@ -107,8 +107,8 @@ public class AppController implements Observer {
                     break;
                 case "Map 3 - Large":
                     // Logic for Map 3
-                  //  board = LoadBoard.loadMap("Board 3");
-                    board= new Board(12,10);
+                    board = LoadBoard.loadMap("Board 3");
+                    //board= new Board(12,10);
                     break;
             }
             gameController = new GameController(board);
