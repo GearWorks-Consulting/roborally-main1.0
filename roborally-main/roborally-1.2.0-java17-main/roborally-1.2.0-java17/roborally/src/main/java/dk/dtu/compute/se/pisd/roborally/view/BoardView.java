@@ -122,12 +122,12 @@ public class BoardView extends VBox implements ViewObserver {
                     //}
                 }
 
-                if (space.getConveyor()!=null && space.getConveyor().getColour()=="green") {
+           else if (space.getConveyor()!=null && space.getConveyor().getColour()=="green") {
                     ImageView imageView = new ImageView();
-                    Image image = null;
-                    if(space.getConveyor().getDirection() == Heading.WEST) {
+                    Image image =null;
+
                          image = new Image("GreenWest.png", 60, 60, false, false);
-                    } else if(space.getConveyor().getDirection() == Heading.EAST ) {
+                  if(space.getConveyor().getDirection() == Heading.EAST ) {
                         image = new Image("GreenEastt.png", 60, 60, false, false);
                     } else if ( space.getConveyor().getDirection() == Heading.SOUTH ) {
                         image = new Image("GreenSouth.png", 60, 60, false, false);
@@ -142,7 +142,7 @@ public class BoardView extends VBox implements ViewObserver {
                     //}
                 }
 
-                if (space.getCheckPoint()!=null && space.getCheckPoint().getOrderNo() ==0){
+        else    if (space.getCheckPoint()!=null && space.getCheckPoint().getOrderNo() ==0){
 
                     ImageView imageView = new ImageView();
                     Image image = new Image("cp1.png",60,60,false,false);
@@ -150,13 +150,13 @@ public class BoardView extends VBox implements ViewObserver {
                     imageView.setImage(image);
                     spaceView.getChildren().add(imageView);
                 }
-                if (space.getCheckPoint()!=null && space.getCheckPoint().getOrderNo() ==1){
+         else   if (space.getCheckPoint()!=null && space.getCheckPoint().getOrderNo() ==1){
                     ImageView imageView = new ImageView();
                     Image image = new Image("cp2.png",60,60,false,false);
                     imageView.setImage(image);
                     spaceView.getChildren().add(imageView);
                 }
-                if (space.getCheckPoint()!=null && space.getCheckPoint().getOrderNo() ==2){
+        else    if (space.getCheckPoint()!=null && space.getCheckPoint().getOrderNo() ==2){
 
                     ImageView imageView = new ImageView();
                     Image image = new Image("cp3.png",60,60,false,false);
@@ -177,7 +177,7 @@ public class BoardView extends VBox implements ViewObserver {
     @Override
     public void updateView(Subject subject) {
         if (subject == board) {
-            conveyorBelt conveyor;
+
             Phase phase = board.getPhase();
             statusLabel.setText(board.getStatusMessage());
             if(gameController.board.getCurrentPlayer().getMessage()) {
