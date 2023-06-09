@@ -75,9 +75,9 @@ public class AppController implements Observer {
         boardDialog.setTitle("Board number");
         boardDialog.setHeaderText("Select Board");
         Optional<String> result2 = boardDialog.showAndWait();
-        String selectedBoard = result2.get();
+        String selectedBoard = result2.orElse(null); // Use orElse to handle canceled dialog
 
-        if (result.isPresent() && result2.isPresent()) {
+        if (selectedBoard != null) { // Check if board selection is present
             if (gameController != null) {
                 // The UI should not allow this, but in case this happens anyway.
                 // give the user the option to save the game or abort this operation!
@@ -136,13 +136,27 @@ public class AppController implements Observer {
 
 
     public void loadGame() {
-        if (gameController == null) {
+        try {
             Board board = LoadBoard.loadBoard("Last Game");
-            gameController = new GameController(board);
+            if (board != null) {
+                gameController = new GameController(board);
+                roboRally.createBoardView(gameController);
+            } else {
+                Alert alert = new Alert(AlertType.WARNING);
+                alert.setTitle("No Saved Game Found");
+                alert.setHeaderText(null);
+                alert.setContentText("There is no saved game available. Better start playing!.");
 
-            roboRally.createBoardView(gameController);
+                alert.showAndWait();
+            }
+        } catch (Exception e) {
+            Alert alert = new Alert(AlertType.ERROR);
+            alert.setTitle("Error Loading Game");
+            alert.setHeaderText(null);
+            alert.setContentText("An error occurred while loading the game: " + e.getMessage());
 
-    }
+            alert.showAndWait();
+        }
     }
 
     /**
