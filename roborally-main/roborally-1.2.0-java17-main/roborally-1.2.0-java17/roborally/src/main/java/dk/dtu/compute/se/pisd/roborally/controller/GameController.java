@@ -22,6 +22,7 @@
 package dk.dtu.compute.se.pisd.roborally.controller;
 
 import dk.dtu.compute.se.pisd.roborally.model.*;
+import javafx.application.Platform;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
@@ -41,8 +42,8 @@ public class GameController {
      * Creates an empty gameboard which the game controller is associated with.
      */
     final public Board board;
-    final private List<String> OPTIONS_Interactive = Arrays.asList("Left","Right");
-    int turn=0;
+    final private List<String> OPTIONS_Interactive = Arrays.asList("Left", "Right");
+    int turn = 0;
 
 
     public GameController(@NotNull Board board) {
@@ -50,10 +51,9 @@ public class GameController {
     }
 
     /**
-
      * @param space the space to which the current player should move
      */
-    public void moveCurrentPlayerToSpace(@NotNull Space space)  {
+    public void moveCurrentPlayerToSpace(@NotNull Space space) {
         /**
          * Moves the current player to the specified space and sets the current player to the next player by +1 and currentplayer.
          *
@@ -63,11 +63,11 @@ public class GameController {
         if (space != null && space.board == board) {
             Player currentPlayer = board.getCurrentPlayer();
 
-            if (currentPlayer != null && space.getPlayer() == null ) {
+            if (currentPlayer != null && space.getPlayer() == null) {
                 currentPlayer.setSpace(space);
                 int playerNumber = turn;
                 board.setCurrentPlayer(board.getPlayer(playerNumber));
-                playerNumber=(playerNumber+1)% board.getPlayersNumber();
+                playerNumber = (playerNumber + 1) % board.getPlayersNumber();
             }
         }
     }
@@ -165,7 +165,7 @@ public class GameController {
                 CommandCard card = currentPlayer.getProgramField(step).getCard();
                 if (card != null) {
                     Command command = card.command;
-                    if(command.isInteractive()){
+                    if (command.isInteractive()) {
                         board.setPhase(Phase.PLAYER_INTERACTION);
                         return;
 
@@ -182,7 +182,8 @@ public class GameController {
                         board.setStep(step);
                         board.setCurrentPlayer(board.getPlayer(turn));
                     } else {
-                        turn=(turn+1) % board.getPlayersNumber();
+                        turn = (turn + 1) % board.getPlayersNumber();
+                        winGame();
                         startProgrammingPhase();
                     }
                 }
@@ -194,8 +195,8 @@ public class GameController {
             // this should not happen
             assert false;
         }
-       // turn=1;
-       // board.setCurrentPlayer(board.getPlayer(turn));
+        // turn=1;
+        // board.setCurrentPlayer(board.getPlayer(turn));
     }
 
     /**
@@ -236,12 +237,11 @@ public class GameController {
                         System.out.println(result);
 
                     */
-                  //  }
+                    //  }
                     break;
 
 
-
-                    // DO NOTHING (for now)
+                // DO NOTHING (for now)
             }
         }
     }
@@ -265,43 +265,41 @@ public class GameController {
         Space target = board.getNeighbour(space, heading);
 
 
-        if (player != null && player.board == board && space != null && playerSpace.wallFace(player.getHeading()) ) {
+        if (player != null && player.board == board && space != null && playerSpace.wallFace(player.getHeading())) {
 
-            if((space.x< target.x) && (player.getHeading()== WEST)) {
+            if ((space.x < target.x) && (player.getHeading() == WEST)) {
 
-                }
-            else if((space.x> target.x) && (player.getHeading()== EAST)) {
+            } else if ((space.x > target.x) && (player.getHeading() == EAST)) {
 
-            }
-            else if((space.y> target.y) && (player.getHeading()== SOUTH)) {
+            } else if ((space.y > target.y) && (player.getHeading() == SOUTH)) {
 
-            }
-            else if((space.y< target.y) && (player.getHeading()== NORTH)) {
+            } else if ((space.y < target.y) && (player.getHeading() == NORTH)) {
 
             }
             // dfsd
 
-                else if (target != null) {
+            else if (target != null) {
 
 
-                    if(robotCollide(target,heading)){
+                if (robotCollide(target, heading)) {
 
                     target.setPlayer(player);
                     player.setSpace(target);
                     GearRotation(player);
                     conveyerTransport(player);
                     CheckPointTokener(player);
-                }}
+                }
+            }
 
             /**
              * Detects the player's heading and check if meets a wall on the same space as the player with a macthing heading.
              * if it is the same it cannot move.(Continue if not).
              */
-        } else if (player != null && player.board == board && space != null ) {
+        } else if (player != null && player.board == board && space != null) {
             int check = 1;
             //int check =1;
             for (int i = 0; i < check; i++) {
-                if (!playerSpace.PlacedWall(player.getHeading()) || this.Checkheading(player) == Heading.NORTH ) {
+                if (!playerSpace.PlacedWall(player.getHeading()) || this.Checkheading(player) == Heading.NORTH) {
                     continue;
                 }
                 playerSpace = player.board.getNeighbour(playerSpace, player.getHeading());
@@ -311,8 +309,7 @@ public class GameController {
             }
 
 
-        }
-        else {
+        } else {
 
         }
     }
@@ -335,17 +332,16 @@ public class GameController {
 
         */
 
-        if(board.getCurrentPlayer().getHeading()==Heading.NORTH)
+        if (board.getCurrentPlayer().getHeading() == Heading.NORTH)
             player.setHeading(Heading.EAST);
 
-        else if(board.getCurrentPlayer().getHeading()==Heading.EAST)
+        else if (board.getCurrentPlayer().getHeading() == Heading.EAST)
             player.setHeading(Heading.SOUTH);
-        else if(board.getCurrentPlayer().getHeading()==Heading.SOUTH)
+        else if (board.getCurrentPlayer().getHeading() == Heading.SOUTH)
             player.setHeading(Heading.WEST);
-        else if(board.getCurrentPlayer().getHeading()==Heading.WEST)
+        else if (board.getCurrentPlayer().getHeading() == Heading.WEST)
             player.setHeading(Heading.NORTH);
     }
-
 
 
     /**
@@ -359,13 +355,13 @@ public class GameController {
 
         */
 
-        if(board.getCurrentPlayer().getHeading()==Heading.NORTH)
+        if (board.getCurrentPlayer().getHeading() == Heading.NORTH)
             player.setHeading(Heading.WEST);
-        else if(board.getCurrentPlayer().getHeading()==Heading.EAST)
+        else if (board.getCurrentPlayer().getHeading() == Heading.EAST)
             player.setHeading(Heading.NORTH);
-        else if(board.getCurrentPlayer().getHeading()==Heading.SOUTH)
+        else if (board.getCurrentPlayer().getHeading() == Heading.SOUTH)
             player.setHeading(Heading.EAST);
-        else if(board.getCurrentPlayer().getHeading()==Heading.WEST)
+        else if (board.getCurrentPlayer().getHeading() == Heading.WEST)
             player.setHeading(Heading.SOUTH);
     }
 
@@ -374,8 +370,10 @@ public class GameController {
         turnLeft(player);
         turnLeft(player);
     }
+
     /**
      * Moves a command card from a source field to a target field.
+     *
      * @param source the source field from which to move the command card
      * @param target the target field to which to move the command card
      * @return true if the move was successful, false otherwise
@@ -397,94 +395,103 @@ public class GameController {
         // XXX just for now to indicate that the actual method is not yet implemented
         assert false;
     }
+
     public Heading Checkheading(Player player) {
         Heading playerDirection = player.getHeading();
         Heading newDirect;
-        if(playerDirection == Heading.WEST) {
+        if (playerDirection == Heading.WEST) {
             newDirect = Heading.EAST;
         } else if (playerDirection == Heading.EAST) {
             newDirect = Heading.WEST;
         } else if (playerDirection == Heading.NORTH) {
             newDirect = Heading.SOUTH;
-        }
-        else newDirect = Heading.NORTH;
-    return newDirect;
+        } else newDirect = Heading.NORTH;
+        return newDirect;
 
     }
 
     /**
-     Executes a command option for a player and continues the game with the OptionInteractive card. It sets phase to Activation Phase.
-     @param player the player for whom to execute the command option
-
-     @param comman2 the command  the option to execute with userinput.
+     * Executes a command option for a player and continues the game with the OptionInteractive card. It sets phase to Activation Phase.
+     *
+     * @param player  the player for whom to execute the command option
+     * @param comman2 the command  the option to execute with userinput.
      */
-    public void executeCommandOptionAndContinue(Player player,Command comman2){
+    public void executeCommandOptionAndContinue(Player player, Command comman2) {
         board.setPhase(Phase.ACTIVATION);
-        this.executeCommand(player,comman2);
+        this.executeCommand(player, comman2);
 
 
+        int step = board.getStep();
+        step++;
+        if (step < Player.NO_REGISTERS) {
+            makeProgramFieldsVisible(step);
+            board.setStep(step);
+            board.setCurrentPlayer(board.getPlayer(turn));
+        } else {
+            startProgrammingPhase();
+        }
+        continuePrograms();
+    }
 
-            int step = board.getStep();
-                    step++;
-                    if (step < Player.NO_REGISTERS) {
-                        makeProgramFieldsVisible(step);
-                        board.setStep(step);
-                        board.setCurrentPlayer(board.getPlayer(turn));
-                    } else {
-                        startProgrammingPhase();
-                    }
-                    continuePrograms();
+
+    public void GearRotation(Player player) {
+        Space space3 = player.getSpace();
+        Gear gear = space3.getGear();
+        if (gear != null) {
+            turnRight(player);
+        }
+    }
+
+    public void conveyerTransport(Player player) {
+        Space space3 = player.getSpace();
+        conveyorBelt conveyor = space3.getConveyor();
+        if (conveyor != null) {
+            String colour = conveyor.getColour();
+            Heading heading2 = conveyor.getDirection();
+            player.setHeading(heading2);
+            if (colour.equals("blue")) {
+                this.fastForward(player);
+            } else {
+                this.moveForward(player);
             }
 
 
-            public void GearRotation(Player player){
-                Space space3 = player.getSpace();
-                Gear gear = space3.getGear();
-                if(gear!=null){
-                    turnRight(player);
-                    }
-                }
+        }
+    }
 
-            public void conveyerTransport(Player player){
-                Space space3 = player.getSpace();
-                conveyorBelt conveyor = space3.getConveyor();
-                if(conveyor!=null){
-                    String colour  = conveyor.getColour();
-                    Heading heading2= conveyor.getDirection();
-                    player.setHeading(heading2);
-                    if(colour.equals("blue")){
-                        this.fastForward(player);
-                    }
-                    else {
-                        this.moveForward(player);
-                    }
+    public boolean robotCollide(Space target, Heading heading) {
+        if (target.getPlayer() != null && !target.getPlayer().getHeading().next().next().equals(heading)) {
+            Player old = target.getPlayer();
+            moveForward(old);
 
+        } else if (target.getPlayer() != null && target.getPlayer().getHeading().next().next().equals(heading))
+            return false;
+        return true;
 
-                }
+    }
+
+    public void CheckPointTokener(Player player) {
+        Space space = player.getSpace();
+
+        CheckPoint checkPoint = space.getCheckPoint();
+        if (checkPoint != null && player.getTokens() == checkPoint.orderNo) {
+            player.setTokens(player.getTokens() + 1);
+        } else if (checkPoint != null) {
+            player.setMessage();
+        }
+    }
+
+    public void winGame() {
+        if (board.getGameId().equals(3)) {
+            if (board.getCurrentPlayer().getTokens() == 6) {
+                System.out.println(board.getCurrentPlayer().getName() + "Du har vundet");
+                Platform.exit();
             }
-            public boolean robotCollide(Space target,Heading heading){
-                if (target.getPlayer() != null && !target.getPlayer().getHeading().next().next().equals(heading)) {
-                    Player old = target.getPlayer();
-                    moveForward(old);
-
-                }
-
-          else if(target.getPlayer() != null && target.getPlayer().getHeading().next().next().equals(heading))
-              return false;
-                return true;
-
+        } else if (board.gameId != (3)) {
+            if (board.getCurrentPlayer().getTokens() == 3) {
+                System.out.println(board.getCurrentPlayer().getName() + "Du har vundet");
+                Platform.exit();
             }
-            public void CheckPointTokener(Player player) {
-                Space space = player.getSpace();
-
-                CheckPoint checkPoint = space.getCheckPoint();
-                if (checkPoint != null && player.getTokens() == checkPoint.orderNo) {
-                    player.setTokens(player.getTokens() + 1);
-                }else if (checkPoint != null){
-                    player.setMessage();
-                }
-            }
-
-
-
+        }
+    }
 }

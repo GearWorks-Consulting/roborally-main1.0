@@ -97,17 +97,20 @@ public class AppController implements Observer {
             switch (selectedBoard) {
                 case "Map 1 - Small":
                  board = LoadBoard.loadMap("Board 1");
+                    board.setGameId(1);
                     break;
 
                 case "Map 2 - Small":
                     // Logic for Map 2
                     board = LoadBoard.loadMap("Board 2");
+                    board.setGameId(2);
 
 
                     break;
                 case "Map 3 - Large":
                     // Logic for Map 3
                     board = LoadBoard.loadMap("Board 3");
+                    board.setGameId(3);
                     //board= new Board(12,10);
                     break;
             }
@@ -120,6 +123,7 @@ public class AppController implements Observer {
                 player.setSpace(board.getSpace(i, 0));
                 player.getSpace().setPlayer(player);
             }
+
             gameController.startProgrammingPhase();
             roboRally.createBoardView(gameController);
         }
@@ -181,15 +185,13 @@ public class AppController implements Observer {
             Platform.exit();
         }
     }
-
     public boolean isGameRunning() {
         return gameController != null;
     }
-
-
     @Override
     public void update(Subject subject) {
         // XXX do nothing for now
-    }
 
+
+    }
 }
