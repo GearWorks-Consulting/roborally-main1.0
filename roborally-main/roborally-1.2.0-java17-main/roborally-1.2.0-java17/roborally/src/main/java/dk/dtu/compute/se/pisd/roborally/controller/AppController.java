@@ -136,13 +136,27 @@ public class AppController implements Observer {
 
 
     public void loadGame() {
-        if (gameController == null) {
+        try {
             Board board = LoadBoard.loadBoard("Last Game");
-            gameController = new GameController(board);
+            if (board != null) {
+                gameController = new GameController(board);
+                roboRally.createBoardView(gameController);
+            } else {
+                Alert alert = new Alert(AlertType.WARNING);
+                alert.setTitle("No Saved Game Found");
+                alert.setHeaderText(null);
+                alert.setContentText("There is no saved game available. Better start playing!.");
 
-            roboRally.createBoardView(gameController);
+                alert.showAndWait();
+            }
+        } catch (Exception e) {
+            Alert alert = new Alert(AlertType.ERROR);
+            alert.setTitle("Error Loading Game");
+            alert.setHeaderText(null);
+            alert.setContentText("An error occurred while loading the game: " + e.getMessage());
 
-    }
+            alert.showAndWait();
+        }
     }
 
     /**
