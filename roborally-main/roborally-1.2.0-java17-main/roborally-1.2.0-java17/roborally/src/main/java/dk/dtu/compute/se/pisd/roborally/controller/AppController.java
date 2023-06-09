@@ -75,9 +75,9 @@ public class AppController implements Observer {
         boardDialog.setTitle("Board number");
         boardDialog.setHeaderText("Select Board");
         Optional<String> result2 = boardDialog.showAndWait();
-        String selectedBoard = result2.get();
+        String selectedBoard = result2.orElse(null); // Use orElse to handle canceled dialog
 
-        if (result.isPresent() && result2.isPresent()) {
+        if (selectedBoard != null) { // Check if board selection is present
             if (gameController != null) {
                 // The UI should not allow this, but in case this happens anyway.
                 // give the user the option to save the game or abort this operation!
