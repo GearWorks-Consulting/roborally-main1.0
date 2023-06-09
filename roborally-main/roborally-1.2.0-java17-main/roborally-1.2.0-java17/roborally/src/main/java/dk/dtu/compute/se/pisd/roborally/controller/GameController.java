@@ -183,7 +183,7 @@ public class GameController {
                         board.setCurrentPlayer(board.getPlayer(turn));
                     } else {
                         turn = (turn + 1) % board.getPlayersNumber();
-                        winGame();
+                        winGame(currentPlayer);
                         startProgrammingPhase();
                     }
                 }
@@ -348,13 +348,6 @@ public class GameController {
      * Moves the player's heading direction 90 degress, or left and checks for the current phasing direction.
      */
     public void turnLeft(@NotNull Player player) {
-       /* if (player != null && player.board == board) {
-
-            player.setHeading(player.getHeading().prev());
-        }
-
-        */
-
         if (board.getCurrentPlayer().getHeading() == Heading.NORTH)
             player.setHeading(Heading.WEST);
         else if (board.getCurrentPlayer().getHeading() == Heading.EAST)
@@ -432,8 +425,6 @@ public class GameController {
         }
         continuePrograms();
     }
-
-
     public void GearRotation(Player player) {
         Space space3 = player.getSpace();
         Gear gear = space3.getGear();
@@ -454,8 +445,6 @@ public class GameController {
             } else {
                 this.moveForward(player);
             }
-
-
         }
     }
 
@@ -481,15 +470,17 @@ public class GameController {
         }
     }
 
-    public void winGame() {
+    public void winGame(Player player) {
         if (board.getGameId().equals(3)) {
             if (board.getCurrentPlayer().getTokens() == 6) {
                 System.out.println(board.getCurrentPlayer().getName() + "Du har vundet");
+                player.getWinMessage();
                 Platform.exit();
             }
         } else if (board.gameId != (3)) {
             if (board.getCurrentPlayer().getTokens() == 3) {
                 System.out.println(board.getCurrentPlayer().getName() + "Du har vundet");
+                player.getWinMessage();
                 Platform.exit();
             }
         }

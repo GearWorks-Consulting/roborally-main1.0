@@ -80,20 +80,13 @@ public class AppController implements Observer {
         if (selectedBoard != null) { // Check if board selection is present
             if (gameController != null) {
                 // The UI should not allow this, but in case this happens anyway.
-                // give the user the option to save the game or abort this operation!
+                // give the user the option to save the game or abort this operation! // added more maps and action for new game.
                 if (!stopGame()) {
                     return;
                 }
             }
-
             // XXX the board should eventually be created programmatically or loaded from a file
             //     here we just create an empty board with the required number of players.
-
-
-
-
-
-
             switch (selectedBoard) {
                 case "Map 1 - Small":
                  board = LoadBoard.loadMap("Board 1");
@@ -205,7 +198,5 @@ public class AppController implements Observer {
     @Override
     public void update(Subject subject) {
         // XXX do nothing for now
-
-
     }
 }

@@ -183,6 +183,10 @@ public class BoardView extends VBox implements ViewObserver {
             if(gameController.board.getCurrentPlayer().getMessage()) {
                 Platform.runLater(() -> {
                     text.setText("You need a previous Checkpoint's flag first!");
+                    if(gameController.board.getCurrentPlayer().getWinMessage()) {
+                        String vinder = String.valueOf(gameController.board.getPlayersNumber());
+                    text.setText(vinder + "Has won, holy smokes!");
+                    }
                     text.setStyle("-fx-font-size: 25; -fx-font-weight: bold;");
                     text.setFill(Color.ORANGE);
                     overlayPane.getChildren().add(text); // Add the 'text' to the 'overlayPane'

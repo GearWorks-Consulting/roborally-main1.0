@@ -40,6 +40,7 @@ public class Player extends Subject {
     final public Board board;
 
     boolean getPlayerMessage = false;
+    boolean getPlayerWinMessage = false;
 
     private String name;
     private String color;
@@ -139,6 +140,14 @@ public class Player extends Subject {
     public void setMessage(){
 
     getPlayerMessage=true;
+    }
+    public void setWinMessage(){
+    getPlayerWinMessage = true;
+    }
+
+    public boolean getWinMessage(){
+        return getPlayerWinMessage;
+
     }
 
     public boolean getMessage(){
