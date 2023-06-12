@@ -6,7 +6,12 @@ import java.awt.*;
 import java.util.Vector;
 
 //this class defines the gear action field, gear rotation, which turns the gear action, to the right.
-
+/**
+ * ...
+ *
+ * @author Moiz H. Khalil, s215617@dtu.dk
+ *
+ */
 public class Gear {
     private Heading direction;
     public Gear(Heading heading ){
