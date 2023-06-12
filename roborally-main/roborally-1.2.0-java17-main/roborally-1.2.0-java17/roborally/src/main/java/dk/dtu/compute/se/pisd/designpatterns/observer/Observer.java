@@ -28,7 +28,8 @@ package dk.dtu.compute.se.pisd.designpatterns.observer;
  * @author Ekkart Kindler, ekki@dtu.dk
  *
  */
-public interface Observer {
+public interface
+Observer {
 	
 	/**
 	 * The observer's update method, which is called, when the subject
