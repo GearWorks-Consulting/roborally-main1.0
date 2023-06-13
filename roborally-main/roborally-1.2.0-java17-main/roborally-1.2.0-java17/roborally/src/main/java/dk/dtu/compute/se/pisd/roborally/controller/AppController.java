@@ -305,6 +305,22 @@ public class AppController implements Observer {
         }
     }
 
+    public void showRules() {
+        Alert alert = new Alert(AlertType.INFORMATION);
+        alert.setTitle("RoboRally Rules");
+        alert.setHeaderText("Rules of the Game");
+
+        String rulesText = "Here are the rules of the RoboRally game:\n"
+                + "- Rule 1\n"
+                + "- Rule 2\n"
+                + "- Rule 3\n"
+                + "- ...\n";
+
+        alert.setContentText(rulesText);
+        alert.showAndWait();
+    }
+
+
     /**
      * Stop playing the current game, giving the user the option to save
      * the game or to cancel stopping the game. The method returns true
