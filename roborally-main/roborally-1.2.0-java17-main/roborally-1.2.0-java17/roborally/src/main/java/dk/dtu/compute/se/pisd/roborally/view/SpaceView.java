@@ -52,8 +52,8 @@ public class SpaceView extends StackPane implements ViewObserver {
     final public static int SPACE_HEIGHT = 60; // 75;
     final public static int SPACE_WIDTH = 60; // 75;
 
-   final public static Color wallColor = Color.BLUEVIOLET;
-    final public static double wallThickness = 2;
+   final public static Color wallColor = Color.BLACK;
+    final public static double wallThickness = 3;
     ImageView imageView = new ImageView();
     Image image = new Image("Green.png",60,60,false,false);
 
@@ -75,14 +75,19 @@ public class SpaceView extends StackPane implements ViewObserver {
         this.setMaxHeight(SPACE_HEIGHT);
 
 
-
-
         if ((space.x + space.y) % 2 == 0) {
-            this.setStyle("-fx-background-color: white;");
+                ImageView imageView = new ImageView();
+                Image image = new Image("BackgroundPanel.png",60,60,false,false);
+                imageView.setImage(image);
+                this.getChildren().add(imageView);
+            //this.setStyle("-fx-background-color: white;");
         }
-
         else {
-            this.setStyle("-fx-background-color: black;");
+            ImageView imageView = new ImageView();
+            Image image = new Image("BackgroundPanel.png",60,60,false,false);
+            imageView.setImage(image);
+            this.getChildren().add(imageView);
+            //this.setStyle("-fx-background-color: black;");
         }
 
 
@@ -111,6 +116,33 @@ public class SpaceView extends StackPane implements ViewObserver {
 
     private void updatePlayer() {
         this.getChildren().clear();
+
+// Check if the sum of 'space.x' and 'space.y' is an even number
+        if ((space.x + space.y) % 2 == 0) {
+            // Create an ImageView object to display an image
+            ImageView imageView = new ImageView();
+            // Load the image file "BackgroundPanel.png" with dimensions 60x60
+            Image image = new Image("BackgroundPanel.png", 60, 60, false, false);
+            // Set the loaded image as the content of the ImageView
+            imageView.setImage(image);
+            // Add the ImageView to the list of child nodes of the current container
+            this.getChildren().add(imageView);
+            // Uncomment the next line to set a white background color for the container
+            //this.setStyle("-fx-background-color: white;");
+        }
+        else {
+            // Create an ImageView object to display an image
+            ImageView imageView = new ImageView();
+            // Load the image file "BackgroundPanel.png" with dimensions 60x60
+            Image image = new Image("BackgroundPanel.png", 60, 60, false, false);
+            // Set the loaded image as the content of the ImageView
+            imageView.setImage(image);
+            // Add the ImageView to the list of child nodes of the current container
+            this.getChildren().add(imageView);
+            // Uncomment the next line to set a black background color for the container
+            //this.setStyle("-fx-background-color: black;");
+        }
+
         if(space.getCheckPoint()!=null &&space.getCheckPoint().getOrderNo()==0){
             ImageView imageView = new ImageView();
             Image image = new Image("cp1.png",60,60,false,false);
