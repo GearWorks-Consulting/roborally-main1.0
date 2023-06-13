@@ -25,6 +25,7 @@ package dk.dtu.compute.se.pisd.roborally.controller;
 import dk.dtu.compute.se.pisd.designpatterns.observer.Observer;
 import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
 
+import dk.dtu.compute.se.pisd.roborally.JSON.BoardTemplate;
 import dk.dtu.compute.se.pisd.roborally.RoboRally;
 
 import dk.dtu.compute.se.pisd.roborally.model.Board;
@@ -130,14 +131,15 @@ public class AppController implements Observer {
     }
 
     public void saveGame() {
-    LoadBoard.saveBoard(gameController.board,"Last Game");
+   // LoadBoard.saveBoard(gameController.board,"Last Game",0);
     }
 
 
 
     public void loadGame() {
         try {
-            Board board = LoadBoard.loadBoard("Last Game");
+            BoardTemplate template= LoadBoard.boardFromFile("last Game");
+            //Board board = LoadBoard.templateToNormalBoard(template);
             if (board != null) {
                 gameController = new GameController(board);
                 roboRally.createBoardView(gameController);

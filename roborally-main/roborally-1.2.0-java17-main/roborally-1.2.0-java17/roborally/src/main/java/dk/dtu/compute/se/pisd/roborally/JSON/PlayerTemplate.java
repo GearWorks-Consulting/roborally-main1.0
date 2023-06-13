@@ -6,15 +6,10 @@ import static dk.dtu.compute.se.pisd.roborally.model.Heading.SOUTH;
 
 public class PlayerTemplate {
     public Heading heading = SOUTH;
-    public int NO_REGISTERS ;
-    public static int NO_CARDS ;
     public String name;
     public String color;
-
-
     public int tokens;
-     public Board board;
-
+    public Board board;
     public SpaceTemplate space;
     final public static int NO_REGISTERS2 = 5;
     final public static int NO_CARDS2 = 8;

@@ -26,10 +26,12 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
+import dk.dtu.compute.se.pisd.roborally.client.ProductClient;
 import dk.dtu.compute.se.pisd.roborally.model.*;
 
 
 import java.io.*;
+import java.time.temporal.Temporal;
 
 /**
  * ...
@@ -45,7 +47,7 @@ public class LoadBoard {
     private static final String DEFAULTBOARD = "defaultboard";
     private static final String JSON_EXT = "json";
 
-    public static Board loadBoard(String boardname) {
+    public static BoardTemplate boardFromFile(String boardname) {
         if (boardname == null) {
             boardname = DEFAULTBOARD;
         }
@@ -60,87 +62,164 @@ public class LoadBoard {
                     registerTypeAdapter(FieldAction.class, new Adapter<FieldAction>());
             Gson gson = simpleBuilder.create();
 
-            Board result;
+
             // FileReader fileReader = null;
             reader = new JsonReader(fileReader);
 
             // fileReader = new FileReader(filename);
-            BoardTemplate template = gson.fromJson(reader, BoardTemplate.class);
+            BoardTemplate template;
 
 
-            result = new Board(template.width, template.height);
-            for (int i = 0; i < template.width; i++) {
-                for (int j = 0; j < template.height; j++) {
-                    Space space = result.getSpace(i, j);
-                    SpaceTemplate temSpace = template.spaces[i][j];
-                    if (temSpace.Conveyor != null) {
-                        space.setConveyor(temSpace.Conveyor);
-                    }
-                    if (temSpace.checkPoint != null) {
-                        space.setCheckPoint(temSpace.checkPoint);
-                    }
-                    if (temSpace.wallHeading != null) {
-                        space.addWall(temSpace.wallHeading);
-                        space.setWall();
-                        space.setWallFacing(temSpace.wallHeading);
-                    }
-                    if (temSpace.gearRotation != null) {
-                        space.setGear(temSpace.gearRotation);
-                    }
-
-
-                }
-            }
-
-
-if(template.gameId!=null)
-            result.setGameId(template.gameId);
-            for(int i=0;i<template.getPlayersNumber();i++) {
-                Player playerAmount = new Player(result,template.getPlayer(i).color,template.getPlayer(i).name);
-
-                playerAmount.setTokens(template.getPlayer(i).tokens);
-                playerAmount.setSpace(result.getSpace(template.getPlayer(i).space.x,template.getPlayer(i).space.y));
-                playerAmount.setHeading(template.getPlayer(i).heading);
-                playerAmount.getSpace().setPlayer(playerAmount);
-                result.addPlayer(playerAmount);
-                for (int k=0;k<template.getPlayer(i).cards.length;k++){
-                    playerAmount.getCardField(k).setCard(template.getPlayer(i).cards[k].card);
-                    playerAmount.getCardField(k).setVisible(template.getPlayer(i).cards[k].visible);
-
-                }
-                for (int k=0;k<template.getPlayer(i).program.length;k++){
-                    playerAmount.getProgramField(k).setCard(template.getPlayer(i).program[k].card);
-                    playerAmount.getProgramField(k).setVisible(template.getPlayer(i).program[k].visible);
-                }
-
-                if(template.current.name.equals(playerAmount.getName())){
-                    result.setCurrentPlayer(playerAmount);
-                }
-
-
-            }
-
-            if(template.gameId != null)
-                result.setGameId(template.gameId);
-
-            result.setPhase(template.phase);
-            result.setStep(template.step);
-            result.setStepMode(template.stepMode);
-
-
+                template = gson.fromJson(reader, BoardTemplate.class);
 
 
 
 
 
             reader.close();
-            return result;
+            return template;
         } catch (IOException e1) {
+
+
 
         }
         return null;
 
     }
+    public static BoardTemplate boardFromServer(String boardname) {
+        return ProductClient.loadBoard(boardname);
+    }
+
+    public static void upDateBoard(BoardTemplate template, Board result){
+
+
+        for (int i = 0; i < template.width; i++) {
+            for (int j = 0; j < template.height; j++) {
+                Space space = result.getSpace(i, j);
+                SpaceTemplate temSpace = template.spaces[i][j];
+                if (temSpace.Conveyor != null) {
+                    space.setConveyor(temSpace.Conveyor);
+                }
+                if (temSpace.checkPoint != null) {
+                    space.setCheckPoint(temSpace.checkPoint);
+                }
+                if (temSpace.wallHeading != null) {
+                    space.addWall(temSpace.wallHeading);
+                    space.setWall();
+                    space.setWallFacing(temSpace.wallHeading);
+                }
+                if (temSpace.gearRotation != null) {
+                    space.setGear(temSpace.gearRotation);
+                }
+
+
+            }
+        }
+
+
+        if(template.gameId!=null)
+            result.setGameId(template.gameId);
+        for(int i=0;i<template.getPlayersNumber();i++) {
+            Player playerAmount = result.getPlayer(i);
+
+            playerAmount.setTokens(template.getPlayer(i).tokens);
+            playerAmount.setSpace(result.getSpace(template.getPlayer(i).space.x,template.getPlayer(i).space.y));
+            playerAmount.setHeading(template.getPlayer(i).heading);
+            playerAmount.getSpace().setPlayer(playerAmount);
+            result.addPlayer(playerAmount);
+            for (int k=0;k<template.getPlayer(i).cards.length;k++){
+                playerAmount.getCardField(k).setCard(template.getPlayer(i).cards[k].card);
+                playerAmount.getCardField(k).setVisible(template.getPlayer(i).cards[k].visible);
+
+            }
+            for (int k=0;k<template.getPlayer(i).program.length;k++){
+                playerAmount.getProgramField(k).setCard(template.getPlayer(i).program[k].card);
+                playerAmount.getProgramField(k).setVisible(template.getPlayer(i).program[k].visible);
+            }
+
+            if(template.current.name.equals(playerAmount.getName())){
+                result.setCurrentPlayer(playerAmount);
+            }
+
+
+        }
+
+        if(template.gameId != null)
+            result.setGameId(template.gameId);
+
+        result.setPhase(template.phase);
+        result.setStep(template.step);
+        result.setStepMode(template.stepMode);
+
+
+
+
+
+    }
+
+    public static Board templatetoBoard(BoardTemplate template){
+
+Board result = new Board(template.width,template.height);
+        for (int i = 0; i < template.width; i++) {
+            for (int j = 0; j < template.height; j++) {
+                Space space = result.getSpace(i, j);
+                SpaceTemplate temSpace = template.spaces[i][j];
+                if (temSpace.Conveyor != null) {
+                    space.setConveyor(temSpace.Conveyor);
+                }
+                if (temSpace.checkPoint != null) {
+                    space.setCheckPoint(temSpace.checkPoint);
+                }
+                if (temSpace.wallHeading != null) {
+                    space.addWall(temSpace.wallHeading);
+                    space.setWall();
+                    space.setWallFacing(temSpace.wallHeading);
+                }
+                if (temSpace.gearRotation != null) {
+                    space.setGear(temSpace.gearRotation);
+                }
+
+
+            }
+
+        }
+
+
+        if(template.gameId!=null)
+            result.setGameId(template.gameId);
+        for(int i=0;i<template.getPlayersNumber();i++) {
+            Player playerAmount = result.getPlayer(i);
+
+            playerAmount.setTokens(template.getPlayer(i).tokens);
+            playerAmount.setSpace(result.getSpace(template.getPlayer(i).space.x,template.getPlayer(i).space.y));
+            playerAmount.setHeading(template.getPlayer(i).heading);
+            playerAmount.getSpace().setPlayer(playerAmount);
+            result.addPlayer(playerAmount);
+            for (int k=0;k<template.getPlayer(i).cards.length;k++){
+                playerAmount.getCardField(k).setCard(template.getPlayer(i).cards[k].card);
+                playerAmount.getCardField(k).setVisible(template.getPlayer(i).cards[k].visible);
+
+            }
+            for (int k=0;k<template.getPlayer(i).program.length;k++){
+                playerAmount.getProgramField(k).setCard(template.getPlayer(i).program[k].card);
+                playerAmount.getProgramField(k).setVisible(template.getPlayer(i).program[k].visible);
+            }
+
+            if(template.current.name.equals(playerAmount.getName())){
+                result.setCurrentPlayer(playerAmount);
+            }
+        }
+
+        if(template.gameId != null)
+            result.setGameId(template.gameId);
+
+        result.setPhase(template.phase);
+        result.setStep(template.step);
+        result.setStepMode(template.stepMode);
+
+return result;
+    }
+
     public static Board loadMap(String boardname) {
         if (boardname == null) {
             boardname = DEFAULTBOARD;
@@ -194,102 +273,107 @@ if(template.gameId!=null)
         return null;
 
     }
-
-
-    public static void saveBoard(Board board, String name) {
+    public static BoardTemplate NormalBoardToTemplate( Board board){
         BoardTemplate template = new BoardTemplate(board.width, board.height);
-        for (int i=0; i<board.width; i++) {
-            for (int j=0; j<board.height; j++) {
-                Space space = board.getSpace(i,j);
+        for (int i = 0; i < board.width; i++) {
+            for (int j = 0; j < board.height; j++) {
+                Space space = board.getSpace(i, j);
                 SpaceTemplate tempSpace = template.spaces[i][j];
-                if (space.getConveyor()!=null) {
-                    tempSpace.Conveyor=space.getConveyor();
+                if (space.getConveyor() != null) {
+                    tempSpace.Conveyor = space.getConveyor();
                 }
-                if (space.getCheckPoint()!=null) {
-                    tempSpace.checkPoint=space.getCheckPoint();
+                if (space.getCheckPoint() != null) {
+                    tempSpace.checkPoint = space.getCheckPoint();
                 }
-                if(space.getWall()) {
-                    tempSpace.wallHeading =space.getWallFacing();
+                if (space.getWall()) {
+                    tempSpace.wallHeading = space.getWallFacing();
                 }
-                if(space.getGear()!=null){
-                    tempSpace.gearRotation=space.getGear();
+                if (space.getGear() != null) {
+                    tempSpace.gearRotation = space.getGear();
                 }
             }
         }
-        for(int i=0;i<board.getPlayersNumber();i++) {
+        for (int i = 0; i < board.getPlayersNumber(); i++) {
             PlayerTemplate playerAmount = new PlayerTemplate();
-            playerAmount.name=board.getPlayer(i).getName();
-            playerAmount.color=board.getPlayer(i).getColor();
-            playerAmount.tokens=board.getPlayer(i).getTokens();
-            playerAmount.heading=board.getPlayer(i).getHeading();
+            playerAmount.name = board.getPlayer(i).getName();
+            playerAmount.color = board.getPlayer(i).getColor();
+            playerAmount.tokens = board.getPlayer(i).getTokens();
+            playerAmount.heading = board.getPlayer(i).getHeading();
             template.players.add(playerAmount);
-            playerAmount.space=template.spaces[board.getPlayer(i).getSpace().x][board.getPlayer(i).getSpace().y];
+            playerAmount.space = template.spaces[board.getPlayer(i).getSpace().x][board.getPlayer(i).getSpace().y];
 
-         for (int k=0;k<board.getPlayer(i).getCards().length;k++){
-             playerAmount.cards[k].card= board.getPlayer(i).getCardField(k).getCard();
-             playerAmount.cards[k].visible=board.getPlayer(i).getCardField(k).isVisible();
-         }
-            for (int k=0;k<board.getPlayer(i).getProgram().length;k++){
-                playerAmount.program[k].card=board.getPlayer(i).getProgramField(k).getCard();
-                playerAmount.program[k].visible=board.getPlayer(i).getProgramField(k).isVisible();
+            for (int k = 0; k < board.getPlayer(i).getCards().length; k++) {
+                playerAmount.cards[k].card = board.getPlayer(i).getCardField(k).getCard();
+                playerAmount.cards[k].visible = board.getPlayer(i).getCardField(k).isVisible();
+            }
+            for (int k = 0; k < board.getPlayer(i).getProgram().length; k++) {
+                playerAmount.program[k].card = board.getPlayer(i).getProgramField(k).getCard();
+                playerAmount.program[k].visible = board.getPlayer(i).getProgramField(k).isVisible();
             }
 
-            if(board.getCurrentPlayer().getName().equals(board.getPlayer(i).getName())){
-                template.current =playerAmount;
+            if (board.getCurrentPlayer().getName().equals(board.getPlayer(i).getName())) {
+                template.current = playerAmount;
             }
 
         }
 
 
-if(board.getGameId()!=null)
-    template.gameId=board.getGameId();
+        if (board.getGameId() != null)
+            template.gameId = board.getGameId();
 
 
-        template.phase=board.getPhase();
-        template.step=board.getStep();
-        template.stepMode=board.stepMode;
+        template.phase = board.getPhase();
+        template.step = board.getStep();
+        template.stepMode = board.stepMode;
+        return template;
 
-
-
-
-
-
-
-
-
-        ClassLoader classLoader = LoadBoard.class.getClassLoader();
-        // TODO: this is not very defensive, and will result in a NullPointerException
-        //       when the folder "resources" does not exist! But, it does not need
-        //       the file "simpleCards.json" to exist!
-        String filename =
-               name + "." + JSON_EXT;
-        GsonBuilder simpleBuilder = new GsonBuilder().
-        registerTypeAdapter(FieldAction.class, new Adapter<FieldAction>()).
-                setPrettyPrinting();
-
-        Gson gson = simpleBuilder.create();
-
-        FileWriter fileWriter = null;
-        JsonWriter writer = null;
-        try {
-            fileWriter = new FileWriter(filename);
-            writer = gson.newJsonWriter(fileWriter);
-            gson.toJson(template, template.getClass(), writer);
-            writer.close();
-        } catch (IOException e1) {
-            if (writer != null) {
-                try {
-                    writer.close();
-                    fileWriter = null;
-                } catch (IOException e2) {}
-            }
-            if (fileWriter != null) {
-                try {
-                    fileWriter.close();
-                } catch (IOException e2) {}
-            }
-        }
     }
 
+    public static void saveGameToFile(BoardTemplate template, String name) {
+
+
+
+
+
+            ClassLoader classLoader = LoadBoard.class.getClassLoader();
+            // TODO: this is not very defensive, and will result in a NullPointerException
+            //       when the folder "resources" does not exist! But, it does not need
+            //       the file "simpleCards.json" to exist!
+            String filename =
+                    name + "." + JSON_EXT;
+            GsonBuilder simpleBuilder = new GsonBuilder().
+                    registerTypeAdapter(FieldAction.class, new Adapter<FieldAction>()).
+                    setPrettyPrinting();
+
+            Gson gson = simpleBuilder.create();
+
+            FileWriter fileWriter = null;
+            JsonWriter writer = null;
+            try {
+                fileWriter = new FileWriter(filename);
+                writer = gson.newJsonWriter(fileWriter);
+                gson.toJson(template, template.getClass(), writer);
+                writer.close();
+            } catch (IOException e1) {
+                if (writer != null) {
+                    try {
+                        writer.close();
+                        fileWriter = null;
+                    } catch (IOException e2) {
+                    }
+                }
+                if (fileWriter != null) {
+                    try {
+                        fileWriter.close();
+                    } catch (IOException e2) {
+                    }
+                }
+            }
+
+
+}
+    public static void boardToServer(BoardTemplate template,String fileName) {
+         ProductClient.saveBoard(template,fileName);
+    }
 }
 

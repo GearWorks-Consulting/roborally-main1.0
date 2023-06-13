@@ -22,6 +22,7 @@
 package dk.dtu.compute.se.pisd.roborally.model;
 
 import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
+import dk.dtu.compute.se.pisd.roborally.JSON.BoardTemplate;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -492,6 +493,7 @@ public class Board extends Subject {
     public Integer getGameId() {
         return gameId;
     }
+
 
     public void setGameId(int gameId) {
         if (this.gameId == null) {

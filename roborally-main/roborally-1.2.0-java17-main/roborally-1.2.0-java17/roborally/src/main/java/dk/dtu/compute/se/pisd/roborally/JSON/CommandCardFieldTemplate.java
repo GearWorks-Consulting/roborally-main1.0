@@ -5,14 +5,7 @@ import dk.dtu.compute.se.pisd.roborally.model.Player;
 
 public class CommandCardFieldTemplate {
     public CommandCardFieldTemplate(){
-
     }
-
-
     public CommandCard card;
-
-
-
-
     public boolean visible;
 }

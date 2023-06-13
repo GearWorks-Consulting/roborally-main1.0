@@ -1,8 +1,6 @@
 package dk.dtu.compute.se.pisd.roborally.client;
 
 import dk.dtu.compute.se.pisd.roborally.JSON.BoardTemplate;
-import dk.dtu.compute.se.pisd.roborally.JSON.LoadBoard;
-import dk.dtu.compute.se.pisd.roborally.client.ProductClient;
 
 import java.util.*;
 
@@ -24,17 +22,19 @@ public class Main {
                 valg = scan.nextInt();
                 switch (valg) {
                     case 1: {
-                       ProductClient.saveBoard(new BoardTemplate(4,4),"Test2");
 
-                        //System.out.println(result);
+                       ProductClient.saveBoard(new BoardTemplate(4,5),"Test2");
+
+
                     }
                     break;
                     case 2: {
-                        // String result = ProductClient.getProduct();
-                        // System.out.println(result);
-                        //exercise12.Product p = ps.getProductById(100);
-                        //ystem.out.println(p);
-                        ProductClient.loadBoard("Board 1");
+
+                        BoardTemplate board = ProductClient.loadBoard("Test2");
+                        System.out.println(board.phase);
+                        System.out.println(board.spaces[0][1].x);
+
+
 
                     }
                     break;

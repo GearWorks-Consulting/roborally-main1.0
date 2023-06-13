@@ -74,7 +74,7 @@ public class ProductClient implements IBoardTemplate {
             String productJSON = new Gson().toJson(p);
             HttpRequest request = HttpRequest.newBuilder()
                     .POST(HttpRequest.BodyPublishers.ofString(productJSON))
-                    .uri(URI.create("http://localhost:8081/products/"))
+                    .uri(URI.create("http://localhost:8080/products/"))
                     .setHeader("User-Agent", "Product Client")
                     .header("Content-Type", "application/json")
                     .build();
@@ -94,7 +94,7 @@ public class ProductClient implements IBoardTemplate {
 
     public static boolean saveBoard(BoardTemplate boardTemplate, String name) {
         try{
-            String url = "http://10.209.211.14:8081/saveGame/"+name;
+            String url = "http://localhost:8080/saveGame/"+name;
             String productJSON = new Gson().toJson(boardTemplate);
             HttpRequest request = HttpRequest.newBuilder()
                     .POST(HttpRequest.BodyPublishers.ofString(productJSON))
@@ -116,7 +116,7 @@ public class ProductClient implements IBoardTemplate {
         try{
             HttpRequest request = HttpRequest.newBuilder()
                     .GET()
-                    .uri(URI.create("http://localhost:8081/loadGame/" + name))
+                    .uri(URI.create("http://localhost:8080/loadGame/" + name))
                     .setHeader("User-Agent", "Product Client")
                     .header("Content-Type", "application/json")
                     .build();
@@ -135,7 +135,7 @@ public class ProductClient implements IBoardTemplate {
         try{
             HttpRequest request = HttpRequest.newBuilder()
                     .GET()
-                    .uri(URI.create("http://10.209.211.14:8081/printTest/" ))
+                    .uri(URI.create("http://localhost:8080/printTest/" ))
                     .setHeader("User-Agent", "Product Client")
                     .header("Content-Type", "application/json")
                     .build();

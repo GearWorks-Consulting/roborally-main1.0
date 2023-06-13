@@ -21,6 +21,9 @@
  */
 package dk.dtu.compute.se.pisd.roborally.controller;
 
+import dk.dtu.compute.se.pisd.roborally.JSON.BoardTemplate;
+import dk.dtu.compute.se.pisd.roborally.JSON.LoadBoard;
+import dk.dtu.compute.se.pisd.roborally.client.ProductClient;
 import dk.dtu.compute.se.pisd.roborally.model.*;
 import javafx.application.Platform;
 import org.jetbrains.annotations.NotNull;
@@ -41,7 +44,7 @@ public class GameController {
     /**
      * Creates an empty gameboard which the game controller is associated with.
      */
-    final public Board board;
+     public Board board;
     final private List<String> OPTIONS_Interactive = Arrays.asList("Left", "Right");
     int turn = 0;
 
@@ -185,6 +188,12 @@ public class GameController {
                         turn = (turn + 1) % board.getPlayersNumber();
                         winGame();
                         startProgrammingPhase();
+                        BoardTemplate saveTemp = LoadBoard.NormalBoardToTemplate(board);
+                        LoadBoard.boardToServer(saveTemp,"test5");
+                        BoardTemplate template=LoadBoard.boardFromServer("test5");
+                        LoadBoard.upDateBoard(template,board);
+
+
                     }
                 }
             } else {
