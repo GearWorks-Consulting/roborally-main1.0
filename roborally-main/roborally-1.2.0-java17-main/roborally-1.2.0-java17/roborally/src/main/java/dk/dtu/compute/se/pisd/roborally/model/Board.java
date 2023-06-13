@@ -22,7 +22,6 @@
 package dk.dtu.compute.se.pisd.roborally.model;
 
 import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
-import dk.dtu.compute.se.pisd.roborally.JSON.BoardTemplate;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -33,9 +32,9 @@ import static dk.dtu.compute.se.pisd.roborally.model.Phase.INITIALISATION;
 /**
  * ...
  *
- * @author Mathias & Abdi
- * @version 2.0
- * @since 2023-13-06
+ * @author Ekkart Kindler, ekki@dtu.dk med et twist fra Mathias og Abdi fra gruppe 21
+ * @version 1.0 prototype
+ * @since 2023-04-16
  */
 public class Board extends Subject {
 
@@ -68,12 +67,15 @@ public class Board extends Subject {
             for(int y = 0; y < height; y++) {
                 Space space;
                 space = new Space(this, x, y);
+
                 spaces[x][y] = space;
 
             }
         }
         this.stepMode = false;
     }
+
+
 
     public Board(int width, int height) {
         this(width, height, "defaultboard");
@@ -82,7 +84,6 @@ public class Board extends Subject {
     public Integer getGameId() {
         return gameId;
     }
-
 
     public void setGameId(int gameId) {
         if (this.gameId == null) {
@@ -173,6 +174,7 @@ public class Board extends Subject {
             return -1;
         }
     }
+
     /**
      * Returns the neighbour of the given space of the board in the given heading.
      * The neighbour is returned only, if it can be reached from the given space
@@ -203,9 +205,17 @@ public class Board extends Subject {
 
         return getSpace(x, y);
     }
+
     public String getStatusMessage() {
+        // this is actually a view aspect, but for making assignment V1 easy for
+        // the students, this method gives a string representation of the current
+        // status of the game
+
+        // XXX: V2 changed the status so that it shows the phase, the player and the step
         return "Phase: " + getPhase().name() +
                 ", Current player  " + getCurrentPlayer().getName() +
                 ", Step: " + getStep() + ", Token countrer: "+getCurrentPlayer().getTokens();
     }
+
+
 }
