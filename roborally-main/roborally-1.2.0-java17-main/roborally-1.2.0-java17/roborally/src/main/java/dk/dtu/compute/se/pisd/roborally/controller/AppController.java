@@ -33,10 +33,15 @@ import dk.dtu.compute.se.pisd.roborally.model.Command;
 import dk.dtu.compute.se.pisd.roborally.model.Player;
 
 import javafx.application.Platform;
-import javafx.scene.control.Alert;
+import javafx.geometry.Insets;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.ChoiceDialog;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
@@ -64,6 +69,74 @@ public class AppController implements Observer {
     public AppController(@NotNull RoboRally roboRally) {
         this.roboRally = roboRally;
     }
+
+    private String enteredText = "App";
+
+    public void HostGame() {
+        Stage primaryStage = new Stage();
+        TextField nameTextFieldGet = new TextField();
+        // Create a button to open a new screen
+        Button openButton = new Button("Open");
+        openButton.setOnAction(event -> {
+
+            System.out.println(enteredText);
+                newGame();
+                primaryStage.close();
+        });
+
+        // Create a layout and add the text field and button
+        VBox root = new VBox(10);
+        root.getChildren().addAll(nameTextFieldGet, openButton);
+
+        // Create a scene and set it on the stage
+        Scene scene = new Scene(root, 250, 100);
+        primaryStage.setTitle("Input dit navn");
+        primaryStage.setScene(scene);
+        primaryStage.show();
+    }
+    public void JoinGame() {
+        Stage primaryStage = new Stage();
+        TextField nameTextFieldGet = new TextField();
+
+        // Create a button to open a new screen
+        Button openButton = new Button("Open");
+        openButton.setOnAction(event -> {
+            boolean isNameCorrect = checkifNameCorrect(nameTextFieldGet.getText());
+            System.out.println(enteredText);
+
+            if (isNameCorrect) {
+                newGame();
+                primaryStage.close();
+            } else {
+                System.out.println("Name is incorrect");
+            }
+        });
+
+        // Create a layout and add the text field and button
+        VBox root = new VBox(10);
+        root.getChildren().addAll(nameTextFieldGet, openButton);
+
+        // Create a scene and set it on the stage
+        Scene scene = new Scene(root, 250, 100);
+        primaryStage.setTitle("Input dit navn");
+        primaryStage.setScene(scene);
+        primaryStage.show();
+    }
+
+    public boolean checkifNameCorrect(String nameMatch) {
+        String textFromTextField = nameMatch; // Get the text from the nameTextFieldGet
+
+        if (enteredText.equals(textFromTextField)) {
+            // Name matches
+            System.out.println("Name is correct: " + enteredText);
+            return true;
+        } else {
+            // Name does not match
+            System.out.println("Name is incorrect");
+            return false;
+        }
+    }
+
 
     public void newGame() {
 
@@ -135,8 +208,6 @@ public class AppController implements Observer {
     public void saveGame() {
    // LoadBoard.saveBoard(gameController.board,"Last Game",0);
     }
-
-
 
     public void loadGame() {
         try {

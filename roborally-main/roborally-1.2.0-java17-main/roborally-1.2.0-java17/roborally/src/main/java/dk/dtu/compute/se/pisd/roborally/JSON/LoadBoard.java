@@ -140,8 +140,6 @@ public class LoadBoard {
             if(template.current.name.equals(playerAmount.getName())){
                 result.setCurrentPlayer(playerAmount);
             }
-
-
         }
 
         if(template.gameId != null)
@@ -150,10 +148,6 @@ public class LoadBoard {
         result.setPhase(template.phase);
         result.setStep(template.step);
         result.setStepMode(template.stepMode);
-
-
-
-
 
     }
 
