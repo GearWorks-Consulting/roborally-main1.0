@@ -504,4 +504,8 @@ public class GameController {
             }
         }
     }
+
+    //for unit testing in CheckpointTest
+    public void setBoard(Board board) {
+    }
 }
