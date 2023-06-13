@@ -21,25 +21,19 @@
  */
 package dk.dtu.compute.se.pisd.roborally.controller;
 
-
 import dk.dtu.compute.se.pisd.designpatterns.observer.Observer;
 import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
-
 import dk.dtu.compute.se.pisd.roborally.JSON.BoardTemplate;
+import dk.dtu.compute.se.pisd.roborally.JSON.LoadBoard;
 import dk.dtu.compute.se.pisd.roborally.RoboRally;
-
 import dk.dtu.compute.se.pisd.roborally.client.ProductClient;
 import dk.dtu.compute.se.pisd.roborally.model.Board;
-import dk.dtu.compute.se.pisd.roborally.model.Command;
 import dk.dtu.compute.se.pisd.roborally.model.Player;
-
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -48,13 +42,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
-import dk.dtu.compute.se.pisd.roborally.JSON.LoadBoard;
-/**
- * ...
- *
- * @author Ekkart Kindler, ekki@dtu.dk
- *
- */
+
 public class AppController implements Observer {
 
     final private List<Integer> PLAYER_NUMBER_OPTIONS = Arrays.asList(2, 3, 4, 5, 6);
@@ -75,19 +63,15 @@ public class AppController implements Observer {
         this.roboRally = roboRally;
     }
 
-
-
     public void HostGame() {
         Stage primaryStage = new Stage();
         TextField nameTextFieldGet = new TextField();
         playerCount = 1;
+
         // Create a button to open a new screen
         Button openButton = new Button("Open");
         openButton.setOnAction(event -> {
-            //int selectedPlayerNumber = getPlayerNumberOption();
-            System.out.println(enteredText);
             newGame();
-
             primaryStage.close();
         });
 
@@ -102,7 +86,6 @@ public class AppController implements Observer {
         primaryStage.show();
     }
 
-
     public void JoinGame() {
         Stage primaryStage = new Stage();
         TextField nameTextFieldGet = new TextField();
@@ -110,25 +93,16 @@ public class AppController implements Observer {
         // Create a button to open a new screen
         Button openButton = new Button("Open");
         openButton.setOnAction(event -> {
-            boolean isNameCorrect = checkifNameCorrect(nameTextFieldGet.getText());
-            System.out.println(enteredText);
+            String playerName = nameTextFieldGet.getText();
+            handleJoinGame(playerName);
 
-            if (isNameCorrect && board != null) {
-                showAlertIfLobbyFull();
-                // Increment the player count
-                if(playerCount < minimumplayer) {
-                    playerCount++;
-                }
+            primaryStage.close();
+        });
 
-
-            // Existing code...
-        } else {
-            System.out.println("Name is incorrect");
-        }
-    });
         // Create a layout and add the text field and button
         VBox root = new VBox(10);
         root.getChildren().addAll(nameTextFieldGet, openButton);
+
         // Create a scene and set it on the stage
         Scene scene = new Scene(root, 400, 100);
         primaryStage.setTitle("Input the host's name");
@@ -136,34 +110,58 @@ public class AppController implements Observer {
         primaryStage.show();
     }
 
-    public boolean checkifNameCorrect(String nameMatch) {
-        String textFromTextField = nameMatch; // Get the text from the nameTextFieldGet
+    public void handleJoinGame(String playerName) {
+        boolean isNameCorrect = checkifNameCorrect(playerName);
 
-        if (enteredText.equals(textFromTextField)) {
-            // Name matches
-            System.out.println("Name is correct: " + enteredText);
-            return true;
-        } else {
-            // Name does not match
-            System.out.println("Name is incorrect");
-            return false;
+        if (isNameCorrect && board != null) {
+            showAlertIfLobbyFull();
+
+            // Increment the player count
+            if (playerCount < minimumplayer) {
+                playerCount++;
+            }
+
+            System.out.println("Player Count: " + playerCount);
+
+            // Rest of the code...
         }
     }
 
-    public void showAlertIfLobbyFull() {
+    private boolean checkifNameCorrect(String playerName) {
+        boolean isNameCorrect = playerName.equals(enteredText);
+        if (!isNameCorrect) {
+            Alert alert = new Alert(AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Invalid Name");
+            alert.setContentText("The entered name does not match the required name!");
+            alert.showAndWait();
+        }
+        return isNameCorrect;
+    }
+
+    private void showAlertIfLobbyFull() {
         if (playerCount >= minimumplayer) {
-            // Show an alert dialog indicating that the lobby is full
-            Alert alert = new Alert(AlertType.WARNING);
+            Alert alert = new Alert(AlertType.INFORMATION);
             alert.setTitle("Lobby Full");
             alert.setHeaderText(null);
-            alert.setContentText("Sorry, the lobby is full.");
-            //playerCount--;
-            System.out.println("Player Count: " + playerCount);
+            alert.setContentText("The lobby is now full.");
             alert.showAndWait();
         }
     }
 
-    public void newGame() {
+    // Rest of the code...
+
+
+
+    // Rest of the code...
+
+
+
+
+
+
+
+public void newGame() {
         ChoiceDialog<Integer> playerdialog = new ChoiceDialog<>(PLAYER_NUMBER_OPTIONS.get(0), PLAYER_NUMBER_OPTIONS);
         playerdialog.setTitle("Player number");
         playerdialog.setHeaderText("Select number of players");
