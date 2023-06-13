@@ -19,9 +19,4 @@ public class Gear {
         direction = heading;
     }
 
-    public Heading getDirection() {
-        return direction;
-    }
-
-
 }
