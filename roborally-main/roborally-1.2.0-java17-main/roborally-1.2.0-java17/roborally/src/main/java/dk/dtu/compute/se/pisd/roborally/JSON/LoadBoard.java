@@ -119,7 +119,7 @@ public class LoadBoard {
 
         if(template.gameId!=null)
             result.setGameId(template.gameId);
-        for(int i=0;i<template.getPlayersNumber();i++) {
+        for(int i=0;i<result.getPlayersNumber();i++) {
             Player playerAmount = result.getPlayer(i);
 
             playerAmount.setTokens(template.getPlayer(i).tokens);
@@ -127,12 +127,12 @@ public class LoadBoard {
             playerAmount.setHeading(template.getPlayer(i).heading);
             playerAmount.getSpace().setPlayer(playerAmount);
             result.addPlayer(playerAmount);
-            for (int k=0;k<template.getPlayer(i).cards.length;k++){
+            for (int k=0;k<result.getPlayer(i).getCards().length;k++){
                 playerAmount.getCardField(k).setCard(template.getPlayer(i).cards[k].card);
                 playerAmount.getCardField(k).setVisible(template.getPlayer(i).cards[k].visible);
 
             }
-            for (int k=0;k<template.getPlayer(i).program.length;k++){
+            for (int k=0;k<result.getPlayer(i).getProgram().length;k++){
                 playerAmount.getProgramField(k).setCard(template.getPlayer(i).program[k].card);
                 playerAmount.getProgramField(k).setVisible(template.getPlayer(i).program[k].visible);
             }

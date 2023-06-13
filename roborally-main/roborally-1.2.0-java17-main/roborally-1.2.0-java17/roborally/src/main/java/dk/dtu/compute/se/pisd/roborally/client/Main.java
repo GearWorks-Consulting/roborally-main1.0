@@ -1,6 +1,7 @@
 package dk.dtu.compute.se.pisd.roborally.client;
 
 import dk.dtu.compute.se.pisd.roborally.JSON.BoardTemplate;
+import dk.dtu.compute.se.pisd.roborally.JSON.PlayerTemplate;
 
 import java.util.*;
 
@@ -23,17 +24,23 @@ public class Main {
                 switch (valg) {
                     case 1: {
 
-                       ProductClient.saveBoard(new BoardTemplate(4,5),"Test2");
+                        BoardTemplate boardTemplate= new BoardTemplate(4,5);
 
-
+                        PlayerTemplate playerTemplate= new PlayerTemplate();
+                        boardTemplate.players.add(playerTemplate);
+                        boardTemplate.gameId=2;
+                        boardTemplate.players.get(0).name="Moiz";
+                        System.out.println(boardTemplate.players.get(0).name);
+                        ProductClient.saveBoard(boardTemplate,"test2");
                     }
                     break;
                     case 2: {
-
-                        BoardTemplate board = ProductClient.loadBoard("Test2");
-                        System.out.println(board.phase);
-                        System.out.println(board.spaces[0][1].x);
-
+                        //BoardTemplate board = ProductClient.loadBoard("Test2");
+                        //System.out.println(board.phase);
+                        //System.out.println(board.spaces[0][1].x);
+                        BoardTemplate board2 = ProductClient.loadBoard("test2");
+                        System.out.println(board2.phase);
+                        System.out.println(board2.players.get(0).name);
 
 
                     }

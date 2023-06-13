@@ -98,6 +98,8 @@ public class AppController implements Observer {
             switch (selectedBoard) {
                 case "Map 1 - Small":
                  board = LoadBoard.loadMap("Board 1");
+                    BoardTemplate TEM=LoadBoard.boardFromServer("test5");
+                    LoadBoard.upDateBoard(TEM,board);
                     board.setGameId(1);
                     break;
 

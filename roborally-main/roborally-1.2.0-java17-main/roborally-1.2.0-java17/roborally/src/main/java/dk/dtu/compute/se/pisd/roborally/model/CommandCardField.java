@@ -53,7 +53,6 @@ public class CommandCardField extends Subject {
             notifyChange();
         }
     }
-
     public boolean isVisible() {
         return visible;
     }

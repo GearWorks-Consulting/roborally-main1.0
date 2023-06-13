@@ -464,7 +464,6 @@ public class GameController {
                 this.moveForward(player);
             }
 
-
         }
     }
 
