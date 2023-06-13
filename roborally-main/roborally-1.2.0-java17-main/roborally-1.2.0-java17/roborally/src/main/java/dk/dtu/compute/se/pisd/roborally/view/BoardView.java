@@ -142,6 +142,25 @@ public class BoardView extends VBox implements ViewObserver {
                     //}
                 }
 
+                else if (space.getPushPanel()!=null) {
+                    ImageView imageView = new ImageView();
+                    Image image =null;
+                    if(space.getPushPanel().getDirection() == Heading.WEST ){
+                        image = new Image("PushPanelWest.png", 60, 60, false, false);
+                    } else if(space.getPushPanel().getDirection() == Heading.EAST ) {
+                        image = new Image("PushPanelEast.png", 60, 60, false, false);
+                    } else if ( space.getPushPanel().getDirection() == Heading.SOUTH ) {
+                        image = new Image("PushPanelSouth.png", 60, 60, false, false);
+                    }else if (space.getPushPanel().getDirection() == Heading.NORTH ) {
+                        image = new Image("PushPanelNorth.png", 60, 60, false, false);
+                    }
+                    imageView.setImage(image);
+                    spaceView.getChildren().add(imageView);
+                    //}
+                }
+
+
+
         else    if (space.getCheckPoint()!=null && space.getCheckPoint().getOrderNo() ==0){
 
                     ImageView imageView = new ImageView();

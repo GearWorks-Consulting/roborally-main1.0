@@ -21,9 +21,6 @@
  */
 package dk.dtu.compute.se.pisd.roborally.controller;
 
-import dk.dtu.compute.se.pisd.roborally.JSON.BoardTemplate;
-import dk.dtu.compute.se.pisd.roborally.JSON.LoadBoard;
-import dk.dtu.compute.se.pisd.roborally.client.ProductClient;
 import dk.dtu.compute.se.pisd.roborally.model.*;
 import javafx.application.Platform;
 import org.jetbrains.annotations.NotNull;
@@ -36,40 +33,17 @@ import static dk.dtu.compute.se.pisd.roborally.model.Heading.*;
 /**
  * ...
  *
- * @author Abdi og Mathias
- * @version 2.0
- *  @since 2023-06-17
+ * @author Abdi, Mathias, & Moiz H. Khalil
+ * @version 1.0 prototype.
+ *  @since 2023-04-16
  */
 public class GameController {
     /**
      * Creates an empty gameboard which the game controller is associated with.
      */
-     public Board board;
-
-    public void setOnline(int online) {
-        this.online = online;
-    }
-
-    private int online;
+    final public Board board;
     final private List<String> OPTIONS_Interactive = Arrays.asList("Left", "Right");
-
-    public void setPlayerNumber(int playerNumber) {
-        this.playerNumber = playerNumber;
-    }
-    
-
-    private int playerNumber;
-
-
-    public int getTurn() {
-        return turn;
-    }
-
-    public void setTurn(int turn) {
-        this.turn = turn;
-    }
-
-    private int turn = 0;
+    int turn = 0;
 
 
     public GameController(@NotNull Board board) {
@@ -100,10 +74,6 @@ public class GameController {
 
     // XXX: V2
     public void startProgrammingPhase() {
-
-
-
-
         board.setPhase(Phase.PROGRAMMING);
         board.setCurrentPlayer(board.getPlayer(turn));
         board.setStep(turn);
@@ -137,21 +107,12 @@ public class GameController {
      * It will set the games phase to activationPhase after Clicked(input).It will also set the current player to the first player, and setting the current step to zero.
      */
     public void finishProgrammingPhase() {
-
         makeProgramFieldsInvisible();
         makeProgramFieldsVisible(turn);
         board.setPhase(Phase.ACTIVATION);
         board.setCurrentPlayer(board.getPlayer(turn));
         board.setStep(turn);
-
-
     }
-    public void updateServer(){
-       BoardTemplate boardTemplate = LoadBoard.NormalBoardToTemplate(board);
-        LoadBoard.boardToServer(boardTemplate,"serverGame");
-    }
-
-
 
     // XXX: V2
     private void makeProgramFieldsVisible(int register) {
@@ -179,7 +140,6 @@ public class GameController {
     public void executePrograms() {
         board.setStepMode(false);
         continuePrograms();
-
     }
 
     // XXX: V2
@@ -197,7 +157,6 @@ public class GameController {
 
     // XXX: V2
     private void executeNextStep() {
-
         Player currentPlayer = board.getCurrentPlayer();
 
         if (board.getPhase() == Phase.ACTIVATION && currentPlayer != null) {
@@ -209,6 +168,7 @@ public class GameController {
                     if (command.isInteractive()) {
                         board.setPhase(Phase.PLAYER_INTERACTION);
                         return;
+
                     }
                     executeCommand(currentPlayer, command);
                 }
@@ -224,24 +184,7 @@ public class GameController {
                     } else {
                         turn = (turn + 1) % board.getPlayersNumber();
                         winGame();
-
-                        if(online==1) {
-                            int savedServerNumber = Integer.parseInt(ProductClient.getPlayerTurn());
-                            if (savedServerNumber % board.getPlayersNumber() == playerNumber) {
-                                LoadBoard.UpdateMoveToServer(board, playerNumber);
-                                updateServer();
-                                savedServerNumber++;
-
-
-                                ProductClient.setPlayerTurn(String.valueOf(savedServerNumber));
-                            } else {
-                                BoardTemplate templateFromServer = LoadBoard.boardFromServer("serverGame");
-                                LoadBoard.boardToServer(templateFromServer, "serverGame");
-                                LoadBoard.upDateBoard(templateFromServer, board);
-                            }
-                        }
                         startProgrammingPhase();
-
                     }
                 }
             } else {
@@ -252,7 +195,8 @@ public class GameController {
             // this should not happen
             assert false;
         }
-
+        // turn=1;
+        // board.setCurrentPlayer(board.getPlayer(turn));
     }
 
     /**
@@ -306,7 +250,6 @@ public class GameController {
      * Moves the player 1 vector direction forward, depending on the heading.
      */
     public void moveForward(@NotNull Player player) {
-
         Space space = player.getSpace();
         Space playerSpace = player.getSpace();
 
@@ -345,6 +288,7 @@ public class GameController {
                     GearRotation(player);
                     conveyerTransport(player);
                     CheckPointTokener(player);
+                    PushPanel(player);
                 }
             }
 
@@ -512,7 +456,18 @@ public class GameController {
                 this.moveForward(player);
             }
 
+
         }
+    }
+    public void PushPanel(Player player) {
+        Space space5 = player.getSpace();
+        PushPanel pushPanel = space5.getPushPanel();
+        if(pushPanel != null) {
+            Heading heading5 = pushPanel.getDirection();
+            player.setHeading(heading5);
+            this.moveForward(player);
+        }
+
     }
 
     public boolean robotCollide(Space target, Heading heading) {

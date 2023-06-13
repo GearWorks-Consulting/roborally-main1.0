@@ -20,6 +20,9 @@
         "y": 2
       },
       {
+        "pushPanel": {
+          "direction": "EAST"
+        },
         "x": 0,
         "y": 3
       },
@@ -274,10 +277,14 @@
         "y": 3
       },
       {
+
         "x": 5,
         "y": 4
       },
       {
+        "pushPanel": {
+          "direction": "NORTH"
+        },
         "wallHeading": "WEST",
         "x": 5,
         "y": 5
@@ -293,6 +300,9 @@
         "y": 7
       },
       {
+        "pushPanel": {
+          "direction": "NORTH"
+        },
         "x": 5,
         "y": 8
       },

@@ -153,7 +153,9 @@ return result;
                     if (temSpace.gearRotation != null) {
                         space.setGear(temSpace.gearRotation);
                     }
-
+                    if (temSpace.pushPanel != null) {
+                        space.setPushPanel(temSpace.pushPanel);
+                    }
 
                 }
             }
@@ -243,7 +245,9 @@ return result;
                     if (temSpace.gearRotation != null) {
                         space.setGear(temSpace.gearRotation);
                     }
-
+                    if (temSpace.pushPanel != null) {
+                        space.setPushPanel(temSpace.pushPanel);
+                    }
 
                 }
             }
@@ -273,6 +277,10 @@ return result;
                 if (space.getGear() != null) {
                     tempSpace.gearRotation = space.getGear();
                 }
+                if(space.getPushPanel()!=null){
+                    tempSpace.pushPanel=space.getPushPanel();
+                }
+
             }
         }
         for (int i = 0; i < board.getPlayersNumber(); i++) {

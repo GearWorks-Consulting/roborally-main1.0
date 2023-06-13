@@ -20,10 +20,7 @@
  *
  */
 package dk.dtu.compute.se.pisd.roborally.JSON;
-import dk.dtu.compute.se.pisd.roborally.model.CheckPoint;
-import dk.dtu.compute.se.pisd.roborally.model.Gear;
-import dk.dtu.compute.se.pisd.roborally.model.Heading;
-import dk.dtu.compute.se.pisd.roborally.model.conveyorBelt;
+import dk.dtu.compute.se.pisd.roborally.model.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,6 +38,8 @@ public class SpaceTemplate {
 
     public Heading wallHeading;
     public Gear gearRotation;
+
+    public PushPanel pushPanel;
 
     public int x;
     public int y;

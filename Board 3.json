@@ -126,6 +126,9 @@
         "y": 3
       },
       {
+        "pushPanel": {
+          "direction": "EAST"
+        },
         "x": 2,
         "y": 4
       },
