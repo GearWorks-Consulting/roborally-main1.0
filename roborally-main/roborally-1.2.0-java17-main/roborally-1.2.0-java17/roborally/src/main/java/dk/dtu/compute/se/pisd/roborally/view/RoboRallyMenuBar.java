@@ -38,6 +38,10 @@ public class RoboRallyMenuBar extends MenuBar {
 
     private Menu controlMenu;
 
+    private MenuItem hostGame;
+
+    private MenuItem joinGame;
+
     private MenuItem saveGame;
 
     private MenuItem newGame;
@@ -53,6 +57,16 @@ public class RoboRallyMenuBar extends MenuBar {
 
         controlMenu = new Menu("File");
         this.getMenus().add(controlMenu);
+
+        joinGame = new MenuItem("Join Game");
+        joinGame.setOnAction( e -> this.appController.JoinGame());
+        controlMenu.getItems().add(joinGame);
+
+
+        hostGame = new MenuItem("Host Game");
+        hostGame.setOnAction( e -> this.appController.HostGame());
+        controlMenu.getItems().add(hostGame);
+
 
         newGame = new MenuItem("New Game");
         newGame.setOnAction( e -> this.appController.newGame());
@@ -88,6 +102,7 @@ public class RoboRallyMenuBar extends MenuBar {
         newGame.setVisible(isOtherItemsVisible);
         stopGame.setVisible(isOtherItemsVisible && isGameRunning);
         saveGame.setVisible(isOtherItemsVisible && isGameRunning);
+        hostGame.setVisible(isOtherItemsVisible);
         loadGame.setVisible(isLoadGameVisible);
     }
 
