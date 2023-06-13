@@ -27,7 +27,7 @@ package dk.dtu.compute.se.pisd.roborally;
  * which prevents starting a JavaFX application in IntelliJ directly:
  *
  *   https://stackoverflow.com/questions/52569724/javafx-11-create-a-jar-file-with-gradle/52571719#52571719
- *
+ *F
  * @author Ekkart Kindler,Mathias Schrader, Abid Samad, Moiz H. Khalil
  * @version 1.0 Prototype.
  */

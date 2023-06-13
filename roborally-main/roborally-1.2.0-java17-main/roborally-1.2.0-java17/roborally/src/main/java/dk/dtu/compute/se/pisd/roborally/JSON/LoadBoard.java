@@ -38,9 +38,6 @@ import java.io.*;
  */
 public class LoadBoard {
 
-
-
-
     private static final String BOARDSFOLDER = "boards";
     private static final String DEFAULTBOARD = "defaultboard";
     private static final String JSON_EXT = "json";
@@ -87,7 +84,9 @@ public class LoadBoard {
                     if (temSpace.gearRotation != null) {
                         space.setGear(temSpace.gearRotation);
                     }
-
+                    if (temSpace.pushPanel != null) {
+                        space.setPushPanel(temSpace.pushPanel);
+                    }
 
                 }
             }
@@ -182,7 +181,9 @@ if(template.gameId!=null)
                     if (temSpace.gearRotation != null) {
                         space.setGear(temSpace.gearRotation);
                     }
-
+                    if (temSpace.pushPanel != null) {
+                        space.setPushPanel(temSpace.pushPanel);
+                    }
 
                 }
             }
@@ -214,6 +215,10 @@ if(template.gameId!=null)
                 if(space.getGear()!=null){
                     tempSpace.gearRotation=space.getGear();
                 }
+                if(space.getPushPanel()!=null){
+                    tempSpace.pushPanel=space.getPushPanel();
+                }
+
             }
         }
         for(int i=0;i<board.getPlayersNumber();i++) {

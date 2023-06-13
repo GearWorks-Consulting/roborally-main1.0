@@ -46,6 +46,7 @@ public class Space extends Subject {
     private Heading wallFacing;
     private conveyorBelt Conveyor;
     private CheckPoint checkPoint;
+    private PushPanel pushPanel;
    private Boolean isthereawallhere = false;
     private Gear Gear;
 
@@ -77,13 +78,6 @@ public class Space extends Subject {
     public boolean PlacedWall(Heading playerDirection) {
      return wall.contains(playerDirection);
     }
-
-
-
-
-
-
-
 
 
     public void setPlayer(Player player) {
@@ -161,4 +155,11 @@ public class Space extends Subject {
         Gear = gear;
     }
 
+    public PushPanel getPushPanel() {
+        return pushPanel;
+    }
+
+    public void setPushPanel(PushPanel pushPanel) {
+        this.pushPanel = pushPanel;
+    }
 }

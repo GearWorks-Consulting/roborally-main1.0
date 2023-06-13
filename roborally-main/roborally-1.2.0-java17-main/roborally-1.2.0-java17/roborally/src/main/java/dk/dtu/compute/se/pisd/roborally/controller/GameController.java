@@ -33,7 +33,7 @@ import static dk.dtu.compute.se.pisd.roborally.model.Heading.*;
 /**
  * ...
  *
- * @author Abdi og Mathias
+ * @author Abdi, Mathias, & Moiz H. Khalil
  * @version 1.0 prototype.
  *  @since 2023-04-16
  */
@@ -288,6 +288,7 @@ public class GameController {
                     GearRotation(player);
                     conveyerTransport(player);
                     CheckPointTokener(player);
+                    PushPanel(player);
                 }
             }
 
@@ -457,6 +458,16 @@ public class GameController {
 
 
         }
+    }
+    public void PushPanel(Player player) {
+        Space space5 = player.getSpace();
+        PushPanel pushPanel = space5.getPushPanel();
+        if(pushPanel != null) {
+            Heading heading5 = pushPanel.getDirection();
+            player.setHeading(heading5);
+            this.moveForward(player);
+        }
+
     }
 
     public boolean robotCollide(Space target, Heading heading) {
