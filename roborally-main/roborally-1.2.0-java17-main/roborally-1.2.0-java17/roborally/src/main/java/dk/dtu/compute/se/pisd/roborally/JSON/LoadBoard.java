@@ -93,8 +93,8 @@ public class LoadBoard {
     public static void upDateBoard(BoardTemplate template, Board result){
 
 
-        for (int i = 0; i < template.width; i++) {
-            for (int j = 0; j < template.height; j++) {
+        for (int i = 0; i < result.width; i++) {
+            for (int j = 0; j < result.height; j++) {
                 Space space = result.getSpace(i, j);
                 SpaceTemplate temSpace = template.spaces[i][j];
                 if (temSpace.Conveyor != null) {
@@ -113,6 +113,7 @@ public class LoadBoard {
                 }
 
 
+
             }
         }
 
@@ -120,26 +121,28 @@ public class LoadBoard {
         if(template.gameId!=null)
             result.setGameId(template.gameId);
         for(int i=0;i<result.getPlayersNumber();i++) {
-            Player playerAmount = result.getPlayer(i);
 
-            playerAmount.setTokens(template.getPlayer(i).tokens);
-            playerAmount.setSpace(result.getSpace(template.getPlayer(i).space.x,template.getPlayer(i).space.y));
-            playerAmount.setHeading(template.getPlayer(i).heading);
-            playerAmount.getSpace().setPlayer(playerAmount);
-            result.addPlayer(playerAmount);
+            result.getPlayer(i).setTokens(template.getPlayer(i).tokens);
+            result.getPlayer(i).setSpace(result.getSpace(template.getPlayer(i).space.x,template.getPlayer(i).space.y));
+            result.getPlayer(i).setHeading(template.getPlayer(i).heading);
+            result.getPlayer(i) .getSpace().setPlayer(result.getPlayer(i));
+            result.getPlayer(i).setName(template.getPlayer(i).name);
+
+
             for (int k=0;k<result.getPlayer(i).getCards().length;k++){
-                playerAmount.getCardField(k).setCard(template.getPlayer(i).cards[k].card);
-                playerAmount.getCardField(k).setVisible(template.getPlayer(i).cards[k].visible);
+                result.getPlayer(i)  .getCardField(k).setCard(template.getPlayer(i).cards[k].card);
+                result.getPlayer(i) .getCardField(k).setVisible(template.getPlayer(i).cards[k].visible);
 
             }
             for (int k=0;k<result.getPlayer(i).getProgram().length;k++){
-                playerAmount.getProgramField(k).setCard(template.getPlayer(i).program[k].card);
-                playerAmount.getProgramField(k).setVisible(template.getPlayer(i).program[k].visible);
+                result.getPlayer(i) .getProgramField(k).setCard(template.getPlayer(i).program[k].card);
+                result.getPlayer(i)  .getProgramField(k).setVisible(template.getPlayer(i).program[k].visible);
             }
 
-            if(template.current.name.equals(playerAmount.getName())){
-                result.setCurrentPlayer(playerAmount);
+            if (template.current != null && result.current != null && template.current.name.equals(result.getCurrentPlayer().getName())) {
+                result.setCurrentPlayer(result.getPlayer(i));
             }
+
 
 
         }

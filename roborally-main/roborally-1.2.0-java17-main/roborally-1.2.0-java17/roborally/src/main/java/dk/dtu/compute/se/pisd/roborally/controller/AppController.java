@@ -28,6 +28,7 @@ import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
 import dk.dtu.compute.se.pisd.roborally.JSON.BoardTemplate;
 import dk.dtu.compute.se.pisd.roborally.RoboRally;
 
+import dk.dtu.compute.se.pisd.roborally.client.ProductClient;
 import dk.dtu.compute.se.pisd.roborally.model.Board;
 import dk.dtu.compute.se.pisd.roborally.model.Command;
 import dk.dtu.compute.se.pisd.roborally.model.Player;
@@ -98,8 +99,22 @@ public class AppController implements Observer {
             switch (selectedBoard) {
                 case "Map 1 - Small":
                  board = LoadBoard.loadMap("Board 1");
-                    BoardTemplate TEM=LoadBoard.boardFromServer("test5");
+
+                 /*   BoardTemplate TEM=LoadBoard.boardFromServer("test5");
+                    int no = result.get();
+            for (int i = 0; i < no; i++) {
+                Player player = new Player(board, PLAYER_COLORS.get(i), "Player " + (i + 1));
+                board.addPlayer(player);
+                player.setSpace(board.getSpace(i, 0));
+                player.getSpace().setPlayer(player);
+                board.setCurrentPlayer(board.getPlayer(0));
+
+
+            }
+
                     LoadBoard.upDateBoard(TEM,board);
+
+                  */
                     board.setGameId(1);
                     break;
 
@@ -126,8 +141,12 @@ public class AppController implements Observer {
                 player.setSpace(board.getSpace(i, 0));
                 player.getSpace().setPlayer(player);
             }
-
+            board.setCurrentPlayer(board.getPlayer(0));
+            BoardTemplate boardTemplate = LoadBoard.NormalBoardToTemplate(board);
+            ProductClient.saveBoard(boardTemplate,"test5");
             gameController.startProgrammingPhase();
+
+
             roboRally.createBoardView(gameController);
         }
     }

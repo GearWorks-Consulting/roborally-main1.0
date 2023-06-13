@@ -94,7 +94,7 @@ public class ProductClient implements IBoardTemplate {
 
     public static boolean saveBoard(BoardTemplate boardTemplate, String name) {
         try{
-            String url = "http://localhost:8080/saveGame/"+name;
+            String url = "http://10.209.211.14:8080/saveGame/"+name;
             String productJSON = new Gson().toJson(boardTemplate);
             HttpRequest request = HttpRequest.newBuilder()
                     .POST(HttpRequest.BodyPublishers.ofString(productJSON))
@@ -116,7 +116,7 @@ public class ProductClient implements IBoardTemplate {
         try{
             HttpRequest request = HttpRequest.newBuilder()
                     .GET()
-                    .uri(URI.create("http://localhost:8080/loadGame/" + name))
+                    .uri(URI.create("http://10.209.211.14:8080/loadGame/" + name))
                     .setHeader("User-Agent", "Product Client")
                     .header("Content-Type", "application/json")
                     .build();
@@ -135,7 +135,7 @@ public class ProductClient implements IBoardTemplate {
         try{
             HttpRequest request = HttpRequest.newBuilder()
                     .GET()
-                    .uri(URI.create("http://localhost:8080/printTest/" ))
+                    .uri(URI.create("http://10.209.211.14:8080/printTest/" ))
                     .setHeader("User-Agent", "Product Client")
                     .header("Content-Type", "application/json")
                     .build();
