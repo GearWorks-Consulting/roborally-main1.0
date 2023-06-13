@@ -21,7 +21,11 @@
  */
 package dk.dtu.compute.se.pisd.roborally.controller;
 
+//For End credits scrolling in Information tab in MenuBar
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextArea;
 
+//Observer pattern
 import dk.dtu.compute.se.pisd.designpatterns.observer.Observer;
 import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
 
@@ -51,7 +55,7 @@ import dk.dtu.compute.se.pisd.roborally.JSON.LoadBoard;
 public class AppController implements Observer {
 
     final private List<Integer> PLAYER_NUMBER_OPTIONS = Arrays.asList(2, 3, 4, 5, 6);
-    final private List<String> BOARD_NUMBER_OPTION = Arrays.asList("Map 1 - Small","Map 2 - Small","Map 3 - Large");
+    final private List<String> BOARD_NUMBER_OPTION = Arrays.asList("Map 1 - Small", "Map 2 - Small", "Map 3 - Large");
     final private List<String> PLAYER_COLORS = Arrays.asList("red", "green", "blue", "orange", "grey", "magenta");
 
     final private RoboRally roboRally;
@@ -90,13 +94,9 @@ public class AppController implements Observer {
             //     here we just create an empty board with the required number of players.
 
 
-
-
-
-
             switch (selectedBoard) {
                 case "Map 1 - Small":
-                 board = LoadBoard.loadMap("Board 1");
+                    board = LoadBoard.loadMap("Board 1");
                     board.setGameId(1);
                     break;
 
@@ -130,9 +130,8 @@ public class AppController implements Observer {
     }
 
     public void saveGame() {
-    LoadBoard.saveBoard(gameController.board,"Last Game");
+        LoadBoard.saveBoard(gameController.board, "Last Game");
     }
-
 
 
     public void loadGame() {
@@ -159,20 +158,75 @@ public class AppController implements Observer {
         }
     }
 
-    public void showRules() {
+    public void showInformation() {
+        List<String> rules = Arrays.asList("How To Play", "RoboRally - Awards Won", "Credits", "...");
+
+        ChoiceDialog<String> ruleDialog = new ChoiceDialog<>(null, rules);
+        ruleDialog.setTitle("Information Details");
+        ruleDialog.setHeaderText("Select an info");
+        ruleDialog.setContentText("Select an info to view:");
+
+        Optional<String> selectedRule = ruleDialog.showAndWait();
+        selectedRule.ifPresent(this::displayRule);
+    }
+
+    private void displayRule(String rule) {
         Alert alert = new Alert(AlertType.INFORMATION);
-        alert.setTitle("RoboRally Rules");
-        alert.setHeaderText("Rules of the Game");
+        alert.setTitle("Information Details");
+        alert.setHeaderText("Information Details");
 
-        String rulesText = "Here are the rules of the RoboRally game:\n"
-                + "- Rule 1\n"
-                + "- Rule 2\n"
-                + "- Rule 3\n"
-                + "- ...\n";
+        if (rule.equals("How To Play")) {
+            alert.setContentText("Here is a short summary of the setup of the actual game: \n" +
+                    "-\tThe players choose a board to compete in.\n" +
+                    "-\tEach players choose a robot and its corresponding colour figure and programming deck. Furthermore, each player gets a player mat.\n" +
+                    "-\tThere are six special programming cards not associated with any specific robots meaning it’s for all.\n" +
+                    "-\tCheckpoint tokens for the players. The checkpoint tokens are acquired for each checkpoint the tokens are displayed in the bottom left corner.\n" +
+                    "-\tGoal of the game is for an individual player to get all checkpoint tokens.\n" +
+                    "Each game is comprised of multiple rounds with each rounds having two phases.\n" +
+                    "1.\tThe programming phase.\n" +
+                    "2.\tThe activation phase.\n" +
+                    "Each phase has their own rules and progressions. As it is called a race, the game ends when one of the players reaches the final checkpoint. \n");
+        } else if (rule.equals("RoboRally - Awards Won")){
+            alert.setContentText("-\tAt the 1995 Origins Awards, RoboRally won awards in two categories: \n" +
+                    "\"Best Fantasy or Science Fiction Boardgame of 1994\"\n" +
+                    "\"Best Graphic Presentation of a Boardgame of 1994\"\n" +
+                    "-\tAt the 1996 Origins Awards, the Armed and Dangerous expansion won \"Best Graphic Presentation of a Boardgame of 1995”\n" +
+                    "-\tAt the 1997 Origins Awards, RoboRally Grand Prix won \"Best Fantasy or Science Fiction Boardgame of 1996”\n");
+        } else if (rule.equals("Credits")){
+            ScrollPane scrollPane = new ScrollPane();
+            scrollPane.setPrefSize(400, 200);
 
-        alert.setContentText(rulesText);
+            TextArea textArea = new TextArea();
+            textArea.setEditable(false);
+            textArea.setWrapText(true);
+            textArea.setText("Thanks to our professor:\n" +
+                    "- Professor Siniša Neškovic \n\n" +
+                    "- Anne Ringsted\n" +
+                    "- Ekkart Kindler \n" +
+                    "- Hubert Baumeister\n" +
+                    "- Censor Standing Infront of me \n" +
+                    "\n"+
+                    "Teaching Assistents:\n" +
+                    "- Christian Francesco Notarmaso Pone \n" +
+                    "- Camila Santos Celes \n" +
+                    "- Ioannis Orestis Zamanis Dimitroulas \n" +
+                    "- Christian Juul Lund Andersen \n" +
+                    "-  Frederik Emil Schibelfeldt \n");
+
+            scrollPane.setContent(textArea);
+            alert.getDialogPane().setContent(scrollPane);
+        }
+
+
+        else {
+            alert.setContentText(rule);
+        }
+
         alert.showAndWait();
     }
+
+
+
 
 
     /**
