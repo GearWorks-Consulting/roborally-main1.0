@@ -81,7 +81,7 @@ public class ProductClient implements IBoardTemplate {
             CompletableFuture<HttpResponse<String>> response =
                     httpClient.sendAsync(request, HttpResponse.BodyHandlers.ofString());
             String result = response.thenApply((r)->r.body()).get(5, TimeUnit.SECONDS);
-            return result.equals("added")? true : false;
+            return result.equals("added");
         } catch (Exception e) {
             return false;
         }
@@ -104,7 +104,7 @@ public class ProductClient implements IBoardTemplate {
             CompletableFuture<HttpResponse<String>> response =
                     httpClient.sendAsync(request, HttpResponse.BodyHandlers.ofString());
             String result = response.thenApply((r)->r.body()).get(5, TimeUnit.SECONDS);
-            return result.equals("added")? true : false;
+            return result.equals("added");
         } catch (Exception e) {
             return false;
         }
@@ -162,7 +162,7 @@ public class ProductClient implements IBoardTemplate {
             CompletableFuture<HttpResponse<String>> response =
                     httpClient.sendAsync(request, HttpResponse.BodyHandlers.ofString());
             String result = response.thenApply((r)->r.body()).get(5, TimeUnit.SECONDS);
-            return result.equals("updated")? true : false;
+            return result.equals("updated");
         } catch (Exception e) {
             return false;
         }
@@ -180,7 +180,7 @@ public class ProductClient implements IBoardTemplate {
             CompletableFuture<HttpResponse<String>> response =
                     httpClient.sendAsync(request, HttpResponse.BodyHandlers.ofString());
             String result = response.thenApply((r)->r.body()).get(5, TimeUnit.SECONDS);
-            return result.equals("deleted")? true : false;
+            return result.equals("deleted");
         } catch (Exception e) {
             return false;
         }

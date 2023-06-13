@@ -3,8 +3,8 @@ package dk.dtu.compute.se.pisd.roborally.model;
 
 
 public class conveyorBelt   {
-    private Heading direction;
-    private String colour ;
+    private final Heading direction;
+    private final String colour ;
     public conveyorBelt(String colour,Heading heading ){
 
      this.colour = colour;

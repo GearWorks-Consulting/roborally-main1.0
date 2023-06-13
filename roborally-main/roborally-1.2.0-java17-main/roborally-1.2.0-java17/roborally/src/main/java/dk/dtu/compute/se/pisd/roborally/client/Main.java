@@ -63,7 +63,7 @@ public class Main {
             }
             scan.close();
         } catch (Exception e) {
-            System.out.println(e.toString());
+            System.out.println(e);
         }
     }
 }
