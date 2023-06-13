@@ -191,7 +191,7 @@ public class SpaceView extends StackPane implements ViewObserver {
       else  if(space.getGear()!=null) {
             ImageView imageView = new ImageView();
             Image image = null;
-            if (space.getGear().getDirection() == Heading.SOUTH) {
+            if (true) {
                 image = new Image("gear.png", 60, 60, false, false);
             }
             imageView.setImage(image);
