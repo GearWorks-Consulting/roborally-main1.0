@@ -19,4 +19,9 @@ public class Gear {
         direction = heading;
     }
 
+    //Used for Unittesting
+    //get Direction isn't relevant for rotation, since it takes in account of it turning right no matter the direction the player comes from.
+    public Heading getDirection() {
+        return direction;
+    }
 }
