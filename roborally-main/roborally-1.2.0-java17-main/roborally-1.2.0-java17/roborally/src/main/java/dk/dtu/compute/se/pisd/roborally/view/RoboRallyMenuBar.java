@@ -99,10 +99,11 @@ public class RoboRallyMenuBar extends MenuBar {
         boolean isLoadGameVisible = !isGameRunning; // Set the visibility of Load Game based on game running status
         boolean isOtherItemsVisible = true; // Set the visibility of other menu items based on Load Game visibility
 
-        newGame.setVisible(isOtherItemsVisible);
+        newGame.setVisible(isOtherItemsVisible && isGameRunning);
         stopGame.setVisible(isOtherItemsVisible && isGameRunning);
         saveGame.setVisible(isOtherItemsVisible && isGameRunning);
         hostGame.setVisible(isOtherItemsVisible);
+        joinGame.setVisible(isOtherItemsVisible);
         loadGame.setVisible(isLoadGameVisible);
     }
 
