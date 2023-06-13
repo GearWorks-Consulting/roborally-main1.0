@@ -3,7 +3,7 @@ package dk.dtu.compute.se.pisd.roborally.model;
 
 
 public class PushPanel {
-    private Heading direction;
+    private final Heading direction;
 
     public PushPanel( Heading heading ){
 

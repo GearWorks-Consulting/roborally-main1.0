@@ -475,8 +475,7 @@ public class GameController {
             Player old = target.getPlayer();
             moveForward(old);
 
-        } else if (target.getPlayer() != null && target.getPlayer().getHeading().next().next().equals(heading))
-            return false;
+        } else return target.getPlayer() == null || !target.getPlayer().getHeading().next().next().equals(heading);
         return true;
 
     }

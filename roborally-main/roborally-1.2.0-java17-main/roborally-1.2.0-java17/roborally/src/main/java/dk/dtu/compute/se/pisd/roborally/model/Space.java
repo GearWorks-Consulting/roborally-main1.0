@@ -97,7 +97,7 @@ public class Space extends Subject {
     }
 
     public boolean wallFace(Heading wallFace) {
-        if (PlacedWall(wallFace) == true) {
+        if (PlacedWall(wallFace)) {
             return false;
         }
         Space checkNeighbor = board.getNeighbour(this, wallFace);

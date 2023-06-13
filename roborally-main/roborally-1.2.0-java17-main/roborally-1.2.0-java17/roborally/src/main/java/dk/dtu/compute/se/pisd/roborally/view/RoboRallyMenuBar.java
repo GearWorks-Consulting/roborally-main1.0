@@ -34,23 +34,19 @@ import javafx.scene.control.MenuItem;
  */
 public class RoboRallyMenuBar extends MenuBar {
 
-    private AppController appController;
+    private final AppController appController;
 
-    private Menu controlMenu;
+    private final Menu controlMenu;
 
-    private MenuItem hostGame;
+    private final MenuItem saveGame;
 
-    private MenuItem joinGame;
+    private final MenuItem newGame;
 
-    private MenuItem saveGame;
+    private final MenuItem loadGame;
 
-    private MenuItem localGame;
+    private final MenuItem stopGame;
 
-    private MenuItem loadGame;
-
-    private MenuItem stopGame;
-
-    private MenuItem exitApp;
+    private final MenuItem exitApp;
 
     public RoboRallyMenuBar(AppController appController) {
         this.appController = appController;
@@ -58,28 +54,17 @@ public class RoboRallyMenuBar extends MenuBar {
         controlMenu = new Menu("File");
         this.getMenus().add(controlMenu);
 
-
-
-
-        hostGame = new MenuItem("Host Game");
-        hostGame.setOnAction( e -> this.appController.HostGame());
-        controlMenu.getItems().add(hostGame);
-
-        joinGame = new MenuItem("Join Game");
-        joinGame.setOnAction( e -> this.appController.JoinGame());
-        controlMenu.getItems().add(joinGame);
-
-        localGame = new MenuItem("Local Game");
-        localGame.setOnAction(e -> this.appController.localGame());
-        controlMenu.getItems().add(localGame);
-
-        saveGame = new MenuItem("Save Game");
-        saveGame.setOnAction( e -> this.appController.saveGame());
-        controlMenu.getItems().add(saveGame);
+        newGame = new MenuItem("New Game");
+        newGame.setOnAction( e -> this.appController.newGame());
+        controlMenu.getItems().add(newGame);
 
         stopGame = new MenuItem("Stop Game");
         stopGame.setOnAction( e -> this.appController.stopGame());
         controlMenu.getItems().add(stopGame);
+
+        saveGame = new MenuItem("Save Game");
+        saveGame.setOnAction( e -> this.appController.saveGame());
+        controlMenu.getItems().add(saveGame);
 
         loadGame = new MenuItem("Load Game");
         loadGame.setOnAction( e -> this.appController.loadGame());
@@ -100,10 +85,9 @@ public class RoboRallyMenuBar extends MenuBar {
         boolean isLoadGameVisible = !isGameRunning; // Set the visibility of Load Game based on game running status
         boolean isOtherItemsVisible = true; // Set the visibility of other menu items based on Load Game visibility
 
-        localGame.setVisible(isOtherItemsVisible);
-        saveGame.setVisible(isOtherItemsVisible && isGameRunning);
+        newGame.setVisible(isOtherItemsVisible);
         stopGame.setVisible(isOtherItemsVisible && isGameRunning);
-        hostGame.setVisible(isOtherItemsVisible);
+        saveGame.setVisible(isOtherItemsVisible && isGameRunning);
         loadGame.setVisible(isLoadGameVisible);
     }
 

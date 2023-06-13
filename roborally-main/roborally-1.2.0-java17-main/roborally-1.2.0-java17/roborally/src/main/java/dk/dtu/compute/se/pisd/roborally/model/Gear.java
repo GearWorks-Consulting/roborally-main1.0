@@ -13,7 +13,7 @@ import java.util.Vector;
  *
  */
 public class Gear {
-    private Heading direction;
+    private final Heading direction;
     public Gear(Heading heading ){
 
         direction = heading;
