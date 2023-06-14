@@ -228,6 +228,7 @@ public void newGame() {
             //JoinGame(Board);
             //getJoinBoard(board);
             System.out.println(board + "test test");
+
             gameController.startProgrammingPhase();
 
 

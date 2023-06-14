@@ -201,7 +201,7 @@ public class GameController {
                         turn = (turn + 1) % board.getPlayersNumber();
 
 
-                        if(ProductClient.isCompleteMove()) {
+                        if(ProductClient.isCompleteMove() ) {
 
                             BoardTemplate template = LoadBoard.boardFromServer("test5");
                             LoadBoard.upDateBoard(template, board);
