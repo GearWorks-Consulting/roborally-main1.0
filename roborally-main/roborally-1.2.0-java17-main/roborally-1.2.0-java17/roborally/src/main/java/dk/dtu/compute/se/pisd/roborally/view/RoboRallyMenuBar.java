@@ -37,10 +37,12 @@ public class RoboRallyMenuBar extends MenuBar {
     private AppController appController;
 
     private Menu controlMenu;
+    private Menu controlMenu1;
 
     private MenuItem hostGame;
 
     private MenuItem joinGame;
+    private MenuItem localGame;
 
     private MenuItem saveGame;
 
@@ -55,8 +57,16 @@ public class RoboRallyMenuBar extends MenuBar {
     public RoboRallyMenuBar(AppController appController) {
         this.appController = appController;
 
-        controlMenu = new Menu("File");
+        controlMenu1 = new Menu("Local");
+        controlMenu = new Menu("Online");
+
         this.getMenus().add(controlMenu);
+        this.getMenus().add(controlMenu1);
+
+
+        localGame = new MenuItem("localGame");
+        localGame.setOnAction( e -> this.appController.localGame());
+        controlMenu1.getItems().add(localGame);
 
         joinGame = new MenuItem("Join Game");
         joinGame.setOnAction( e -> this.appController.JoinGame());

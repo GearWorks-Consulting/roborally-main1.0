@@ -108,6 +108,14 @@ public class AppController implements Observer {
         primaryStage.setTitle("Input the host's name");
         primaryStage.setScene(scene);
         primaryStage.show();
+
+        if(ProductClient.isCompleteMove()) {
+
+            BoardTemplate template = LoadBoard.boardFromServer("test5");
+            LoadBoard.upDateBoard(template, board);
+            ProductClient.setCompleteMove("false");
+        }
+
     }
 
     public void handleJoinGame(String playerName) {
@@ -276,6 +284,67 @@ public void newGame() {
             return true;
         }
         return false;
+    }
+
+    public void localGame() {
+        ChoiceDialog<Integer> playerdialog = new ChoiceDialog<>(PLAYER_NUMBER_OPTIONS.get(0), PLAYER_NUMBER_OPTIONS);
+        playerdialog.setTitle("Player number");
+        playerdialog.setHeaderText("Select number of players");
+        Optional<Integer> result = playerdialog.showAndWait();
+
+        ChoiceDialog<String> boardDialog = new ChoiceDialog<>(BOARD_NUMBER_OPTION.get(0), BOARD_NUMBER_OPTION);
+        boardDialog.setTitle("Board number");
+        boardDialog.setHeaderText("Select Board");
+        Optional<String> result2 = boardDialog.showAndWait();
+
+        String selectedBoard = result2.orElse(null); // Use orElse to handle canceled dialog
+
+        if (selectedBoard != null) { // Check if board selection is present
+            if (gameController != null) {
+                // The UI should not allow this, but in case this happens anyway.
+                // give the user the option to save the game or abort this operation!
+                if (!stopGame()) {
+                    return;
+                }
+            }
+            // XXX the board should eventually be created programmatically or loaded from a file
+            //     here we just create an empty board with the required number of players.
+
+            switch (selectedBoard) {
+                case "Map 1 - Small":
+                    board = LoadBoard.loadMap("Board 1");
+                    board.setGameId(1);
+                    break;
+
+                case "Map 2 - Small":
+                    // Logic for Map 2
+                    board = LoadBoard.loadMap("Board 2");
+                    board.setGameId(2);
+                    break;
+                case "Map 3 - Large":
+                    // Logic for Map 3
+                    board = LoadBoard.loadMap("Board 3");
+                    board.setGameId(3);
+                    //board= new Board(12,10);
+                    break;
+            }
+            gameController = new GameController(board);
+            int no = result.get();
+            minimumplayer = no;
+            System.out.println(minimumplayer);
+            for (int i = 0; i < no; i++) {
+                Player player = new Player(board, PLAYER_COLORS.get(i), "Player " + (i + 1));
+                board.addPlayer(player);
+
+                player.setSpace(board.getSpace(i, 0));
+                player.getSpace().setPlayer(player);
+            }
+            board.setCurrentPlayer(board.getPlayer(0));
+
+            gameController.startProgrammingPhase();
+
+            roboRally.createBoardView(gameController);
+        }
     }
 
     public void exit() {
