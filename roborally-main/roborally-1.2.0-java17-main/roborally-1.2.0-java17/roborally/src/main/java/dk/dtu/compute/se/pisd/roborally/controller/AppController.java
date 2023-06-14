@@ -109,14 +109,31 @@ public class AppController implements Observer {
         primaryStage.setScene(scene);
         primaryStage.show();
 
-        if(ProductClient.isCompleteMove()) {
+
 
             BoardTemplate template = LoadBoard.boardFromServer("test5");
+            if(template.gameId==1){
+                board = LoadBoard.loadMap("Board 1");
+                board.setGameId(1);
+                for (int i = 0; i < template.getPlayersNumber(); i++) {
+                    Player player = new Player(board, PLAYER_COLORS.get(i), "Player " + (i + 1));
+                    board.addPlayer(player);
+
+                    player.setSpace(board.getSpace(i, 0));
+                    player.getSpace().setPlayer(player);
+                }
+                board.setCurrentPlayer(board.getPlayer(0));
+
+
+
+
+
+            }
             LoadBoard.upDateBoard(template, board);
             ProductClient.setCompleteMove("false");
         }
 
-    }
+
 
     public void handleJoinGame(String playerName) {
         boolean isNameCorrect = checkifNameCorrect(playerName);
