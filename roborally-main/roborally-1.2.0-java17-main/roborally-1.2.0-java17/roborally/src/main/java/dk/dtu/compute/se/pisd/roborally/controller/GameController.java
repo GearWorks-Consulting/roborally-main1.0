@@ -77,6 +77,15 @@ public class GameController {
 
     // XXX: V2
     public void startProgrammingPhase() {
+        if(ProductClient.isCompleteMove() ) {
+
+            BoardTemplate template = LoadBoard.boardFromServer("test5");
+            LoadBoard.upDateBoard(template, board);
+            ProductClient.setCompleteMove("false");
+        }
+
+
+
         board.setPhase(Phase.PROGRAMMING);
         board.setCurrentPlayer(board.getPlayer(turn));
         board.setStep(turn);
@@ -96,6 +105,8 @@ public class GameController {
                 }
             }
         }
+        System.out.println("tes");
+
     }
 
     // XXX: V2
@@ -110,11 +121,14 @@ public class GameController {
      * It will set the games phase to activationPhase after Clicked(input).It will also set the current player to the first player, and setting the current step to zero.
      */
     public void finishProgrammingPhase() {
+
         makeProgramFieldsInvisible();
         makeProgramFieldsVisible(turn);
         board.setPhase(Phase.ACTIVATION);
         board.setCurrentPlayer(board.getPlayer(turn));
         board.setStep(turn);
+
+
     }
 
     // XXX: V2
@@ -160,6 +174,7 @@ public class GameController {
 
     // XXX: V2
     private void executeNextStep() {
+
         Player currentPlayer = board.getCurrentPlayer();
 
         if (board.getPhase() == Phase.ACTIVATION && currentPlayer != null) {
@@ -185,13 +200,18 @@ public class GameController {
                         board.setStep(step);
                         board.setCurrentPlayer(board.getPlayer(turn));
                     } else {
-                        turn = (turn + 1) % board.getPlayersNumber();
+
                         winGame();
                         startProgrammingPhase();
+
+                        turn = (turn + 1) % board.getPlayersNumber();
+
+
+
+
+
                         BoardTemplate saveTemp = LoadBoard.NormalBoardToTemplate(board);
                         LoadBoard.boardToServer(saveTemp,"test5");
-                        BoardTemplate template=LoadBoard.boardFromServer("test5");
-                        LoadBoard.upDateBoard(template,board);
 
 
                     }

@@ -1,7 +1,10 @@
 package dk.dtu.compute.se.pisd.roborally.client;
 
 import dk.dtu.compute.se.pisd.roborally.JSON.BoardTemplate;
+import dk.dtu.compute.se.pisd.roborally.JSON.LoadBoard;
 import dk.dtu.compute.se.pisd.roborally.JSON.PlayerTemplate;
+import dk.dtu.compute.se.pisd.roborally.JSON.SpaceTemplate;
+import dk.dtu.compute.se.pisd.roborally.model.*;
 
 import java.util.*;
 
@@ -18,6 +21,8 @@ public class Main {
                 System.out.println("\t1. Send board");
                 System.out.println("\t2. Get board");
                 System.out.println("\t3. Print test line: Test");
+                System.out.println("\t4. get boolean Test");
+                System.out.println("\t5. get setBool");
                 System.out.println("\t6. EXIT");
                 System.out.print("Enter option:");
                 valg = scan.nextInt();
@@ -30,34 +35,51 @@ public class Main {
                         boardTemplate.players.add(playerTemplate);
                         boardTemplate.gameId=2;
                         boardTemplate.players.get(0).name="Moiz";
+                        SpaceTemplate space= new SpaceTemplate();
+                        space.x=1;
+                        space.y=1;
+
+                        boardTemplate.players.get(0).space=space;
                         System.out.println(boardTemplate.players.get(0).name);
+                        boardTemplate.players.get(0).cards[0].card=new CommandCard(Command.FORWARD);
+                        System.out.println(boardTemplate.players.get(0).cards[0].card);
                         ProductClient.saveBoard(boardTemplate,"test2");
                     }
                     break;
                     case 2: {
-                        //BoardTemplate board = ProductClient.loadBoard("Test2");
-                        //System.out.println(board.phase);
-                        //System.out.println(board.spaces[0][1].x);
+
                         BoardTemplate board2 = ProductClient.loadBoard("test2");
-                        System.out.println(board2.phase);
-                        System.out.println(board2.players.get(0).name);
+                        System.out.println(board2.players.get(0).cards[0].card);
+                        Board board = new Board(2,2);
+                        Player player=new Player(board,null,"aliBaBa");
+                        board.players.add(player);
+                        board.setCurrentPlayer(player);
+
+                        LoadBoard.upDateBoard(board2,board);
+
+                        System.out.println(board.getPlayer(0).getCardField(0).getCard());
+                      //  System.out.println(board2.current.name);
+                       // System.out.println(board.getCurrentPlayer().getName());
+                        //System.out.println(board2.players.get(0).name);
+                        //System.out.println(board.getPlayer(0).getName());
 
 
                     }
                     break;
                     case 3: {
                         System.out.println(ProductClient.printTest());
+
+
+
                     }
                     break;
                     case 4: {
-                        //exercise12.Product p = new exercise12.Product(200, "Micro Owen", 350.0);
-                        //boolean success = ps.updateProduct(100, p);
-                        //System.out.println(success ? "Updated product 100" : "Failed to update!");
+                        System.out.println(ProductClient.isCompleteMove());
                     }
                     break;
                     case 5: {
-                        //boolean success = ps.deleteProductById(100);
-                        //System.out.println(success ? "Deleted product 100" : "Failed to delete!");
+                        System.out.println(ProductClient.setCompleteMove("true"));
+
                     }
                     break;
                     case 6:
