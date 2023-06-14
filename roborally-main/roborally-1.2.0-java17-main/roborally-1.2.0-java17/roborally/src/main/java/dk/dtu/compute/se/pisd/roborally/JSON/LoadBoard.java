@@ -130,13 +130,13 @@ public class LoadBoard {
 
 
             for (int k=0;k<result.getPlayer(i).getCards().length;k++){
-                result.getPlayer(i)  .getCardField(k).setCard(template.getPlayer(i).cards[k].card);
-                result.getPlayer(i) .getCardField(k).setVisible(template.getPlayer(i).cards[k].visible);
+                result.getPlayer(i).getCardField(k).setCard(template.getPlayer(i).cards[k].card);
+                result.getPlayer(i).getCardField(k).setVisible(template.getPlayer(i).cards[k].visible);
 
             }
             for (int k=0;k<result.getPlayer(i).getProgram().length;k++){
-                result.getPlayer(i) .getProgramField(k).setCard(template.getPlayer(i).program[k].card);
-                result.getPlayer(i)  .getProgramField(k).setVisible(template.getPlayer(i).program[k].visible);
+                result.getPlayer(i).getProgramField(k).setCard(template.getPlayer(i).program[k].card);
+                result.getPlayer(i).getProgramField(k).setVisible(template.getPlayer(i).program[k].visible);
             }
 
             if (template.current != null && result.current != null && template.current.name.equals(result.getCurrentPlayer().getName())) {

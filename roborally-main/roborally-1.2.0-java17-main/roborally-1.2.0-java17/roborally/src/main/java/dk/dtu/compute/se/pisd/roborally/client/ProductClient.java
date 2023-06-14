@@ -2,6 +2,7 @@ package dk.dtu.compute.se.pisd.roborally.client;
 
 import com.google.gson.Gson;
 import dk.dtu.compute.se.pisd.roborally.JSON.BoardTemplate;
+import dk.dtu.compute.se.pisd.roborally.model.Board;
 
 
 import java.net.URI;
@@ -11,6 +12,8 @@ import java.net.http.HttpResponse;
 import java.time.Duration;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
+
+import static java.lang.Boolean.parseBoolean;
 
 
 public class ProductClient implements IBoardTemplate {
@@ -69,27 +72,28 @@ public class ProductClient implements IBoardTemplate {
 
 
 
-    public boolean addProduct(Product p) {
+
+
+    public static boolean setCompleteMove(String p) {
         try{
-            String productJSON = new Gson().toJson(p);
+            String productJSON =p;
             HttpRequest request = HttpRequest.newBuilder()
                     .POST(HttpRequest.BodyPublishers.ofString(productJSON))
-                    .uri(URI.create("http://localhost:8080/products/"))
-                    .setHeader("User-Agent", "Product Client")
-                    .header("Content-Type", "application/json")
-                    .build();
+                    .uri(URI.create("http://10.209.211.14:8080/setCompleteMove/"))
+                            .setHeader("User-Agent", "Product Client")
+                            .header("Content-Type", "application/json")
+                            .build();
             CompletableFuture<HttpResponse<String>> response =
                     httpClient.sendAsync(request, HttpResponse.BodyHandlers.ofString());
             String result = response.thenApply((r)->r.body()).get(5, TimeUnit.SECONDS);
+            System.out.println("Great Success");
             return result.equals("added")? true : false;
+
         } catch (Exception e) {
+            System.out.println("Great Failure");
             return false;
         }
     }
-
-
-
-
 
 
     public static boolean saveBoard(BoardTemplate boardTemplate, String name) {
@@ -108,7 +112,12 @@ public class ProductClient implements IBoardTemplate {
         } catch (Exception e) {
             return false;
         }
+
+
+
     }
+
+
 
 
 
@@ -147,7 +156,25 @@ public class ProductClient implements IBoardTemplate {
             return null;
         }
     }
+    public static boolean isCompleteMove() {
+        try {
+            HttpRequest request = HttpRequest.newBuilder()
+                    .GET()
+                    .uri(URI.create("http://10.209.211.14:8080/isCompleteMove/"))
+                    .setHeader("User-Agent", "Product Client")
+                    .header("Content-Type", "application/json")
+                    .build();
 
+            CompletableFuture<HttpResponse<String>> response = httpClient.sendAsync(request, HttpResponse.BodyHandlers.ofString());
+
+
+            boolean result = Boolean.parseBoolean(response.get(5, TimeUnit.SECONDS).body());
+
+            return result;
+        } catch (Exception e) {
+            return false;
+        }
+    }
 
 
     public boolean updateProduct(int id, Product p) {

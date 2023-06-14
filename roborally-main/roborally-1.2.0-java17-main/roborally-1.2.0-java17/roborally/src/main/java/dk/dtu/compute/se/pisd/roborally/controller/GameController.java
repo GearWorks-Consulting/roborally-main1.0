@@ -77,6 +77,14 @@ public class GameController {
 
     // XXX: V2
     public void startProgrammingPhase() {
+        if(ProductClient.isCompleteMove() ) {
+
+            BoardTemplate template = LoadBoard.boardFromServer("test5");
+            LoadBoard.upDateBoard(template, board);
+            ProductClient.setCompleteMove("false");
+        }
+
+
 
         board.setPhase(Phase.PROGRAMMING);
         board.setCurrentPlayer(board.getPlayer(turn));
@@ -97,6 +105,8 @@ public class GameController {
                 }
             }
         }
+        System.out.println("tes");
+
     }
 
     // XXX: V2
@@ -190,15 +200,18 @@ public class GameController {
                         board.setStep(step);
                         board.setCurrentPlayer(board.getPlayer(turn));
                     } else {
-                        turn = (turn + 1) % board.getPlayersNumber();
+
                         winGame();
                         startProgrammingPhase();
+
+                        turn = (turn + 1) % board.getPlayersNumber();
+
+
+
+
+
                         BoardTemplate saveTemp = LoadBoard.NormalBoardToTemplate(board);
                         LoadBoard.boardToServer(saveTemp,"test5");
-
-                        BoardTemplate template=LoadBoard.boardFromServer("test5");
-                        LoadBoard.upDateBoard(template,board);
-
 
 
                     }
