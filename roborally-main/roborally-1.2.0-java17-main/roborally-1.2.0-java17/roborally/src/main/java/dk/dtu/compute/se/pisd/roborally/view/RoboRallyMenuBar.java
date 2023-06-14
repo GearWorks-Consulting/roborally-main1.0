@@ -1,24 +1,3 @@
-/*
- *  This file is part of the initial project provided for the
- *  course "Project in Software Development (02362)" held at
- *  DTU Compute at the Technical University of Denmark.
- *
- *  Copyright (C) 2019, 2020: Ekkart Kindler, ekki@dtu.dk
- *
- *  This software is free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; version 2 of the License.
- *
- *  This project is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with this project; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- *
- */
 package dk.dtu.compute.se.pisd.roborally.view;
 
 import dk.dtu.compute.se.pisd.roborally.controller.AppController;
@@ -26,12 +5,6 @@ import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 
-/**
- * ...
- *
- * @author Ekkart Kindler, ekki@dtu.dk
- *
- */
 public class RoboRallyMenuBar extends MenuBar {
 
     private AppController appController;
@@ -40,19 +13,16 @@ public class RoboRallyMenuBar extends MenuBar {
     private Menu controlMenu1;
 
     private MenuItem hostGame;
-
     private MenuItem joinGame;
     private MenuItem localGame;
 
     private MenuItem saveGame;
-
     private MenuItem newGame;
-
     private MenuItem loadGame;
-
+    private MenuItem loadGameLocal;
     private MenuItem stopGame;
-
     private MenuItem exitApp;
+    private MenuItem exitAppOnline;
 
     public RoboRallyMenuBar(AppController appController) {
         this.appController = appController;
@@ -63,48 +33,54 @@ public class RoboRallyMenuBar extends MenuBar {
         this.getMenus().add(controlMenu);
         this.getMenus().add(controlMenu1);
 
-
-        localGame = new MenuItem("localGame");
-        localGame.setOnAction( e -> this.appController.localGame());
+        localGame = new MenuItem("Local Game");
+        localGame.setOnAction(e -> this.appController.localGame());
         controlMenu1.getItems().add(localGame);
 
         joinGame = new MenuItem("Join Game");
-        joinGame.setOnAction( e -> this.appController.JoinGame());
+        joinGame.setOnAction(e -> this.appController.JoinGame());
         controlMenu.getItems().add(joinGame);
 
-
         hostGame = new MenuItem("Host Game");
-        hostGame.setOnAction( e -> this.appController.HostGame());
+        hostGame.setOnAction(e -> this.appController.HostGame());
         controlMenu.getItems().add(hostGame);
 
-
         newGame = new MenuItem("New Game");
-        newGame.setOnAction( e -> this.appController.newGame());
-        controlMenu.getItems().add(newGame);
+        newGame.setOnAction(e -> this.appController.newGame());
+        controlMenu1.getItems().add(newGame);
 
         stopGame = new MenuItem("Stop Game");
-        stopGame.setOnAction( e -> this.appController.stopGame());
-        controlMenu.getItems().add(stopGame);
+        stopGame.setOnAction(e -> this.appController.stopGame());
+        controlMenu1.getItems().add(stopGame);
 
         saveGame = new MenuItem("Save Game");
-        saveGame.setOnAction( e -> this.appController.saveGame());
-        controlMenu.getItems().add(saveGame);
+        saveGame.setOnAction(e -> this.appController.saveGame());
+        controlMenu1.getItems().add(saveGame);
 
         loadGame = new MenuItem("Load Game");
-        loadGame.setOnAction( e -> this.appController.loadGame());
+        loadGame.setOnAction(e -> this.appController.loadGame());
         controlMenu.getItems().add(loadGame);
 
+        loadGameLocal = new MenuItem("Load Game");
+        loadGameLocal.setOnAction(e -> this.appController.loadGame());
+        controlMenu1.getItems().add(loadGameLocal);
+
         exitApp = new MenuItem("Exit");
-        exitApp.setOnAction( e -> this.appController.exit());
-        controlMenu.getItems().add(exitApp);
+        exitApp.setOnAction(e -> this.appController.exit());
+        controlMenu1.getItems().add(exitApp);
+
+        exitAppOnline = new MenuItem("Exit");
+        exitAppOnline.setOnAction(e -> this.appController.exit());
+        controlMenu.getItems().add(exitAppOnline);
 
         controlMenu.setOnShowing(e -> update());
         controlMenu.setOnShown(e -> this.updateBounds());
+        controlMenu1.setOnShowing(e -> update());
+        controlMenu1.setOnShown(e -> this.updateBounds());
         update();
     }
 
     public void update() {
-
         boolean isGameRunning = appController.isGameRunning();
         boolean isLoadGameVisible = !isGameRunning; // Set the visibility of Load Game based on game running status
         boolean isOtherItemsVisible = true; // Set the visibility of other menu items based on Load Game visibility
@@ -112,9 +88,11 @@ public class RoboRallyMenuBar extends MenuBar {
         newGame.setVisible(isOtherItemsVisible && isGameRunning);
         stopGame.setVisible(isOtherItemsVisible && isGameRunning);
         saveGame.setVisible(isOtherItemsVisible && isGameRunning);
+
         hostGame.setVisible(isOtherItemsVisible);
         joinGame.setVisible(isOtherItemsVisible);
         loadGame.setVisible(isLoadGameVisible);
-    }
+        loadGameLocal.setVisible(isLoadGameVisible);
 
+    }
 }
