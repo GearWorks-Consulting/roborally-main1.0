@@ -77,12 +77,6 @@ public class GameController {
 
     // XXX: V2
     public void startProgrammingPhase() {
-        if(ProductClient.isCompleteMove() ) {
-
-            BoardTemplate template = LoadBoard.boardFromServer("test5");
-            LoadBoard.upDateBoard(template, board);
-            ProductClient.setCompleteMove("false");
-        }
 
 
 
@@ -207,6 +201,12 @@ public class GameController {
                         turn = (turn + 1) % board.getPlayersNumber();
 
 
+                        if(ProductClient.isCompleteMove()) {
+
+                            BoardTemplate template = LoadBoard.boardFromServer("test5");
+                            LoadBoard.upDateBoard(template, board);
+                            ProductClient.setCompleteMove("false");
+                        }
 
 
 
