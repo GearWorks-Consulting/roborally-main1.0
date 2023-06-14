@@ -225,9 +225,7 @@ public void newGame() {
             board.setCurrentPlayer(board.getPlayer(0));
             BoardTemplate boardTemplate = LoadBoard.NormalBoardToTemplate(board);
             ProductClient.saveBoard(boardTemplate,"test5");
-            //JoinGame(Board);
-            //getJoinBoard(board);
-            System.out.println(board + "test test");
+
 
             gameController.startProgrammingPhase();
 

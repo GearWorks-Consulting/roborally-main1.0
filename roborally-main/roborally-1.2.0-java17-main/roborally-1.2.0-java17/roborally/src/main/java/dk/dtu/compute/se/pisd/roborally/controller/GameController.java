@@ -99,7 +99,7 @@ public class GameController {
                 }
             }
         }
-        System.out.println("tes");
+
 
     }
 
@@ -201,17 +201,18 @@ public class GameController {
                         turn = (turn + 1) % board.getPlayersNumber();
 
 
-                        if(ProductClient.isCompleteMove() ) {
+                        if(ProductClient.isCompleteMove()) {
 
-                            BoardTemplate template = LoadBoard.boardFromServer("test5");
-                            LoadBoard.upDateBoard(template, board);
-                            ProductClient.setCompleteMove("false");
+                            BoardTemplate saveTemp = LoadBoard.NormalBoardToTemplate(board);
+                            LoadBoard.boardToServer(saveTemp,"test5");
                         }
+                        BoardTemplate template = LoadBoard.boardFromServer("test5");
+                        LoadBoard.upDateBoard(template, board);
+                        ProductClient.setCompleteMove("false");
 
 
 
-                        BoardTemplate saveTemp = LoadBoard.NormalBoardToTemplate(board);
-                        LoadBoard.boardToServer(saveTemp,"test5");
+
 
 
                     }
