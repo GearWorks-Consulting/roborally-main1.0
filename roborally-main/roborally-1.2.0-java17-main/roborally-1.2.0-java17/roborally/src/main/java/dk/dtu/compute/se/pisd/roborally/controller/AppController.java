@@ -124,11 +124,9 @@ public class AppController implements Observer {
         primaryStage.show();
 
         BoardTemplate template = LoadBoard.boardFromServer("serverGame");
-        if(template.gameId==1){
-            board = LoadBoard.loadMap("Board 1");
-            board.setGameId(1);
-           addPlayersToBoard(board,minimumplayer);
-        }
+
+
+
         LoadBoard.upDateBoard(template, board);
         ProductClient.setCompleteMove("false");
     }
