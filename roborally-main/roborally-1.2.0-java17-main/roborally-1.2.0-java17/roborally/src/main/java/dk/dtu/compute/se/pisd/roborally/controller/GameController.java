@@ -77,6 +77,9 @@ public class GameController {
 
     // XXX: V2
     public void startProgrammingPhase() {
+        updateGame();
+
+
 
         board.setPhase(Phase.PROGRAMMING);
         board.setCurrentPlayer(board.getPlayer(turn));
