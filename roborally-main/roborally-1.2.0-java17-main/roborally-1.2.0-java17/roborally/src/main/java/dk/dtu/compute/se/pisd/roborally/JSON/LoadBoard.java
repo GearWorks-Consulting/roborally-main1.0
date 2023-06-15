@@ -32,6 +32,8 @@ import dk.dtu.compute.se.pisd.roborally.model.*;
 
 import java.io.*;
 import java.time.temporal.Temporal;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * ...
@@ -40,12 +42,10 @@ import java.time.temporal.Temporal;
  */
 public class LoadBoard {
 
-
-
-
     private static final String BOARDSFOLDER = "boards";
     private static final String DEFAULTBOARD = "defaultboard";
     private static final String JSON_EXT = "json";
+
 
     public static BoardTemplate boardFromFile(String boardname) {
         if (boardname == null) {
@@ -91,136 +91,136 @@ public class LoadBoard {
     }
 
     public static void upDateBoard(BoardTemplate template, Board result){
+        if (result != null) {
+
+            for (int i = 0; i < result.width; i++) {
+                for (int j = 0; j < result.height; j++) {
+                    Space space = result.getSpace(i, j);
+                    SpaceTemplate temSpace = template.spaces[i][j];
+                    if (temSpace.Conveyor != null) {
+                        space.setConveyor(temSpace.Conveyor);
+                    }
+                    if (temSpace.checkPoint != null) {
+                        space.setCheckPoint(temSpace.checkPoint);
+                    }
+                    if (temSpace.wallHeading != null) {
+                        space.addWall(temSpace.wallHeading);
+                        space.setWall();
+                        space.setWallFacing(temSpace.wallHeading);
+                    }
+                    if (temSpace.gearRotation != null) {
+                        space.setGear(temSpace.gearRotation);
+                    }
 
 
-        for (int i = 0; i < result.width; i++) {
-            for (int j = 0; j < result.height; j++) {
-                Space space = result.getSpace(i, j);
-                SpaceTemplate temSpace = template.spaces[i][j];
-                if (temSpace.Conveyor != null) {
-                    space.setConveyor(temSpace.Conveyor);
                 }
-                if (temSpace.checkPoint != null) {
-                    space.setCheckPoint(temSpace.checkPoint);
-                }
-                if (temSpace.wallHeading != null) {
-                    space.addWall(temSpace.wallHeading);
-                    space.setWall();
-                    space.setWallFacing(temSpace.wallHeading);
-                }
-                if (temSpace.gearRotation != null) {
-                    space.setGear(temSpace.gearRotation);
-                }
-
-
-
-            }
-        }
-
-
-        if(template.gameId!=null)
-            result.setGameId(template.gameId);
-        for(int i=0;i<result.getPlayersNumber();i++) {
-
-            result.getPlayer(i).setTokens(template.getPlayer(i).tokens);
-            result.getPlayer(i).setSpace(result.getSpace(template.getPlayer(i).space.x,template.getPlayer(i).space.y));
-            result.getPlayer(i).setHeading(template.getPlayer(i).heading);
-            result.getPlayer(i) .getSpace().setPlayer(result.getPlayer(i));
-            result.getPlayer(i).setName(template.getPlayer(i).name);
-
-
-            for (int k=0;k<result.getPlayer(i).getCards().length;k++){
-                result.getPlayer(i).getCardField(k).setCard(template.getPlayer(i).cards[k].card);
-                result.getPlayer(i).getCardField(k).setVisible(template.getPlayer(i).cards[k].visible);
-
-            }
-            for (int k=0;k<result.getPlayer(i).getProgram().length;k++){
-                result.getPlayer(i).getProgramField(k).setCard(template.getPlayer(i).program[k].card);
-                result.getPlayer(i).getProgramField(k).setVisible(template.getPlayer(i).program[k].visible);
-            }
-
-            if (template.current != null && result.current != null && template.current.name.equals(result.getCurrentPlayer().getName())) {
-                result.setCurrentPlayer(result.getPlayer(i));
             }
 
 
+            if (template.gameId != null)
+                result.setGameId(template.gameId);
+            for (int i = 0; i < result.getPlayersNumber(); i++) {
 
-        }
-
-        if(template.gameId != null)
-            result.setGameId(template.gameId);
-
-        result.setPhase(template.phase);
-        result.setStep(template.step);
-        result.setStepMode(template.stepMode);
-
-
+                result.getPlayer(i).setTokens(template.getPlayer(i).tokens);
+                result.getPlayer(i).setSpace(result.getSpace(template.getPlayer(i).space.x, template.getPlayer(i).space.y));
+                result.getPlayer(i).setHeading(template.getPlayer(i).heading);
+                result.getPlayer(i).getSpace().setPlayer(result.getPlayer(i));
+                result.getPlayer(i).setName(template.getPlayer(i).name);
 
 
+                for (int k = 0; k < result.getPlayer(i).getCards().length; k++) {
+                    result.getPlayer(i).getCardField(k).setCard(template.getPlayer(i).cards[k].card);
+                    result.getPlayer(i).getCardField(k).setVisible(template.getPlayer(i).cards[k].visible);
 
-    }
-
-    public static Board templatetoBoard(BoardTemplate template){
-
-        Board result = new Board(template.width,template.height);
-        for (int i = 0; i < template.width; i++) {
-            for (int j = 0; j < template.height; j++) {
-                Space space = result.getSpace(i, j);
-                SpaceTemplate temSpace = template.spaces[i][j];
-                if (temSpace.Conveyor != null) {
-                    space.setConveyor(temSpace.Conveyor);
                 }
-                if (temSpace.checkPoint != null) {
-                    space.setCheckPoint(temSpace.checkPoint);
+                for (int k = 0; k < result.getPlayer(i).getProgram().length; k++) {
+                    result.getPlayer(i).getProgramField(k).setCard(template.getPlayer(i).program[k].card);
+                    result.getPlayer(i).getProgramField(k).setVisible(template.getPlayer(i).program[k].visible);
                 }
-                if (temSpace.wallHeading != null) {
-                    space.addWall(temSpace.wallHeading);
-                    space.setWall();
-                    space.setWallFacing(temSpace.wallHeading);
-                }
-                if (temSpace.gearRotation != null) {
-                    space.setGear(temSpace.gearRotation);
+
+                if (template.current != null && result.current != null && template.current.name.equals(result.getCurrentPlayer().getName())) {
+                    result.setCurrentPlayer(result.getPlayer(i));
                 }
 
 
             }
+
+            if (template.gameId != null)
+                result.setGameId(template.gameId);
+
+            result.setPhase(template.phase);
+            result.setStep(template.step);
+            result.setStepMode(template.stepMode);
+
 
         }
+        else
+        {
+            result= new Board(template.width, template.height);
+            for (int i = 0; i < result.width; i++) {
+                for (int j = 0; j < result.height; j++) {
+                    Space space = result.getSpace(i, j);
+                    SpaceTemplate temSpace = template.spaces[i][j];
+                    if (temSpace.Conveyor != null) {
+                        space.setConveyor(temSpace.Conveyor);
+                    }
+                    if (temSpace.checkPoint != null) {
+                        space.setCheckPoint(temSpace.checkPoint);
+                    }
+                    if (temSpace.wallHeading != null) {
+                        space.addWall(temSpace.wallHeading);
+                        space.setWall();
+                        space.setWallFacing(temSpace.wallHeading);
+                    }
+                    if (temSpace.gearRotation != null) {
+                        space.setGear(temSpace.gearRotation);
+                    }
 
 
-        if(template.gameId!=null)
-            result.setGameId(template.gameId);
-        for(int i=0;i<template.getPlayersNumber();i++) {
-            Player playerAmount = result.getPlayer(i);
+                }
+            }
 
-            playerAmount.setTokens(template.getPlayer(i).tokens);
-            playerAmount.setSpace(result.getSpace(template.getPlayer(i).space.x,template.getPlayer(i).space.y));
-            playerAmount.setHeading(template.getPlayer(i).heading);
-            playerAmount.getSpace().setPlayer(playerAmount);
-            result.addPlayer(playerAmount);
-            for (int k=0;k<template.getPlayer(i).cards.length;k++){
-                playerAmount.getCardField(k).setCard(template.getPlayer(i).cards[k].card);
-                playerAmount.getCardField(k).setVisible(template.getPlayer(i).cards[k].visible);
+
+            if (template.gameId != null)
+                result.setGameId(template.gameId);
+            for (int i = 0; i < template.getPlayersNumber(); i++) {
+                 List<String> PLAYER_COLORS = Arrays.asList("red", "green", "blue", "orange", "grey", "magenta");
+                result.addPlayer(new Player(result,PLAYER_COLORS.get(i) ,"Player " + (i + 1)));
+
+                result.getPlayer(i).setTokens(template.getPlayer(i).tokens);
+                result.getPlayer(i).setSpace(result.getSpace(template.getPlayer(i).space.x, template.getPlayer(i).space.y));
+                result.getPlayer(i).setHeading(template.getPlayer(i).heading);
+                result.getPlayer(i).getSpace().setPlayer(result.getPlayer(i));
+                result.getPlayer(i).setName(template.getPlayer(i).name);
+
+
+                for (int k = 0; k < result.getPlayer(i).getCards().length; k++) {
+                    result.getPlayer(i).getCardField(k).setCard(template.getPlayer(i).cards[k].card);
+                    result.getPlayer(i).getCardField(k).setVisible(template.getPlayer(i).cards[k].visible);
+
+                }
+                for (int k = 0; k < result.getPlayer(i).getProgram().length; k++) {
+                    result.getPlayer(i).getProgramField(k).setCard(template.getPlayer(i).program[k].card);
+                    result.getPlayer(i).getProgramField(k).setVisible(template.getPlayer(i).program[k].visible);
+                }
+
+                if (template.current != null && result.current != null && template.current.name.equals(result.getCurrentPlayer().getName())) {
+                    result.setCurrentPlayer(result.getPlayer(i));
+                }
+
 
             }
-            for (int k=0;k<template.getPlayer(i).program.length;k++){
-                playerAmount.getProgramField(k).setCard(template.getPlayer(i).program[k].card);
-                playerAmount.getProgramField(k).setVisible(template.getPlayer(i).program[k].visible);
-            }
 
-            if(template.current.name.equals(playerAmount.getName())){
-                result.setCurrentPlayer(playerAmount);
-            }
+            if (template.gameId != null)
+                result.setGameId(template.gameId);
+
+            result.setPhase(template.phase);
+            result.setStep(template.step);
+            result.setStepMode(template.stepMode);
+
+
         }
 
-        if(template.gameId != null)
-            result.setGameId(template.gameId);
-
-        result.setPhase(template.phase);
-        result.setStep(template.step);
-        result.setStepMode(template.stepMode);
-
-        return result;
     }
 
     public static Board loadMap(String boardname) {
@@ -276,7 +276,7 @@ public class LoadBoard {
         return null;
 
     }
-    public static BoardTemplate NormalBoardToTemplate( Board board){
+    public static BoardTemplate NormalBoardToTemplate(Board board){
         BoardTemplate template = new BoardTemplate(board.width, board.height);
         for (int i = 0; i < board.width; i++) {
             for (int j = 0; j < board.height; j++) {
@@ -378,4 +378,6 @@ public class LoadBoard {
     public static void boardToServer(BoardTemplate template,String fileName) {
         ProductClient.saveBoard(template,fileName);
     }
+
+
 }
