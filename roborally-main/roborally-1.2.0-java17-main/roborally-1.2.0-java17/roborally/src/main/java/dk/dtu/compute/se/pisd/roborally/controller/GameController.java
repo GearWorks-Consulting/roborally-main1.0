@@ -46,7 +46,16 @@ public class GameController {
      */
      public Board board;
     final private List<String> OPTIONS_Interactive = Arrays.asList("Left", "Right");
-    int turn = 0;
+
+    public int getTurn() {
+        return turn;
+    }
+
+    public void setTurn(int turn) {
+        this.turn = turn;
+    }
+
+    private int turn = 0;
 
 
     public GameController(@NotNull Board board) {
@@ -197,9 +206,10 @@ public class GameController {
                         board.setStep(step);
                         board.setCurrentPlayer(board.getPlayer(turn));
                     } else {
-                        turn = (turn + 1) % board.getPlayersNumber();
+                        //turn = (turn + 1) % board.getPlayersNumber();
                         winGame();
-                        //updateServer();
+                        if (board.getPlayerNumber(board.getCurrentPlayer())==turn)
+                        updateServer();
                         startProgrammingPhase();
 
 
