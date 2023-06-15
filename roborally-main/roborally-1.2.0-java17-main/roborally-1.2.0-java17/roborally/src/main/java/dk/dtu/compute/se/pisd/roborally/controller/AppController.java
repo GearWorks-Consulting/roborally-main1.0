@@ -128,7 +128,9 @@ public class AppController implements Observer {
 
 
         LoadBoard.upDateBoard(template, board);
-        ProductClient.setCompleteMove("false");
+       ProductClient.setCompleteMove("false");
+      // chooseMap("Map 1 - Small");
+      // addPlayersToBoard(board,2);
     }
     public void handleJoinGame(String playerName) {
         boolean isNameCorrect = checkifNameCorrect(playerName);
