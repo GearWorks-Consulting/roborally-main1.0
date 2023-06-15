@@ -81,10 +81,12 @@ public class AppController implements Observer {
         openButton.setOnAction(event -> {
 
             System.out.println(enteredText);
-                newGame();
+                startGame();
+            gameController.updateServer();
+
+                //gameController.updateServer();
                 primaryStage.close();
         });
-
         // Create a layout and add the text field and button
         VBox root = new VBox(10);
         root.getChildren().addAll(nameTextFieldGet, openButton);
@@ -94,7 +96,9 @@ public class AppController implements Observer {
         primaryStage.setTitle("Input dit navn");
         primaryStage.setScene(scene);
         primaryStage.show();
+
     }
+
     public void JoinGame() {
         Stage primaryStage = new Stage();
         TextField nameTextFieldGet = new TextField();
@@ -106,7 +110,7 @@ public class AppController implements Observer {
             System.out.println(enteredText);
 
             if (isNameCorrect) {
-                newGame();
+
                 primaryStage.close();
             } else {
                 System.out.println("Name is incorrect");
@@ -139,8 +143,7 @@ public class AppController implements Observer {
     }
 
 
-    public void newGame() {
-
+    private void startGame() {
         ChoiceDialog<Integer> playerdialog = new ChoiceDialog<>(PLAYER_NUMBER_OPTIONS.get(0), PLAYER_NUMBER_OPTIONS);
         playerdialog.setTitle("Player number");
         playerdialog.setHeaderText("Select number of players");
@@ -163,25 +166,29 @@ public class AppController implements Observer {
 
             // XXX the board should eventually be created programmatically or loaded from a file
             //     here we just create an empty board with the required number of players.
-            Board board=chooseMap(selectedBoard);
-
-
-
-
-
+            Board board = chooseMap(selectedBoard);
 
             gameController = new GameController(board);
             int no = result.get();
-            addPlayersToBoard(board,no);
+            addPlayersToBoard(board, no);
 
-          //  BoardTemplate boardTemplate = LoadBoard.NormalBoardToTemplate(board);
-           // ProductClient.saveBoard(boardTemplate,"test5");
             gameController.startProgrammingPhase();
-
-
             roboRally.createBoardView(gameController);
+
+
+
+            //  BoardTemplate boardTemplate = LoadBoard.NormalBoardToTemplate(board);
+            // ProductClient.saveBoard(boardTemplate,"test5");
         }
     }
+
+    public void localGame() {
+            startGame();
+
+            gameController.startProgrammingPhase();
+            roboRally.createBoardView(gameController);
+        }
+
     public void addPlayersToBoard(Board board,int no){
         for (int i = 0; i < no; i++) {
             Player player = new Player(board, PLAYER_COLORS.get(i), "Player " + (i + 1));
