@@ -163,15 +163,42 @@ public class AppController implements Observer {
 
             // XXX the board should eventually be created programmatically or loaded from a file
             //     here we just create an empty board with the required number of players.
+            Board board=chooseMap(selectedBoard);
 
 
 
 
 
 
-            switch (selectedBoard) {
-                case "Map 1 - Small":
-                 board = LoadBoard.loadMap("Board 1");
+            gameController = new GameController(board);
+            int no = result.get();
+            addPlayersToBoard(board,no);
+
+          //  BoardTemplate boardTemplate = LoadBoard.NormalBoardToTemplate(board);
+           // ProductClient.saveBoard(boardTemplate,"test5");
+            gameController.startProgrammingPhase();
+
+
+            roboRally.createBoardView(gameController);
+        }
+    }
+    public void addPlayersToBoard(Board board,int no){
+        for (int i = 0; i < no; i++) {
+            Player player = new Player(board, PLAYER_COLORS.get(i), "Player " + (i + 1));
+            board.addPlayer(player);
+
+            player.setSpace(board.getSpace(i, 0));
+            player.getSpace().setPlayer(player);
+        }
+        board.setCurrentPlayer(board.getPlayer(0));
+
+
+    }
+    public Board chooseMap(String selectedBoard){
+
+        switch (selectedBoard) {
+            case "Map 1 - Small":
+                board = LoadBoard.loadMap("Board 1");
 
                  /*   BoardTemplate TEM=LoadBoard.boardFromServer("test5");
                     int no = result.get();
@@ -188,40 +215,24 @@ public class AppController implements Observer {
                     LoadBoard.upDateBoard(TEM,board);
 
                   */
-                    board.setGameId(1);
-                    break;
+                board.setGameId(1);
+                break;
 
-                case "Map 2 - Small":
-                    // Logic for Map 2
-                    board = LoadBoard.loadMap("Board 2");
-                    board.setGameId(2);
-
-
-                    break;
-                case "Map 3 - Large":
-                    // Logic for Map 3
-                    board = LoadBoard.loadMap("Board 3");
-                    board.setGameId(3);
-                    //board= new Board(12,10);
-                    break;
-            }
-            gameController = new GameController(board);
-            int no = result.get();
-            for (int i = 0; i < no; i++) {
-                Player player = new Player(board, PLAYER_COLORS.get(i), "Player " + (i + 1));
-                board.addPlayer(player);
-
-                player.setSpace(board.getSpace(i, 0));
-                player.getSpace().setPlayer(player);
-            }
-            board.setCurrentPlayer(board.getPlayer(0));
-            BoardTemplate boardTemplate = LoadBoard.NormalBoardToTemplate(board);
-            ProductClient.saveBoard(boardTemplate,"test5");
-            gameController.startProgrammingPhase();
+            case "Map 2 - Small":
+                // Logic for Map 2
+                board = LoadBoard.loadMap("Board 2");
+                board.setGameId(2);
 
 
-            roboRally.createBoardView(gameController);
+                break;
+            case "Map 3 - Large":
+                // Logic for Map 3
+                board = LoadBoard.loadMap("Board 3");
+                board.setGameId(3);
+                //board= new Board(12,10);
+                break;
         }
+        return board;
     }
 
     public void saveGame() {

@@ -193,11 +193,11 @@ public class GameController {
                         turn = (turn + 1) % board.getPlayersNumber();
                         winGame();
                         startProgrammingPhase();
-                        BoardTemplate saveTemp = LoadBoard.NormalBoardToTemplate(board);
-                        LoadBoard.boardToServer(saveTemp,"test5");
+                        //BoardTemplate saveTemp = LoadBoard.NormalBoardToTemplate(board);
+                        //LoadBoard.boardToServer(saveTemp,"test5");
 
-                        BoardTemplate template=LoadBoard.boardFromServer("test5");
-                        LoadBoard.upDateBoard(template,board);
+                        //BoardTemplate template=LoadBoard.boardFromServer("test5");
+                        //LoadBoard.upDateBoard(template,board);
 
 
 
