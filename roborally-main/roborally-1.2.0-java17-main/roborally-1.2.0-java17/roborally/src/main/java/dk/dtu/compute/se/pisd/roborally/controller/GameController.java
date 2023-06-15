@@ -200,12 +200,8 @@ public class GameController {
                     } else {
                         turn = (turn + 1) % board.getPlayersNumber();
                         winGame();
+                        updateServer();
                         startProgrammingPhase();
-                        //BoardTemplate saveTemp = LoadBoard.NormalBoardToTemplate(board);
-                        //LoadBoard.boardToServer(saveTemp,"test5");
-
-                        //BoardTemplate template=LoadBoard.boardFromServer("test5");
-                        //LoadBoard.upDateBoard(template,board);
 
 
 
