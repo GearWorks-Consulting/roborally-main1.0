@@ -86,9 +86,6 @@ public class GameController {
 
     // XXX: V2
     public void startProgrammingPhase() {
-        updateGame();
-
-
 
         board.setPhase(Phase.PROGRAMMING);
         board.setCurrentPlayer(board.getPlayer(turn));
@@ -196,7 +193,6 @@ public class GameController {
                     if (command.isInteractive()) {
                         board.setPhase(Phase.PLAYER_INTERACTION);
                         return;
-
                     }
                     executeCommand(currentPlayer, command);
                 }

@@ -111,6 +111,7 @@ public class AppController implements Observer {
         openButton.setOnAction(event -> {
             String playerName = nameTextFieldGet.getText();
             handleJoinGame(playerName);
+            roboRally.createBoardView(gameController);
 
             primaryStage.close();
         });
