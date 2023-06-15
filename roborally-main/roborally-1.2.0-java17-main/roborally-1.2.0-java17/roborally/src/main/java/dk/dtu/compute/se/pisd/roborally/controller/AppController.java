@@ -80,10 +80,12 @@ public class AppController implements Observer {
         TextField nameTextFieldGet = new TextField();
         // Create a button to open a new screen
         Button openButton = new Button("Open");
+
         openButton.setOnAction(event -> {
             playerCount = 1;
             System.out.println(enteredText);
                 startGame();
+
             gameController.updateServer();
                 //gameController.updateServer();
                 primaryStage.close();
@@ -127,10 +129,11 @@ public class AppController implements Observer {
 
 
 
-        LoadBoard.upDateBoard(template, board);
+       board= LoadBoard.upDateBoard(template, board);
+        System.out.println(board.getPlayer(0).getName());
        ProductClient.setCompleteMove("false");
-      // chooseMap("Map 1 - Small");
-      // addPlayersToBoard(board,2);
+       roboRally.createBoardView(gameController);
+
     }
     public void handleJoinGame(String playerName) {
         boolean isNameCorrect = checkifNameCorrect(playerName);

@@ -212,8 +212,7 @@ public class GameController {
                     } else {
                         //turn = (turn + 1) % board.getPlayersNumber();
                         winGame();
-                        if (board.getPlayerNumber(board.getCurrentPlayer())==turn)
-                        updateServer();
+                        //updateServer();
                         startProgrammingPhase();
 
 

@@ -90,7 +90,7 @@ public class LoadBoard {
         return ProductClient.loadBoard(boardname);
     }
 
-    public static void upDateBoard(BoardTemplate template, Board result){
+    public static Board upDateBoard(BoardTemplate template, Board result){
         if (result != null) {
 
             for (int i = 0; i < result.width; i++) {
@@ -152,7 +152,7 @@ public class LoadBoard {
             result.setStep(template.step);
             result.setStepMode(template.stepMode);
 
-
+return  result;
         }
         else
         {
@@ -218,7 +218,7 @@ public class LoadBoard {
             result.setStep(template.step);
             result.setStepMode(template.stepMode);
 
-
+return result;
         }
 
     }
