@@ -66,6 +66,8 @@ public class AppController implements Observer {
 
 
     private GameController gameController;
+    private int playerCount = 0;
+    public int minimumplayer;
 
     public AppController(@NotNull RoboRally roboRally) {
         this.roboRally = roboRally;
@@ -79,11 +81,10 @@ public class AppController implements Observer {
         // Create a button to open a new screen
         Button openButton = new Button("Open");
         openButton.setOnAction(event -> {
-
+            playerCount = 1;
             System.out.println(enteredText);
                 startGame();
             gameController.updateServer();
-
                 //gameController.updateServer();
                 primaryStage.close();
         });
@@ -106,15 +107,10 @@ public class AppController implements Observer {
         // Create a button to open a new screen
         Button openButton = new Button("Open");
         openButton.setOnAction(event -> {
-            boolean isNameCorrect = checkifNameCorrect(nameTextFieldGet.getText());
-            System.out.println(enteredText);
+            String playerName = nameTextFieldGet.getText();
+            handleJoinGame(playerName);
 
-            if (isNameCorrect) {
-
-                primaryStage.close();
-            } else {
-                System.out.println("Name is incorrect");
-            }
+            primaryStage.close();
         });
 
         // Create a layout and add the text field and button
@@ -122,23 +118,55 @@ public class AppController implements Observer {
         root.getChildren().addAll(nameTextFieldGet, openButton);
 
         // Create a scene and set it on the stage
-        Scene scene = new Scene(root, 250, 100);
-        primaryStage.setTitle("Input dit navn");
+        Scene scene = new Scene(root, 400, 100);
+        primaryStage.setTitle("Input the host's name");
         primaryStage.setScene(scene);
         primaryStage.show();
+
+        BoardTemplate template = LoadBoard.boardFromServer("test5");
+        if(template.gameId==1){
+            board = LoadBoard.loadMap("Board 1");
+            board.setGameId(1);
+           addPlayersToBoard(board,playerCount);
+        }
+        LoadBoard.upDateBoard(template, board);
+        ProductClient.setCompleteMove("false");
+    }
+    public void handleJoinGame(String playerName) {
+        boolean isNameCorrect = checkifNameCorrect(playerName);
+
+        if (isNameCorrect && board != null) {
+            showAlertIfLobbyFull();
+
+            // Increment the player count
+            if (playerCount < minimumplayer) {
+                playerCount++;
+            }
+
+            System.out.println("Player Count: " + playerCount);
+
+            // Rest of the code...
+        }
+    }
+    private boolean checkifNameCorrect(String playerName) {
+        boolean isNameCorrect = playerName.equals(enteredText);
+        if (!isNameCorrect) {
+            Alert alert = new Alert(AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Invalid Name");
+            alert.setContentText("The entered name does not match the required name!");
+            alert.showAndWait();
+        }
+        return isNameCorrect;
     }
 
-    public boolean checkifNameCorrect(String nameMatch) {
-        String textFromTextField = nameMatch; // Get the text from the nameTextFieldGet
-
-        if (enteredText.equals(textFromTextField)) {
-            // Name matches
-            System.out.println("Name is correct: " + enteredText);
-            return true;
-        } else {
-            // Name does not match
-            System.out.println("Name is incorrect");
-            return false;
+    private void showAlertIfLobbyFull() {
+        if (playerCount >= minimumplayer) {
+            Alert alert = new Alert(AlertType.INFORMATION);
+            alert.setTitle("Lobby Full");
+            alert.setHeaderText(null);
+            alert.setContentText("The lobby is now full.");
+            alert.showAndWait();
         }
     }
 
@@ -169,7 +197,10 @@ public class AppController implements Observer {
             Board board = chooseMap(selectedBoard);
 
             gameController = new GameController(board);
+
             int no = result.get();
+            minimumplayer = no;
+            System.out.println(minimumplayer);
             addPlayersToBoard(board, no);
 
             gameController.startProgrammingPhase();
