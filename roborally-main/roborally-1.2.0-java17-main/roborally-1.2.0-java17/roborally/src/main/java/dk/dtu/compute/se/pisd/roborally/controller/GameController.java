@@ -78,8 +78,6 @@ public class GameController {
     // XXX: V2
     public void startProgrammingPhase() {
 
-
-
         board.setPhase(Phase.PROGRAMMING);
         board.setCurrentPlayer(board.getPlayer(turn));
         board.setStep(turn);
@@ -99,8 +97,6 @@ public class GameController {
                 }
             }
         }
-
-
     }
 
     // XXX: V2
@@ -194,24 +190,14 @@ public class GameController {
                         board.setStep(step);
                         board.setCurrentPlayer(board.getPlayer(turn));
                     } else {
-
+                        turn = (turn + 1) % board.getPlayersNumber();
                         winGame();
                         startProgrammingPhase();
+                        //BoardTemplate saveTemp = LoadBoard.NormalBoardToTemplate(board);
+                        //LoadBoard.boardToServer(saveTemp,"test5");
 
-                        turn = (turn + 1) % board.getPlayersNumber();
-
-
-                        if(ProductClient.isCompleteMove()) {
-
-                            BoardTemplate saveTemp = LoadBoard.NormalBoardToTemplate(board);
-                            LoadBoard.boardToServer(saveTemp,"test5");
-                        }
-                        BoardTemplate template = LoadBoard.boardFromServer("test5");
-                        LoadBoard.upDateBoard(template, board);
-                        ProductClient.setCompleteMove("false");
-
-
-
+                        //BoardTemplate template=LoadBoard.boardFromServer("test5");
+                        //LoadBoard.upDateBoard(template,board);
 
 
 
