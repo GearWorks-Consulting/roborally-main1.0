@@ -109,7 +109,6 @@ public class AppController implements Observer {
         openButton.setOnAction(event -> {
             String playerName = nameTextFieldGet.getText();
             handleJoinGame(playerName);
-            roboRally.createBoardView(gameController);
 
             primaryStage.close();
         });
@@ -124,15 +123,14 @@ public class AppController implements Observer {
         primaryStage.setScene(scene);
         primaryStage.show();
 
-
         BoardTemplate template = LoadBoard.boardFromServer("serverGame");
 
 
 
         LoadBoard.upDateBoard(template, board);
-        ProductClient.setCompleteMove("false");
-        //roboRally.createBoardView(gameController);
-
+       ProductClient.setCompleteMove("false");
+      // chooseMap("Map 1 - Small");
+      // addPlayersToBoard(board,2);
     }
     public void handleJoinGame(String playerName) {
         boolean isNameCorrect = checkifNameCorrect(playerName);
@@ -146,6 +144,8 @@ public class AppController implements Observer {
             }
 
             System.out.println("Player Count: " + playerCount);
+
+            // Rest of the code...
         }
     }
     private boolean checkifNameCorrect(String playerName) {

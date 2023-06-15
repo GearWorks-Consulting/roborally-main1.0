@@ -199,7 +199,7 @@ public class GameController {
                     } else {
                         turn = (turn + 1) % board.getPlayersNumber();
                         winGame();
-                        updateServer();
+                        //updateServer();
                         startProgrammingPhase();
 
 
