@@ -120,6 +120,14 @@ public class GameController {
 
 
     }
+    public void updateServer(){
+       BoardTemplate boardTemplate = LoadBoard.NormalBoardToTemplate(board);
+        LoadBoard.boardToServer(boardTemplate,"serverGame");
+    }
+    public void updateGame(){
+        BoardTemplate boardTemplate= LoadBoard.boardFromServer("serverGame");
+        LoadBoard.upDateBoard(boardTemplate,board);
+    }
 
     // XXX: V2
     private void makeProgramFieldsVisible(int register) {

@@ -70,7 +70,7 @@ public class LoadBoard {
             BoardTemplate template;
 
 
-                template = gson.fromJson(reader, BoardTemplate.class);
+            template = gson.fromJson(reader, BoardTemplate.class);
 
 
 
@@ -130,13 +130,13 @@ public class LoadBoard {
 
 
             for (int k=0;k<result.getPlayer(i).getCards().length;k++){
-                result.getPlayer(i)  .getCardField(k).setCard(template.getPlayer(i).cards[k].card);
-                result.getPlayer(i) .getCardField(k).setVisible(template.getPlayer(i).cards[k].visible);
+                result.getPlayer(i).getCardField(k).setCard(template.getPlayer(i).cards[k].card);
+                result.getPlayer(i).getCardField(k).setVisible(template.getPlayer(i).cards[k].visible);
 
             }
             for (int k=0;k<result.getPlayer(i).getProgram().length;k++){
-                result.getPlayer(i) .getProgramField(k).setCard(template.getPlayer(i).program[k].card);
-                result.getPlayer(i)  .getProgramField(k).setVisible(template.getPlayer(i).program[k].visible);
+                result.getPlayer(i).getProgramField(k).setCard(template.getPlayer(i).program[k].card);
+                result.getPlayer(i).getProgramField(k).setVisible(template.getPlayer(i).program[k].visible);
             }
 
             if (template.current != null && result.current != null && template.current.name.equals(result.getCurrentPlayer().getName())) {
@@ -162,7 +162,7 @@ public class LoadBoard {
 
     public static Board templatetoBoard(BoardTemplate template){
 
-Board result = new Board(template.width,template.height);
+        Board result = new Board(template.width,template.height);
         for (int i = 0; i < template.width; i++) {
             for (int j = 0; j < template.height; j++) {
                 Space space = result.getSpace(i, j);
@@ -220,7 +220,7 @@ Board result = new Board(template.width,template.height);
         result.setStep(template.step);
         result.setStepMode(template.stepMode);
 
-return result;
+        return result;
     }
 
     public static Board loadMap(String boardname) {
@@ -338,45 +338,44 @@ return result;
 
 
 
-            ClassLoader classLoader = LoadBoard.class.getClassLoader();
-            // TODO: this is not very defensive, and will result in a NullPointerException
-            //       when the folder "resources" does not exist! But, it does not need
-            //       the file "simpleCards.json" to exist!
-            String filename =
-                    name + "." + JSON_EXT;
-            GsonBuilder simpleBuilder = new GsonBuilder().
-                    registerTypeAdapter(FieldAction.class, new Adapter<FieldAction>()).
-                    setPrettyPrinting();
+        ClassLoader classLoader = LoadBoard.class.getClassLoader();
+        // TODO: this is not very defensive, and will result in a NullPointerException
+        //       when the folder "resources" does not exist! But, it does not need
+        //       the file "simpleCards.json" to exist!
+        String filename =
+                name + "." + JSON_EXT;
+        GsonBuilder simpleBuilder = new GsonBuilder().
+                registerTypeAdapter(FieldAction.class, new Adapter<FieldAction>()).
+                setPrettyPrinting();
 
-            Gson gson = simpleBuilder.create();
+        Gson gson = simpleBuilder.create();
 
-            FileWriter fileWriter = null;
-            JsonWriter writer = null;
-            try {
-                fileWriter = new FileWriter(filename);
-                writer = gson.newJsonWriter(fileWriter);
-                gson.toJson(template, template.getClass(), writer);
-                writer.close();
-            } catch (IOException e1) {
-                if (writer != null) {
-                    try {
-                        writer.close();
-                        fileWriter = null;
-                    } catch (IOException e2) {
-                    }
-                }
-                if (fileWriter != null) {
-                    try {
-                        fileWriter.close();
-                    } catch (IOException e2) {
-                    }
+        FileWriter fileWriter = null;
+        JsonWriter writer = null;
+        try {
+            fileWriter = new FileWriter(filename);
+            writer = gson.newJsonWriter(fileWriter);
+            gson.toJson(template, template.getClass(), writer);
+            writer.close();
+        } catch (IOException e1) {
+            if (writer != null) {
+                try {
+                    writer.close();
+                    fileWriter = null;
+                } catch (IOException e2) {
                 }
             }
+            if (fileWriter != null) {
+                try {
+                    fileWriter.close();
+                } catch (IOException e2) {
+                }
+            }
+        }
 
 
-}
+    }
     public static void boardToServer(BoardTemplate template,String fileName) {
-         ProductClient.saveBoard(template,fileName);
+        ProductClient.saveBoard(template,fileName);
     }
 }
-
