@@ -86,6 +86,7 @@ public class GameController {
 
     // XXX: V2
     public void startProgrammingPhase() {
+        updateGame();
 
 
 
@@ -135,8 +136,10 @@ public class GameController {
        BoardTemplate boardTemplate = LoadBoard.NormalBoardToTemplate(board);
         LoadBoard.boardToServer(boardTemplate,"serverGame");
     }
-
-
+    public void updateGame(){
+        BoardTemplate boardTemplate= LoadBoard.boardFromServer("serverGame");
+        LoadBoard.upDateBoard(boardTemplate,board);
+    }
 
     // XXX: V2
     private void makeProgramFieldsVisible(int register) {
@@ -164,7 +167,6 @@ public class GameController {
     public void executePrograms() {
         board.setStepMode(false);
         continuePrograms();
-
     }
 
     // XXX: V2
@@ -194,6 +196,7 @@ public class GameController {
                     if (command.isInteractive()) {
                         board.setPhase(Phase.PLAYER_INTERACTION);
                         return;
+
                     }
                     executeCommand(currentPlayer, command);
                 }
@@ -207,11 +210,12 @@ public class GameController {
                         board.setStep(step);
                         board.setCurrentPlayer(board.getPlayer(turn));
                     } else {
-                        turn = (turn + 1) % board.getPlayersNumber();
+                        //turn = (turn + 1) % board.getPlayersNumber();
                         winGame();
-                       //LoadBoard.UpdateMoveToServer(board,1);
-                        System.out.println(board);
+                        //updateServer();
                         startProgrammingPhase();
+
+
 
                     }
                 }
