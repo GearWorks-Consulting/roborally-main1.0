@@ -58,8 +58,8 @@ public class Main {
                         LoadBoard.upDateBoard(board2,board);
 
                         System.out.println(board.getPlayer(0).getCardField(0).getCard());
-                      //  System.out.println(board2.current.name);
-                       // System.out.println(board.getCurrentPlayer().getName());
+                        //  System.out.println(board2.current.name);
+                        // System.out.println(board.getCurrentPlayer().getName());
                         //System.out.println(board2.players.get(0).name);
                         //System.out.println(board.getPlayer(0).getName());
 

@@ -80,9 +80,9 @@ public class ProductClient implements IBoardTemplate {
             HttpRequest request = HttpRequest.newBuilder()
                     .POST(HttpRequest.BodyPublishers.ofString(productJSON))
                     .uri(URI.create("http://10.209.211.14:8080/setCompleteMove/"))
-                            .setHeader("User-Agent", "Product Client")
-                            .header("Content-Type", "application/json")
-                            .build();
+                    .setHeader("User-Agent", "Product Client")
+                    .header("Content-Type", "application/json")
+                    .build();
             CompletableFuture<HttpResponse<String>> response =
                     httpClient.sendAsync(request, HttpResponse.BodyHandlers.ofString());
             String result = response.thenApply((r)->r.body()).get(5, TimeUnit.SECONDS);
@@ -215,6 +215,5 @@ public class ProductClient implements IBoardTemplate {
 
 
 }
-
 
 
