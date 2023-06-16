@@ -86,6 +86,7 @@ public class GameController {
 
     // XXX: V2
     public void startProgrammingPhase() {
+        System.out.println(board);
 
         board.setPhase(Phase.PROGRAMMING);
         board.setCurrentPlayer(board.getPlayer(turn));
@@ -136,6 +137,11 @@ public class GameController {
     public void updateGame(){
         BoardTemplate boardTemplate= LoadBoard.boardFromServer("serverGame");
         LoadBoard.upDateBoard(boardTemplate,board);
+    }
+    public void updateMove(int i){
+        BoardTemplate boardTemplate = LoadBoard.UpdateMoveToServer(board,i);
+        LoadBoard.boardToServer(boardTemplate,"serverGame");
+
     }
 
     // XXX: V2
@@ -206,9 +212,11 @@ public class GameController {
                         board.setStep(step);
                         board.setCurrentPlayer(board.getPlayer(turn));
                     } else {
-                        //turn = (turn + 1) % board.getPlayersNumber();
+                        turn = (turn + 1) % board.getPlayersNumber();
                         winGame();
                         //updateServer();
+                        updateMove(0);
+                        updateGame();
                         startProgrammingPhase();
 
 
