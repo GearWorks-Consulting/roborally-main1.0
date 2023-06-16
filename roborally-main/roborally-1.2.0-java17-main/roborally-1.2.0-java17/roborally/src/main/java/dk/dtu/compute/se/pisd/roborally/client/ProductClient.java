@@ -70,11 +70,6 @@ public class ProductClient implements IBoardTemplate {
         }
     }
 
-
-
-
-
-
     public static boolean setCompleteMove(String p) {
         try{
             String productJSON =p;
@@ -96,7 +91,45 @@ public class ProductClient implements IBoardTemplate {
         }
     }
 
+    public static boolean updatePlayerJoinedCounter(String p) {
+        try{
+            String productJSON =p;
+            HttpRequest request = HttpRequest.newBuilder()
+                    .POST(HttpRequest.BodyPublishers.ofString(productJSON))
+                    .uri(URI.create("http://10.209.211.14:8080/updatePlayerJoinedCounter/"))
+                    .setHeader("User-Agent", "Product Client")
+                    .header("Content-Type", "application/json")
+                    .build();
+            CompletableFuture<HttpResponse<String>> response =
+                    httpClient.sendAsync(request, HttpResponse.BodyHandlers.ofString());
+            String result = response.thenApply((r)->r.body()).get(5, TimeUnit.SECONDS);
+            System.out.println("Big "+ p);
+            return result.equals("added")? true : false;
+        } catch (Exception e) {
+            System.out.println("Great Failure, lort");
+            return false;
+        }
+    }
+    public static String getPlayerCounter() {
+        try {
+            HttpRequest request = HttpRequest.newBuilder()
+                    .GET()
+                    .uri(URI.create("http://10.209.211.14:8080/getPlayerCounter"))
+                    .setHeader("User-Agent", "Product Client")
+                    .build();
 
+            CompletableFuture<HttpResponse<String>> response =
+                    httpClient.sendAsync(request, HttpResponse.BodyHandlers.ofString());
+
+            String result = response.thenApply(HttpResponse::body).get(5, TimeUnit.SECONDS);
+            System.out.println("Retrieved counter " + result);
+            return result;
+
+        } catch (Exception e) {
+            System.out.println("Failed counter: " + e.getMessage());
+            return null;
+        }
+    }
     public static boolean updateMaxPlayers(String p) {
         try{
             String productJSON =p;
@@ -137,6 +170,7 @@ public class ProductClient implements IBoardTemplate {
             return null;
         }
     }
+
 
     public static boolean saveBoard(BoardTemplate boardTemplate, String name) {
         try{

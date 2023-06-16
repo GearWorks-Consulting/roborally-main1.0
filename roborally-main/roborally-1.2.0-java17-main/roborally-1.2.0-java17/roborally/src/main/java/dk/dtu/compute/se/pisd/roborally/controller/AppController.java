@@ -66,8 +66,9 @@ public class AppController implements Observer {
 
 
     private GameController gameController;
-    private int playerCount = 0;
+    private int playerCount;
     public int minimumplayer;
+
 
     public AppController(@NotNull RoboRally roboRally) {
         this.roboRally = roboRally;
@@ -83,6 +84,7 @@ public class AppController implements Observer {
         Button openButton = new Button("Open");
         openButton.setOnAction(event -> {
             playerCount = 1;
+            ProductClient.updatePlayerJoinedCounter(""+ playerCount);
             System.out.println(enteredText);
                 startGame();
             gameController.updateServer();
@@ -117,6 +119,7 @@ public class AppController implements Observer {
             String playerName = nameTextFieldGet.getText();
             handleJoinGame(playerName);
 
+
             primaryStage.close();
         });
 
@@ -142,12 +145,19 @@ public class AppController implements Observer {
     public void handleJoinGame(String playerName) {
         boolean isNameCorrect = checkifNameCorrect(playerName);
 
+        int playerCounter = playerCount;
         if (isNameCorrect &&  hostBoardTemplate != null) {
+            if(playerCount < minimumplayer) {
+
+
+                ProductClient.updatePlayerJoinedCounter(""+ playerCounter +1);
+            }
             showAlertIfLobbyFull();
 
             // Increment the player count
             if (playerCount < minimumplayer) {
                 playerCount++;
+
             }
 
             System.out.println("Player Count: " + playerCount);
