@@ -122,6 +122,7 @@ public class LoadBoard {
             for (int i = 0; i < result.getPlayersNumber(); i++) {
 
                 result.getPlayer(i).setTokens(template.getPlayer(i).tokens);
+
                 result.getPlayer(i).setSpace(result.getSpace(template.getPlayer(i).space.x, template.getPlayer(i).space.y));
                 result.spaces[template.getPlayer(i).space.x][template.getPlayer(i).space.y].setPlayer(result.getPlayer(i));
                 result.getPlayer(i).setHeading(template.getPlayer(i).heading);
@@ -378,6 +379,8 @@ return result;
             PlayerTemplate playerAmount = templateFromServer.getPlayer(currentPlayer);
             playerAmount.tokens = board.getPlayer(currentPlayer).getTokens();
             playerAmount.heading = board.getPlayer(currentPlayer).getHeading();
+
+
             playerAmount.space = templateFromServer.spaces[board.getPlayer(currentPlayer).getSpace().x][board.getPlayer(currentPlayer).getSpace().y];
 
 

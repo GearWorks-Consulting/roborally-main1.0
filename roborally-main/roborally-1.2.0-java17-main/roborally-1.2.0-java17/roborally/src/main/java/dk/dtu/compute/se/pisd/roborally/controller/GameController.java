@@ -89,6 +89,7 @@ public class GameController {
 
 
 
+
         board.setPhase(Phase.PROGRAMMING);
         board.setCurrentPlayer(board.getPlayer(turn));
         board.setStep(turn);
@@ -209,8 +210,8 @@ public class GameController {
                     } else {
                         turn = (turn + 1) % board.getPlayersNumber();
                         winGame();
-                       LoadBoard.UpdateMoveToServer(board,0);
-                        System.out.println(board);
+
+
                         startProgrammingPhase();
 
 
@@ -225,8 +226,7 @@ public class GameController {
             // this should not happen
             assert false;
         }
-        // turn=1;
-        // board.setCurrentPlayer(board.getPlayer(turn));
+
     }
 
     /**
@@ -280,6 +280,7 @@ public class GameController {
      * Moves the player 1 vector direction forward, depending on the heading.
      */
     public void moveForward(@NotNull Player player) {
+        LoadBoard.UpdateMoveToServer(board,0);
         Space space = player.getSpace();
         Space playerSpace = player.getSpace();
 
