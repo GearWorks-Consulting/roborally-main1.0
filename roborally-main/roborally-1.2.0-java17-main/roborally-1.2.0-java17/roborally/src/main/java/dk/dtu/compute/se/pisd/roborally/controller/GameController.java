@@ -134,15 +134,8 @@ public class GameController {
        BoardTemplate boardTemplate = LoadBoard.NormalBoardToTemplate(board);
         LoadBoard.boardToServer(boardTemplate,"serverGame");
     }
-    public void updateGame(){
-        BoardTemplate boardTemplate= LoadBoard.boardFromServer("serverGame");
-        LoadBoard.upDateBoard(boardTemplate,board);
-    }
-    public void updateMove(int i){
-        BoardTemplate boardTemplate = LoadBoard.UpdateMoveToServer(board,i);
-        LoadBoard.boardToServer(boardTemplate,"serverGame");
 
-    }
+
 
     // XXX: V2
     private void makeProgramFieldsVisible(int register) {
@@ -214,9 +207,7 @@ public class GameController {
                     } else {
                         turn = (turn + 1) % board.getPlayersNumber();
                         winGame();
-                        //updateServer();
-                        updateMove(0);
-                        updateGame();
+                        LoadBoard.UpdateMoveToServer(board,0);
                         startProgrammingPhase();
 
 
