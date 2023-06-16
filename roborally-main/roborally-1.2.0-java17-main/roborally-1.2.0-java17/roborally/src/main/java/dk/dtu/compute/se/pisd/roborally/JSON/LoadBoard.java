@@ -444,6 +444,7 @@ return result;
         template.phase = board.getPhase();
         template.step = board.getStep();
         template.stepMode = board.stepMode;
+        boardToServer(template,"serverGame");
         return template;
 
     }
