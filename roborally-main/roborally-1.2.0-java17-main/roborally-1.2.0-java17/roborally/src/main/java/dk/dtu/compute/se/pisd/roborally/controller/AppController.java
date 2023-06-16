@@ -86,8 +86,12 @@ public class AppController implements Observer {
             System.out.println(enteredText);
                 startGame();
             gameController.updateServer();
-            boolean updateMaxPlayersResult = ProductClient.updateMaxPlayers("" + minimumplayer);
+            //boolean updateMaxPlayersResult = ProductClient.updateMaxPlayers("" + minimumplayer);
+            //ProductClient.updateMaxPlayers(""+ minimumplayer);
                 //gameController.updateServer();
+            ProductClient.updateMaxPlayers(""+ minimumplayer);
+            int maxPlayers = Integer.parseInt(ProductClient.getMaxPlayers());
+            //System.out.println("Max Players: " + maxPlayers);
                 primaryStage.close();
         });
         // Create a layout and add the text field and button

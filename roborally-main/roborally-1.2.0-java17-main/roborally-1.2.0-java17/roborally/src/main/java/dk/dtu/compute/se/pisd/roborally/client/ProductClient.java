@@ -117,23 +117,24 @@ public class ProductClient implements IBoardTemplate {
             return false;
         }
     }
-    public static boolean getMaxPlayers() {
+    public static String getMaxPlayers() {
         try {
             HttpRequest request = HttpRequest.newBuilder()
                     .GET()
-                    .uri(URI.create("http://10.209.211.14:8080/getMaxPlayers/"))
+                    .uri(URI.create("http://10.209.211.14:8080/getMaxPlayers"))
                     .setHeader("User-Agent", "Product Client")
-                    .header("Content-Type", "application/json")
                     .build();
 
-            CompletableFuture<HttpResponse<String>> response = httpClient.sendAsync(request, HttpResponse.BodyHandlers.ofString());
+            CompletableFuture<HttpResponse<String>> response =
+                    httpClient.sendAsync(request, HttpResponse.BodyHandlers.ofString());
 
-
-            boolean result = Boolean.parseBoolean(response.get(5, TimeUnit.SECONDS).body());
-
+            String result = response.thenApply(HttpResponse::body).get(5, TimeUnit.SECONDS);
+            System.out.println("Retrieved max players: " + result);
             return result;
+
         } catch (Exception e) {
-            return false;
+            System.out.println("Failed to retrieve max players: " + e.getMessage());
+            return null;
         }
     }
 

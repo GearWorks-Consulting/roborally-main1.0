@@ -67,8 +67,12 @@ public class Main {
                     }
                     break;
                     case 3: {
-                        System.out.println(ProductClient.printTest());
+                        //System.out.println(ProductClient.printTest());
 
+                        //ProductClient.updateMaxPlayers("3");
+                        //int maxPlayers = Integer.parseInt(ProductClient.getMaxPlayers());
+                        //System.out.println("Max Players: " + maxPlayers);
+                        //System.out.println(ProductClient.updateMaxPlayers("3"));
 
 
                     }
@@ -84,7 +88,7 @@ public class Main {
                     break;
                     case 6:
                         //System.out.println("Bye");
-                        System.out.println("");
+
                         break;
                     default:
                         //System.out.println("Invalid option");
