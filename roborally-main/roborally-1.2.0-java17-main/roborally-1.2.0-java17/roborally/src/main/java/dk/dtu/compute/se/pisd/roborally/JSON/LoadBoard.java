@@ -309,10 +309,6 @@ return result;
 
     public static void saveGameToFile(BoardTemplate template, String name) {
 
-
-
-
-
         ClassLoader classLoader = LoadBoard.class.getClassLoader();
         // TODO: this is not very defensive, and will result in a NullPointerException
         //       when the folder "resources" does not exist! But, it does not need
@@ -350,6 +346,83 @@ return result;
 
 
     }
+    public static BoardTemplate UpdateMoveToServer (Board board,int currentPlayer){
+        BoardTemplate template = new BoardTemplate(board.width, board.height);
+        BoardTemplate templateFromServer = boardFromServer("serverGame");
+        for (int i = 0; i < board.width; i++) {
+            for (int j = 0; j < board.height; j++) {
+                Space space = board.getSpace(i, j);
+                SpaceTemplate tempSpace = template.spaces[i][j];
+                if (space.getConveyor() != null) {
+                    tempSpace.Conveyor = space.getConveyor();
+                }
+                if (space.getCheckPoint() != null) {
+                    tempSpace.checkPoint = space.getCheckPoint();
+                }
+                if (space.getWall()) {
+                    tempSpace.wallHeading = space.getWallFacing();
+                }
+                if (space.getGear() != null) {
+                    tempSpace.gearRotation = space.getGear();
+                }
+            }
+        }
+        for (int i = 0; i < board.getPlayersNumber(); i++) {
+            PlayerTemplate playerAmount = new PlayerTemplate();
+            playerAmount.name = templateFromServer.getPlayer(i).name;
+            playerAmount.color = templateFromServer.getPlayer(i).color;
+            playerAmount.tokens = templateFromServer.getPlayer(i).tokens;
+            playerAmount.heading = templateFromServer.getPlayer(i).heading;
+            template.players.add(playerAmount);
+            playerAmount.space = templateFromServer.spaces[templateFromServer.getPlayer(i).space.x][templateFromServer.getPlayer(i).space.y];
+
+            for (int k = 0; k < templateFromServer.getPlayer(i).cards.length; k++) {
+                playerAmount.cards[k].card = templateFromServer.getPlayer(i).cards[k].card;
+                playerAmount.cards[k].visible = templateFromServer.getPlayer(i).cards[k].visible;
+            }
+            for (int k = 0; k < templateFromServer.getPlayer(i).program.length; k++) {
+                playerAmount.program[k].card = templateFromServer.getPlayer(i).program[k].card;
+                playerAmount.program[k].visible = templateFromServer.getPlayer(i).program[k].visible;
+            }
+
+
+
+        }
+
+            PlayerTemplate playerAmount = template.getPlayer(currentPlayer);
+            playerAmount.name = board.getPlayer(currentPlayer).getName();
+            playerAmount.color = board.getPlayer(currentPlayer).getColor();
+            playerAmount.tokens = board.getPlayer(currentPlayer).getTokens();
+            playerAmount.heading = board.getPlayer(currentPlayer).getHeading();
+
+            playerAmount.space = template.spaces[templateFromServer.getPlayer(currentPlayer).space.x][templateFromServer.getPlayer(currentPlayer).space.y];
+
+            for (int k = 0; k < board.getPlayer(currentPlayer).getCards().length; k++) {
+                playerAmount.cards[k].card = board.getPlayer(currentPlayer).getCardField(k).getCard();
+                playerAmount.cards[k].visible = board.getPlayer(currentPlayer).getCardField(k).isVisible();
+            }
+            for (int k = 0; k < board.getPlayer(currentPlayer).getProgram().length; k++) {
+                playerAmount.program[k].card = board.getPlayer(currentPlayer).getProgramField(k).getCard();
+                playerAmount.program[k].visible = board.getPlayer(currentPlayer).getProgramField(k).isVisible();
+            }
+
+
+                template.current = template.getPlayer(board.getPlayerNumber(board.getCurrentPlayer()));
+
+
+
+
+        if (board.getGameId() != null)
+            template.gameId = board.getGameId();
+
+
+        template.phase = board.getPhase();
+        template.step = board.getStep();
+        template.stepMode = board.stepMode;
+        return template;
+
+    }
+
     public static void boardToServer(BoardTemplate template,String fileName) {
         ProductClient.saveBoard(template,fileName);
     }
