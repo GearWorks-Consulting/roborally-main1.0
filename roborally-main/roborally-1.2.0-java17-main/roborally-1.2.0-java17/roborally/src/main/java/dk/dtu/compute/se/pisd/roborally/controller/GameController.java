@@ -86,7 +86,8 @@ public class GameController {
 
     // XXX: V2
     public void startProgrammingPhase() {
-        System.out.println(board);
+
+
 
         board.setPhase(Phase.PROGRAMMING);
         board.setCurrentPlayer(board.getPlayer(turn));
@@ -163,6 +164,7 @@ public class GameController {
     public void executePrograms() {
         board.setStepMode(false);
         continuePrograms();
+
     }
 
     // XXX: V2
@@ -207,7 +209,8 @@ public class GameController {
                     } else {
                         turn = (turn + 1) % board.getPlayersNumber();
                         winGame();
-                        LoadBoard.UpdateMoveToServer(board,0);
+                       LoadBoard.UpdateMoveToServer(board,0);
+                        System.out.println(board);
                         startProgrammingPhase();
 
 

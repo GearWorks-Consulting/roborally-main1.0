@@ -351,14 +351,13 @@ return result;
     public static void UpdateMoveToServer (Board board,int currentPlayer){
         BoardTemplate templateFromServer = boardFromServer("serverGame");
             PlayerTemplate playerAmount = templateFromServer.getPlayer(currentPlayer);
-            playerAmount.name = board.getPlayer(currentPlayer).getName();
-            playerAmount.color = board.getPlayer(currentPlayer).getColor();
             playerAmount.tokens = board.getPlayer(currentPlayer).getTokens();
             playerAmount.heading = board.getPlayer(currentPlayer).getHeading();
-            playerAmount.space = templateFromServer.spaces[templateFromServer.getPlayer(currentPlayer).space.x][templateFromServer.getPlayer(currentPlayer).space.y];
+            playerAmount.space.x = templateFromServer.getPlayer(currentPlayer).space.x;
+            playerAmount.space.y=templateFromServer.getPlayer(currentPlayer).space.y;
 
 
-            for (int k = 0; k < board.getPlayer(currentPlayer).getCards().length; k++) {
+        for (int k = 0; k < board.getPlayer(currentPlayer).getCards().length; k++) {
                 playerAmount.cards[k].card = board.getPlayer(currentPlayer).getCardField(k).getCard();
                 playerAmount.cards[k].visible = board.getPlayer(currentPlayer).getCardField(k).isVisible();
             }
@@ -369,10 +368,6 @@ return result;
 
 
         templateFromServer.current = templateFromServer.getPlayer(board.getPlayerNumber(board.getCurrentPlayer()));
-
-
-
-
 
         templateFromServer.phase = board.getPhase();
         templateFromServer.step = board.getStep();
