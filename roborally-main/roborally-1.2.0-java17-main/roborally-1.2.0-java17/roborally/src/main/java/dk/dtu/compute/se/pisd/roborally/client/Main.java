@@ -84,11 +84,13 @@ public class Main {
                     break;
                     case 6:
                         //System.out.println("Bye");
+                        System.out.println("");
                         break;
                     default:
                         //System.out.println("Invalid option");
                         break;
                 }
+
             }
             scan.close();
         } catch (Exception e) {

@@ -117,10 +117,25 @@ public class ProductClient implements IBoardTemplate {
             return false;
         }
     }
+    public static boolean getMaxPlayers() {
+        try {
+            HttpRequest request = HttpRequest.newBuilder()
+                    .GET()
+                    .uri(URI.create("http://10.209.211.14:8080/getMaxPlayers/"))
+                    .setHeader("User-Agent", "Product Client")
+                    .header("Content-Type", "application/json")
+                    .build();
+
+            CompletableFuture<HttpResponse<String>> response = httpClient.sendAsync(request, HttpResponse.BodyHandlers.ofString());
 
 
+            boolean result = Boolean.parseBoolean(response.get(5, TimeUnit.SECONDS).body());
 
-
+            return result;
+        } catch (Exception e) {
+            return false;
+        }
+    }
 
     public static boolean saveBoard(BoardTemplate boardTemplate, String name) {
         try{
@@ -139,14 +154,7 @@ public class ProductClient implements IBoardTemplate {
             return false;
         }
 
-
-
     }
-
-
-
-
-
     public static BoardTemplate loadBoard(String name) {
         try{
             HttpRequest request = HttpRequest.newBuilder()

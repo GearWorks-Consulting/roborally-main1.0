@@ -102,6 +102,7 @@ public class AppController implements Observer {
 
     }
 
+
     public void JoinGame() {
         Stage primaryStage = new Stage();
         TextField nameTextFieldGet = new TextField();
