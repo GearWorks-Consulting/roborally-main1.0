@@ -68,13 +68,12 @@ public class Main {
                     break;
                     case 3: {
                         //System.out.println(ProductClient.printTest());
-
+                        ProductClient.updatePlayerJoinedCounter("5");
+                        System.out.println(ProductClient.getPlayerCounter());
                         //ProductClient.updateMaxPlayers("3");
                         //int maxPlayers = Integer.parseInt(ProductClient.getMaxPlayers());
                         //System.out.println("Max Players: " + maxPlayers);
                         //System.out.println(ProductClient.updateMaxPlayers("3"));
-
-
                     }
                     break;
                     case 4: {
