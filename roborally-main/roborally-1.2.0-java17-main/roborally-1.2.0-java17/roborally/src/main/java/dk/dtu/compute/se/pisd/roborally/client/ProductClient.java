@@ -2,6 +2,7 @@ package dk.dtu.compute.se.pisd.roborally.client;
 
 import com.google.gson.Gson;
 import dk.dtu.compute.se.pisd.roborally.JSON.BoardTemplate;
+import dk.dtu.compute.se.pisd.roborally.controller.AppController;
 import dk.dtu.compute.se.pisd.roborally.model.Board;
 
 
@@ -96,6 +97,31 @@ public class ProductClient implements IBoardTemplate {
     }
 
 
+    public static boolean updateMaxPlayers(String p) {
+        try{
+            String productJSON =p;
+            HttpRequest request = HttpRequest.newBuilder()
+                    .POST(HttpRequest.BodyPublishers.ofString(productJSON))
+                    .uri(URI.create("http://10.209.211.14:8080/updateMaxPlayers/"))
+                    .setHeader("User-Agent", "Product Client")
+                    .header("Content-Type", "application/json")
+                    .build();
+            CompletableFuture<HttpResponse<String>> response =
+                    httpClient.sendAsync(request, HttpResponse.BodyHandlers.ofString());
+            String result = response.thenApply((r)->r.body()).get(5, TimeUnit.SECONDS);
+            System.out.println("Giga Chad succesfull "+ p);
+            return result.equals("added")? true : false;
+
+        } catch (Exception e) {
+            System.out.println("Great Failure, lort");
+            return false;
+        }
+    }
+
+
+
+
+
     public static boolean saveBoard(BoardTemplate boardTemplate, String name) {
         try{
             String url = "http://10.209.211.14:8080/saveGame/"+name;
@@ -175,6 +201,10 @@ public class ProductClient implements IBoardTemplate {
             return false;
         }
     }
+
+
+
+
 
 
     public boolean updateProduct(int id, Product p) {
