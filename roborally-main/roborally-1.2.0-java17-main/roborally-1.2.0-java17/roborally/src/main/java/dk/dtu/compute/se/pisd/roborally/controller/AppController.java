@@ -74,6 +74,7 @@ public class AppController implements Observer {
     }
 
     private String enteredText = "App";
+    private BoardTemplate hostBoardTemplate;
 
     public void HostGame() {
         Stage primaryStage = new Stage();
@@ -85,6 +86,7 @@ public class AppController implements Observer {
             System.out.println(enteredText);
                 startGame();
             gameController.updateServer();
+            boolean updateMaxPlayersResult = ProductClient.updateMaxPlayers("" + minimumplayer);
                 //gameController.updateServer();
                 primaryStage.close();
         });
@@ -127,8 +129,8 @@ public class AppController implements Observer {
         BoardTemplate template = LoadBoard.boardFromServer("serverGame");
 
 
-
         LoadBoard.upDateBoard(template, board);
+        //gameController.setTurn(1);
        ProductClient.setCompleteMove("false");
       // chooseMap("Map 1 - Small");
       // addPlayersToBoard(board,2);
@@ -136,7 +138,7 @@ public class AppController implements Observer {
     public void handleJoinGame(String playerName) {
         boolean isNameCorrect = checkifNameCorrect(playerName);
 
-        if (isNameCorrect && board != null) {
+        if (isNameCorrect &&  hostBoardTemplate != null) {
             showAlertIfLobbyFull();
 
             // Increment the player count
@@ -146,8 +148,9 @@ public class AppController implements Observer {
 
             System.out.println("Player Count: " + playerCount);
 
-            // Rest of the code...
+
         }
+
     }
     private boolean checkifNameCorrect(String playerName) {
         boolean isNameCorrect = playerName.equals(enteredText);
