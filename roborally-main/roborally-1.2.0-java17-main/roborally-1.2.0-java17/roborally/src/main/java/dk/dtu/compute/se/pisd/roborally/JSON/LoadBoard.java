@@ -353,11 +353,10 @@ return result;
             PlayerTemplate playerAmount = templateFromServer.getPlayer(currentPlayer);
             playerAmount.tokens = board.getPlayer(currentPlayer).getTokens();
             playerAmount.heading = board.getPlayer(currentPlayer).getHeading();
-            playerAmount.space.x = templateFromServer.getPlayer(currentPlayer).space.x;
-            playerAmount.space.y=templateFromServer.getPlayer(currentPlayer).space.y;
+            playerAmount.space = templateFromServer.spaces[board.getPlayer(currentPlayer).getSpace().x][board.getPlayer(currentPlayer).getSpace().y];
 
 
-        for (int k = 0; k < board.getPlayer(currentPlayer).getCards().length; k++) {
+            for (int k = 0; k < board.getPlayer(currentPlayer).getCards().length; k++) {
                 playerAmount.cards[k].card = board.getPlayer(currentPlayer).getCardField(k).getCard();
                 playerAmount.cards[k].visible = board.getPlayer(currentPlayer).getCardField(k).isVisible();
             }
