@@ -211,7 +211,7 @@ public class GameController {
                         turn = (turn + 1) % board.getPlayersNumber();
                         winGame();
 
-
+                        LoadBoard.UpdateMoveToServer(board,0);
                         startProgrammingPhase();
 
 
@@ -280,7 +280,7 @@ public class GameController {
      * Moves the player 1 vector direction forward, depending on the heading.
      */
     public void moveForward(@NotNull Player player) {
-        LoadBoard.UpdateMoveToServer(board,0);
+
         Space space = player.getSpace();
         Space playerSpace = player.getSpace();
 
