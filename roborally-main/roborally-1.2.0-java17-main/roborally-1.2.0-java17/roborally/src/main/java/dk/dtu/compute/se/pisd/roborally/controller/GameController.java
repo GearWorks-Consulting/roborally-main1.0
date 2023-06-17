@@ -87,6 +87,9 @@ public class GameController {
     // XXX: V2
     public void startProgrammingPhase() {
 
+
+
+
         board.setPhase(Phase.PROGRAMMING);
         board.setCurrentPlayer(board.getPlayer(turn));
         board.setStep(turn);
@@ -133,10 +136,8 @@ public class GameController {
        BoardTemplate boardTemplate = LoadBoard.NormalBoardToTemplate(board);
         LoadBoard.boardToServer(boardTemplate,"serverGame");
     }
-    public void updateGame(){
-        BoardTemplate boardTemplate= LoadBoard.boardFromServer("serverGame");
-        LoadBoard.upDateBoard(boardTemplate,board);
-    }
+
+
 
     // XXX: V2
     private void makeProgramFieldsVisible(int register) {
@@ -164,6 +165,7 @@ public class GameController {
     public void executePrograms() {
         board.setStepMode(false);
         continuePrograms();
+
     }
 
     // XXX: V2
@@ -206,9 +208,10 @@ public class GameController {
                         board.setStep(step);
                         board.setCurrentPlayer(board.getPlayer(turn));
                     } else {
-                        //turn = (turn + 1) % board.getPlayersNumber();
+                        turn = (turn + 1) % board.getPlayersNumber();
                         winGame();
-                        //updateServer();
+
+
                         startProgrammingPhase();
 
 
@@ -223,8 +226,7 @@ public class GameController {
             // this should not happen
             assert false;
         }
-        // turn=1;
-        // board.setCurrentPlayer(board.getPlayer(turn));
+
     }
 
     /**
@@ -278,6 +280,7 @@ public class GameController {
      * Moves the player 1 vector direction forward, depending on the heading.
      */
     public void moveForward(@NotNull Player player) {
+        LoadBoard.UpdateMoveToServer(board,0);
         Space space = player.getSpace();
         Space playerSpace = player.getSpace();
 

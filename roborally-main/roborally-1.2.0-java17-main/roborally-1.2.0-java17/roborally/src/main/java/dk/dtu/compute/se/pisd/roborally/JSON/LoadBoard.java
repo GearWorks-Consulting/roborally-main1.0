@@ -97,7 +97,9 @@ public class LoadBoard {
             for (int i = 0; i < result.getPlayersNumber(); i++) {
 
                 result.getPlayer(i).setTokens(template.getPlayer(i).tokens);
+
                 result.getPlayer(i).setSpace(result.getSpace(template.getPlayer(i).space.x, template.getPlayer(i).space.y));
+                result.spaces[template.getPlayer(i).space.x][template.getPlayer(i).space.y].setPlayer(result.getPlayer(i));
                 result.getPlayer(i).setHeading(template.getPlayer(i).heading);
                 result.getPlayer(i).getSpace().setPlayer(result.getPlayer(i));
                 result.getPlayer(i).setName(template.getPlayer(i).name);
@@ -164,6 +166,7 @@ return  result;
 
                 result.getPlayer(i).setTokens(template.getPlayer(i).tokens);
                 result.getPlayer(i).setSpace(result.getSpace(template.getPlayer(i).space.x, template.getPlayer(i).space.y));
+                result.spaces[template.getPlayer(i).space.x][template.getPlayer(i).space.y].setPlayer(result.getPlayer(i));
                 result.getPlayer(i).setHeading(template.getPlayer(i).heading);
                 result.getPlayer(i).getSpace().setPlayer(result.getPlayer(i));
                 result.getPlayer(i).setName(template.getPlayer(i).name);
@@ -309,10 +312,6 @@ return result;
 
     public static void saveGameToFile(BoardTemplate template, String name) {
 
-
-
-
-
         ClassLoader classLoader = LoadBoard.class.getClassLoader();
         // TODO: this is not very defensive, and will result in a NullPointerException
         //       when the folder "resources" does not exist! But, it does not need
@@ -350,6 +349,37 @@ return result;
 
 
     }
+    public static void UpdateMoveToServer (Board board,int currentPlayer){
+        BoardTemplate templateFromServer = boardFromServer("serverGame");
+            PlayerTemplate playerAmount = templateFromServer.getPlayer(currentPlayer);
+            playerAmount.tokens = board.getPlayer(currentPlayer).getTokens();
+            playerAmount.heading = board.getPlayer(currentPlayer).getHeading();
+
+
+            playerAmount.space = templateFromServer.spaces[board.getPlayer(currentPlayer).getSpace().x][board.getPlayer(currentPlayer).getSpace().y];
+
+
+            for (int k = 0; k < board.getPlayer(currentPlayer).getCards().length; k++) {
+                playerAmount.cards[k].card = board.getPlayer(currentPlayer).getCardField(k).getCard();
+                playerAmount.cards[k].visible = board.getPlayer(currentPlayer).getCardField(k).isVisible();
+            }
+            for (int k = 0; k < board.getPlayer(currentPlayer).getProgram().length; k++) {
+                playerAmount.program[k].card = board.getPlayer(currentPlayer).getProgramField(k).getCard();
+                playerAmount.program[k].visible = board.getPlayer(currentPlayer).getProgramField(k).isVisible();
+            }
+
+
+        templateFromServer.current = templateFromServer.getPlayer(board.getPlayerNumber(board.getCurrentPlayer()));
+
+        templateFromServer.phase = board.getPhase();
+        templateFromServer.step = board.getStep();
+        templateFromServer.stepMode = board.stepMode;
+        boardToServer(templateFromServer,"serverGame");
+        upDateBoard(templateFromServer,board);
+
+
+    }
+
     public static void boardToServer(BoardTemplate template,String fileName) {
         ProductClient.saveBoard(template,fileName);
     }
