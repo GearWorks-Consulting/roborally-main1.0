@@ -113,7 +113,7 @@ public class AppController implements Observer {
         openButton.setOnAction(event -> {
             String playerName = nameTextFieldGet.getText();
             int playerCounter = Integer.parseInt(ProductClient.getPlayerCounter());
-            BoardTemplate template = LoadBoard.boardFromServer("serverGame, you will be playing as player " + playerCounter);
+            BoardTemplate template = LoadBoard.boardFromServer("serverGame");
             board=LoadBoard.upDateBoard(template, board);
             handleJoinGame(playerName,board,playerCounter);
             primaryStage.close();
