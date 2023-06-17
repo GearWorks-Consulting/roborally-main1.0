@@ -54,8 +54,7 @@ public class SpaceView extends StackPane implements ViewObserver {
 
    final public static Color wallColor = Color.BLACK;
     final public static double wallThickness = 3;
-    ImageView imageView = new ImageView();
-    Image image = new Image("Green.png",60,60,false,false);
+
 
     public final Space space;
 
@@ -73,23 +72,6 @@ public class SpaceView extends StackPane implements ViewObserver {
         this.setPrefHeight(SPACE_HEIGHT);
         this.setMinHeight(SPACE_HEIGHT);
         this.setMaxHeight(SPACE_HEIGHT);
-
-
-        if ((space.x + space.y) % 2 == 0) {
-                ImageView imageView = new ImageView();
-                Image image = new Image("BackgroundPanel.png",60,60,false,false);
-                imageView.setImage(image);
-                this.getChildren().add(imageView);
-            //this.setStyle("-fx-background-color: white;");
-        }
-        else {
-            ImageView imageView = new ImageView();
-            Image image = new Image("BackgroundPanel.png",60,60,false,false);
-            imageView.setImage(image);
-            this.getChildren().add(imageView);
-            //this.setStyle("-fx-background-color: black;");
-        }
-
 
 
 
