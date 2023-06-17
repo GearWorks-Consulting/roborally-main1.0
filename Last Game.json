@@ -6,10 +6,16 @@
         "y": 0
       },
       {
+        "Conveyor": {
+          "direction": "EAST",
+          "colour": "green"
+        },
+        "wallHeading": "SOUTH",
         "x": 0,
         "y": 1
       },
       {
+        "wallHeading": "NORTH",
         "x": 0,
         "y": 2
       },
@@ -26,7 +32,6 @@
           "direction": "SOUTH",
           "colour": "blue"
         },
-        "wallHeading": "EAST",
         "x": 0,
         "y": 5
       },
@@ -61,7 +66,6 @@
         "y": 2
       },
       {
-        "wallHeading": "SOUTH",
         "x": 1,
         "y": 3
       },
@@ -98,15 +102,16 @@
         "y": 0
       },
       {
+        "wallHeading": "SOUTH",
         "x": 2,
         "y": 1
       },
       {
+        "wallHeading": "NORTH",
         "x": 2,
         "y": 2
       },
       {
-        "wallHeading": "SOUTH",
         "x": 2,
         "y": 3
       },
@@ -158,7 +163,6 @@
         "y": 3
       },
       {
-        "wallHeading": "WEST",
         "x": 3,
         "y": 4
       },
@@ -197,10 +201,16 @@
         "y": 0
       },
       {
+        "Conveyor": {
+          "direction": "EAST",
+          "colour": "green"
+        },
+        "wallHeading": "SOUTH",
         "x": 4,
         "y": 1
       },
       {
+        "wallHeading": "NORTH",
         "x": 4,
         "y": 2
       },
@@ -301,10 +311,16 @@
         "y": 0
       },
       {
+        "Conveyor": {
+          "direction": "EAST",
+          "colour": "green"
+        },
+        "wallHeading": "SOUTH",
         "x": 6,
         "y": 1
       },
       {
+        "wallHeading": "NORTH",
         "x": 6,
         "y": 2
       },
@@ -388,11 +404,10 @@
   ],
   "width": 8,
   "height": 10,
-  "gameId": 0,
+  "gameId": 1,
   "players": [
     {
       "heading": "SOUTH",
-      "NO_REGISTERS": 0,
       "name": "Player 1",
       "color": "red",
       "tokens": 0,
@@ -420,14 +435,14 @@
       "cards": [
         {
           "card": {
-            "command": "LEFT",
+            "command": "OPTION_LEFT_RIGHT",
             "observers": []
           },
           "visible": true
         },
         {
           "card": {
-            "command": "FORWARD",
+            "command": "RIGHT",
             "observers": []
           },
           "visible": true
@@ -435,6 +450,20 @@
         {
           "card": {
             "command": "FAST_FORWARD",
+            "observers": []
+          },
+          "visible": true
+        },
+        {
+          "card": {
+            "command": "RIGHT",
+            "observers": []
+          },
+          "visible": true
+        },
+        {
+          "card": {
+            "command": "RIGHT",
             "observers": []
           },
           "visible": true
@@ -442,20 +471,6 @@
         {
           "card": {
             "command": "UTURN",
-            "observers": []
-          },
-          "visible": true
-        },
-        {
-          "card": {
-            "command": "FAST_FORWARD",
-            "observers": []
-          },
-          "visible": true
-        },
-        {
-          "card": {
-            "command": "OPTION_LEFT_RIGHT",
             "observers": []
           },
           "visible": true
@@ -478,7 +493,6 @@
     },
     {
       "heading": "SOUTH",
-      "NO_REGISTERS": 0,
       "name": "Player 2",
       "color": "green",
       "tokens": 0,
@@ -506,7 +520,7 @@
       "cards": [
         {
           "card": {
-            "command": "LEFT",
+            "command": "OPTION_LEFT_RIGHT",
             "observers": []
           },
           "visible": true
@@ -520,14 +534,7 @@
         },
         {
           "card": {
-            "command": "RIGHT",
-            "observers": []
-          },
-          "visible": true
-        },
-        {
-          "card": {
-            "command": "RIGHT",
+            "command": "FAST_FORWARD",
             "observers": []
           },
           "visible": true
@@ -541,7 +548,21 @@
         },
         {
           "card": {
-            "command": "LEFT",
+            "command": "FAST_FORWARD",
+            "observers": []
+          },
+          "visible": true
+        },
+        {
+          "card": {
+            "command": "RIGHT",
+            "observers": []
+          },
+          "visible": true
+        },
+        {
+          "card": {
+            "command": "RIGHT",
             "observers": []
           },
           "visible": true
@@ -552,20 +573,12 @@
             "observers": []
           },
           "visible": true
-        },
-        {
-          "card": {
-            "command": "OPTION_LEFT_RIGHT",
-            "observers": []
-          },
-          "visible": true
         }
       ]
     }
   ],
   "current": {
     "heading": "SOUTH",
-    "NO_REGISTERS": 0,
     "name": "Player 1",
     "color": "red",
     "tokens": 0,
@@ -593,14 +606,14 @@
     "cards": [
       {
         "card": {
-          "command": "LEFT",
+          "command": "OPTION_LEFT_RIGHT",
           "observers": []
         },
         "visible": true
       },
       {
         "card": {
-          "command": "FORWARD",
+          "command": "RIGHT",
           "observers": []
         },
         "visible": true
@@ -608,6 +621,20 @@
       {
         "card": {
           "command": "FAST_FORWARD",
+          "observers": []
+        },
+        "visible": true
+      },
+      {
+        "card": {
+          "command": "RIGHT",
+          "observers": []
+        },
+        "visible": true
+      },
+      {
+        "card": {
+          "command": "RIGHT",
           "observers": []
         },
         "visible": true
@@ -615,20 +642,6 @@
       {
         "card": {
           "command": "UTURN",
-          "observers": []
-        },
-        "visible": true
-      },
-      {
-        "card": {
-          "command": "FAST_FORWARD",
-          "observers": []
-        },
-        "visible": true
-      },
-      {
-        "card": {
-          "command": "OPTION_LEFT_RIGHT",
           "observers": []
         },
         "visible": true
