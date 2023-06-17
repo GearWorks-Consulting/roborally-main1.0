@@ -43,28 +43,41 @@ import javafx.util.Duration;
 import org.jetbrains.annotations.NotNull;
 import javafx.scene.Group;
 /**
- * ...
+ * The view class that displays the game board.
+ * It represents the graphical user interface for the board and handles events related to the board.
+ * This class extends VBox and implements ViewObserver interface.
  *
- * @author Ekkart Kindler, ekki@dtu.dk
- *
+ * @author Abdi, Mathias, & Moiz H. Khalil
+ * @version 2.0 Release.
+ *  @since 17-6-2023
+ *,
  */
+
+
 public class BoardView extends VBox implements ViewObserver {
 
-    private Board board;
+    private final Board board;
 
-    private GridPane mainBoardPane;
-    private SpaceView[][] spaces;
+    private final GridPane mainBoardPane;
+    private final SpaceView[][] spaces;
 
-    private PlayersView playersView;
+    private final PlayersView playersView;
 
-    private Label statusLabel;
-    private GameController gameController;
-    private SpaceEventHandler spaceEventHandler;
+    private final Label statusLabel;
+    private final GameController gameController;
+    private final SpaceEventHandler spaceEventHandler;
 
-    private Text text = new Text();
+    private final Text text = new Text();
     public Pane overlayPane;
-    private Timeline textRemovalTimeline;
+    private final Timeline textRemovalTimeline;
 
+    /**
+     * Constructor for BoardView class.
+     * Initializes the board view, including the main board pane, player views, status label, overlay pane, etc.
+     * Attaches the board view as an observer to the board.
+     *
+     * @param gameController the game controller instance
+     */
     public BoardView(@NotNull GameController gameController) {
         board = gameController.board;
         this.gameController = gameController;
@@ -77,20 +90,23 @@ public class BoardView extends VBox implements ViewObserver {
         Duration removalDuration = Duration.seconds(4);
         textRemovalTimeline = new Timeline(new KeyFrame(removalDuration, event -> removeText()));
 
+        // Adds UI elements to the current view
         this.getChildren().add(mainBoardPane);
         this.getChildren().add(playersView);
         this.getChildren().add(statusLabel);
         this.getChildren().add(overlayPane);
 
-
+        // Creates an array of SpaceView objects to represent the spaces on the board
         spaces = new SpaceView[board.width][board.height];
 
+        // Creates a SpaceEventHandler for handling space events
         spaceEventHandler = new SpaceEventHandler(gameController);
 
+        // Iterates through each space on the board
         for (int x = 0; x < board.width; x++) {
             for (int y = 0; y < board.height; y++) {
                 Space space = board.getSpace(x, y);
-
+                // Creates a SpaceView object for the current space
                 SpaceView spaceView = new SpaceView(space);
                 /**
                  * This takes an image using imageview loaded from our resource folder and then detects what @OrderNo is equally set as. This is made in BoardClass.
@@ -101,10 +117,11 @@ public class BoardView extends VBox implements ViewObserver {
                  * This takes an image using imageview loaded from our resource folder and then detects what getDirection is equally set as from the object of the conveyer. This is made in BoardClass.
                  *  * Creates color for the spaces of each conveyer and creates picture.
                  */
-
+                // Checks if the space has a conveyor with the color "blue"
                 if (space.getConveyor()!=null && space.getConveyor().getColour()=="blue") {
                     ImageView imageView = new ImageView();
                     Image image = null;
+                    // Sets the image based on the direction of the conveyor
                     if(space.getConveyor().getDirection() == Heading.WEST) {
                         image = new Image("BlueWest.png", 60, 60, false, false);
                     } else if(space.getConveyor().getDirection() == Heading.EAST ) {
@@ -114,18 +131,15 @@ public class BoardView extends VBox implements ViewObserver {
                     }else if (space.getConveyor().getDirection() == Heading.NORTH ) {
                         image = new Image("Blue.png", 60, 60, false, false);
                     }
+                    // Sets the image to the ImageView and adds it to the SpaceView
                     imageView.setImage(image);
-                    //if (space.getConveyor().getDirection() == Heading.EAST) {
-                    //   ImageView.setRotate((90*space.getConveyor().getDirection().ordinal())%360);
-
                     spaceView.getChildren().add(imageView);
-                    //}
                 }
-
+                // Checks if the space has a conveyor with the color "green"
            else if (space.getConveyor()!=null && space.getConveyor().getColour()=="green") {
                     ImageView imageView = new ImageView();
                     Image image =null;
-
+                    // Sets the image based on the direction of the conveyor
                          image = new Image("GreenWest.png", 60, 60, false, false);
                   if(space.getConveyor().getDirection() == Heading.EAST ) {
                         image = new Image("GreenEastt.png", 60, 60, false, false);
@@ -134,14 +148,32 @@ public class BoardView extends VBox implements ViewObserver {
                     }else if (space.getConveyor().getDirection() == Heading.NORTH ) {
                         image = new Image("Green.png", 60, 60, false, false);
                     }
-                    imageView.setImage(image);
-                   //if (space.getConveyor().getDirection() == Heading.EAST) {
-                     //   ImageView.setRotate((90*space.getConveyor().getDirection().ordinal())%360);
 
+                    // Sets the image to the ImageView and adds it to the SpaceView
+                    imageView.setImage(image);
                         spaceView.getChildren().add(imageView);
-                    //}
+
+                }
+                // Checks if the space has a push panel
+                else if (space.getPushPanel()!=null) {
+                    ImageView imageView = new ImageView();
+                    Image image =null;
+                    // Sets the image based on the direction of the push panel
+                    if(space.getPushPanel().getDirection() == Heading.WEST ){
+                        image = new Image("PushPanelWest.png", 60, 60, false, false);
+                    } else if(space.getPushPanel().getDirection() == Heading.EAST ) {
+                        image = new Image("PushPanelEast.png", 60, 60, false, false);
+                    } else if ( space.getPushPanel().getDirection() == Heading.SOUTH ) {
+                        image = new Image("PushPanelSouth.png", 60, 60, false, false);
+                    }else if (space.getPushPanel().getDirection() == Heading.NORTH ) {
+                        image = new Image("PushPanelNorth.png", 60, 60, false, false);
+                    }
+                    imageView.setImage(image);
+                    spaceView.getChildren().add(imageView);
                 }
 
+
+                // Creates an ImageView for the checkpoints
         else    if (space.getCheckPoint()!=null && space.getCheckPoint().getOrderNo() ==0){
 
                     ImageView imageView = new ImageView();
@@ -161,47 +193,59 @@ public class BoardView extends VBox implements ViewObserver {
                     ImageView imageView = new ImageView();
                     Image image = new Image("cp3.png",60,60,false,false);
                     imageView.setImage(image);
+                    // Adds the ImageView to the SpaceView
                     spaceView.getChildren().add(imageView);
                 }
+                // Adds the SpaceView to the mainBoardPane at the current position
                 mainBoardPane.add(spaceView, x, y);
+                // Sets a mouse click event handler for the SpaceView
                 spaceView.setOnMouseClicked(spaceEventHandler);
             }
         }
+        // Attaches the current view to the board as a subject
         board.attach(this);
+        // Updates the current view with the board state
         update(board);
     }
+    // Removes the 'text' from the overlayPane
     private void removeText() {
         overlayPane.getChildren().remove(text);
 
     }
+    // Updates the view based on the subject that triggered the update
     @Override
     public void updateView(Subject subject) {
+        // Checks if the current player has a message
         if (subject == board) {
 
             Phase phase = board.getPhase();
             statusLabel.setText(board.getStatusMessage());
             if(gameController.board.getCurrentPlayer().getMessage()) {
                 Platform.runLater(() -> {
+                    // Sets the text properties for the message
                     text.setText("You need a previous Checkpoint's flag first!");
                     text.setStyle("-fx-font-size: 25; -fx-font-weight: bold;");
                     text.setFill(Color.ORANGE);
-                    overlayPane.getChildren().add(text); // Add the 'text' to the 'overlayPane'
+                    // Adds the 'text' to the 'overlayPane'
+                    overlayPane.getChildren().add(text);
                 });
                 overlayPane.setManaged(false);
+
+                //cordination layout x and y for text.
                 overlayPane.setLayoutX(100);
                 overlayPane.setLayoutY(220);
 
-                // Add the overlayPane on top of the mainBoardPane
-                //Start Timer for Removal of text after displaying.
+                // Sets the cycle count for the text removal timeline
                 textRemovalTimeline.setCycleCount(1);
                 gameController.board.getCurrentPlayer().setMessagefalse();
             }
 
         }
+        // Starts the text removal timeline from the beginning
         textRemovalTimeline.playFromStart();
     }
-    // XXX this handler and its uses should eventually be deleted! This is just to help test the
-    //     behaviour of the game by being able to explicitly move the players on the board!
+
+    // Event handler for space mouse click events
     private class SpaceEventHandler implements EventHandler<MouseEvent> {
 
         final public GameController gameController;
@@ -213,14 +257,15 @@ public class BoardView extends VBox implements ViewObserver {
         @Override
         public void handle(MouseEvent event) {
             Object source = event.getSource();
-            if (source instanceof SpaceView) {
-                SpaceView spaceView = (SpaceView) source;
+            // Checks if the board is the same as the game controller's board
+            if (source instanceof SpaceView spaceView) {
                 Space space = spaceView.space;
                 Board board = space.board;
 
 
 
                 if (board == gameController.board) {
+                    // Moves the current player to the clicked space
                     gameController.moveCurrentPlayerToSpace(space);
                     event.consume();
                 }

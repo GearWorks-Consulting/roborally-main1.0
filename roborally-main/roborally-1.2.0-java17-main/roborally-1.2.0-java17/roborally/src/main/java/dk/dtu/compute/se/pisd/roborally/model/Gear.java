@@ -10,13 +10,18 @@ import java.util.Vector;
  * ...
  *
  * @author Moiz H. Khalil, s215617@dtu.dk
- *
+ *,
  */
 public class Gear {
-    private Heading direction;
+    private final Heading direction;
     public Gear(Heading heading ){
 
         direction = heading;
     }
 
+    //Used for Unittesting
+    //get Direction isn't relevant for rotation, since it takes in account of it turning right no matter the direction the player comes from.
+    public Heading getDirection() {
+        return direction;
+    }
 }

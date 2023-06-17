@@ -27,9 +27,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
- * ...
  *
- * @author Ekkart Kindler, ekki@dtu.dk
+ * @author Abdi, Mathias, & Moiz H. Khalil
+ * @version 2.0 Release.
+ *  @since 17-6-2023
  *
  */
 public class Space extends Subject {
@@ -46,6 +47,7 @@ public class Space extends Subject {
     private Heading wallFacing;
     private conveyorBelt Conveyor;
     private CheckPoint checkPoint;
+    private PushPanel pushPanel;
    private Boolean isthereawallhere = false;
     private Gear Gear;
 
@@ -79,13 +81,6 @@ public class Space extends Subject {
     }
 
 
-
-
-
-
-
-
-
     public void setPlayer(Player player) {
         Player oldPlayer = this.player;
         if (player != oldPlayer &&
@@ -103,7 +98,7 @@ public class Space extends Subject {
     }
 
     public boolean wallFace(Heading wallFace) {
-        if (PlacedWall(wallFace) == true) {
+        if (PlacedWall(wallFace)) {
             return false;
         }
         Space checkNeighbor = board.getNeighbour(this, wallFace);
@@ -161,4 +156,11 @@ public class Space extends Subject {
         Gear = gear;
     }
 
+    public PushPanel getPushPanel() {
+        return pushPanel;
+    }
+
+    public void setPushPanel(PushPanel pushPanel) {
+        this.pushPanel = pushPanel;
+    }
 }

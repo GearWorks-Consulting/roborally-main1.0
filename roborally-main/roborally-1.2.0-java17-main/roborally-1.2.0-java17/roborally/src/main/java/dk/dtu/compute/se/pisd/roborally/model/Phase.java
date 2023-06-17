@@ -22,11 +22,12 @@
 package dk.dtu.compute.se.pisd.roborally.model;
 
 /**
- * ...
  *
- * @author Ekkart Kindler, ekki@dtu.dk
+ * @author Abdi, Mathias, & Moiz H. Khalil
+ * @version 2.0 Release.
+ *  @since 17-6-2023
  *
  */
 public enum Phase {
-    INITIALISATION, PROGRAMMING, ACTIVATION, PLAYER_INTERACTION
+    INITIALISATION, PROGRAMMING, ACTIVATION, INITIALIZATION, PLAYER_INTERACTION
 }

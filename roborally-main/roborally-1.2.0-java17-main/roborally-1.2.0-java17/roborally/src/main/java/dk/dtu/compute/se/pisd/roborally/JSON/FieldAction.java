@@ -25,9 +25,10 @@ import dk.dtu.compute.se.pisd.roborally.controller.GameController;
 import dk.dtu.compute.se.pisd.roborally.model.Space;
 
 /**
- * ...
  *
- * @author Ekkart Kindler, ekki@dtu.dk
+ * @author Abdi, Mathias, & Moiz H. Khalil
+ * @version 2.0 Release.
+ *  @since 17-6-2023
  *
  */
 public abstract class FieldAction {

@@ -37,6 +37,9 @@ import javafx.scene.Group;
  * ...
  *
  * @author Ekkart Kindler, ekki@dtu.dk
+ * @author Abdi, Mathias, & Moiz H. Khalil
+ * @version 2.0 Release.
+ *  @since 17-6-2023
  *
  */
 public class RoboRally extends Application {
