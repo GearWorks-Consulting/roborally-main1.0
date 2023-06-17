@@ -45,6 +45,12 @@ public class GameController {
      * Creates an empty gameboard which the game controller is associated with.
      */
      public Board board;
+
+    public void setOnline(int online) {
+        this.online = online;
+    }
+
+    private int online;
     final private List<String> OPTIONS_Interactive = Arrays.asList("Left", "Right");
 
     public void setPlayerNumber(int playerNumber) {
@@ -218,23 +224,22 @@ public class GameController {
                     } else {
                         turn = (turn + 1) % board.getPlayersNumber();
                         winGame();
-                        int savedServerNumber = Integer.parseInt(ProductClient.getPlayerTurn());
 
-                        if(savedServerNumber %board.getPlayersNumber()== playerNumber){
-                            LoadBoard.UpdateMoveToServer(board, playerNumber);
-                            updateServer();
-                            savedServerNumber++;
+                        if(online==1) {
+                            int savedServerNumber = Integer.parseInt(ProductClient.getPlayerTurn());
+                            if (savedServerNumber % board.getPlayersNumber() == playerNumber) {
+                                LoadBoard.UpdateMoveToServer(board, playerNumber);
+                                updateServer();
+                                savedServerNumber++;
 
 
-                            ProductClient.setPlayerTurn(String.valueOf(savedServerNumber));
+                                ProductClient.setPlayerTurn(String.valueOf(savedServerNumber));
+                            } else {
+                                BoardTemplate templateFromServer = LoadBoard.boardFromServer("serverGame");
+                                LoadBoard.boardToServer(templateFromServer, "serverGame");
+                                LoadBoard.upDateBoard(templateFromServer, board);
+                            }
                         }
-                        else
-                        {
-                            BoardTemplate templateFromServer = LoadBoard.boardFromServer("serverGame");
-                            LoadBoard.boardToServer(templateFromServer,"serverGame");
-                            LoadBoard.upDateBoard(templateFromServer,board);
-                        }
-
                         startProgrammingPhase();
 
                     }

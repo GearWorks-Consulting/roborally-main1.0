@@ -89,6 +89,7 @@ public class AppController implements Observer {
                 startGame();
                 gameController.setPlayerNumber(0);
             gameController.updateServer();
+            gameController.setOnline(1);
 
                 primaryStage.close();
         });
@@ -141,6 +142,7 @@ public class AppController implements Observer {
         if (isNameCorrect && playerCounter < board.getPlayersNumber()) {
             gameController = new GameController(board);
             gameController.setPlayerNumber(playerCounter);
+            gameController.setOnline(1);
             playerCounter++;
             ProductClient.updatePlayerJoinedCounter(String.valueOf(playerCounter));
             gameController.startProgrammingPhase();
@@ -272,15 +274,18 @@ public class AppController implements Observer {
     }
 
     public void saveGame() {
-   // LoadBoard.saveBoard(gameController.board,"Last Game",0);
+    BoardTemplate boardTemplate= LoadBoard.NormalBoardToTemplate(gameController.board);
+    LoadBoard.saveGameToFile(boardTemplate,"Last Game");
     }
 
     public void loadGame() {
         try {
             BoardTemplate template= LoadBoard.boardFromFile("last Game");
-            //Board board = LoadBoard.templateToNormalBoard(template);
+          board=LoadBoard.upDateBoard(template,board);
+
             if (board != null) {
                 gameController = new GameController(board);
+              //  gameController.startProgrammingPhase();
                 roboRally.createBoardView(gameController);
             } else {
                 Alert alert = new Alert(AlertType.WARNING);
