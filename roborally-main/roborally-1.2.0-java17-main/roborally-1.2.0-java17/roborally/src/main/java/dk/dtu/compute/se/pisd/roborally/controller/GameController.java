@@ -36,7 +36,7 @@ import static dk.dtu.compute.se.pisd.roborally.model.Heading.*;
 /**
  * ...
  *
- * @author Abdi og Mathias
+ * @author Abdi og Mathias,  & Moiz
  * @version 2.0
  *  @since 2023-06-17
  */

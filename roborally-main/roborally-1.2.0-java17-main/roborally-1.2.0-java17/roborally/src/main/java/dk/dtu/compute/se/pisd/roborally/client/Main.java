@@ -84,11 +84,11 @@ public class Main {
                     break;
                     case 4: {
                         //System.out.println(ProductClient.isCompleteMove());
-                        System.out.println(ProductClient.getPlayerTurn());
+                        //System.out.println(ProductClient.getPlayerTurn());
                     }
                     break;
                     case 5: {
-                        System.out.println(ProductClient.setCompleteMove("true"));
+                        //System.out.println(ProductClient.setCompleteMove("true"));
 
                     }
                     break;
