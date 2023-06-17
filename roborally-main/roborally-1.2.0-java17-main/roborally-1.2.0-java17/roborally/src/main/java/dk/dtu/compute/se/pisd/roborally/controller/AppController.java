@@ -113,10 +113,8 @@ public class AppController implements Observer {
         openButton.setOnAction(event -> {
             String playerName = nameTextFieldGet.getText();
             BoardTemplate template = LoadBoard.boardFromServer("serverGame");
-            LoadBoard.upDateBoard(template, board);
-
+            board=LoadBoard.upDateBoard(template, board);
             handleJoinGame(playerName,board);
-
             primaryStage.close();
 
         });
@@ -143,22 +141,13 @@ public class AppController implements Observer {
         if (isNameCorrect && playerCounter < board.getPlayersNumber()) {
             gameController = new GameController(board);
             gameController.setPlayerNumber(playerCounter);
-
             playerCounter++;
-            System.out.println(playerCounter);
             ProductClient.updatePlayerJoinedCounter(String.valueOf(playerCounter));
-            System.out.println("enters the game");
-
+            gameController.startProgrammingPhase();
             roboRally.createBoardView(gameController);
-
         } else {
-
             showAlertIfLobbyFull();
         }
-
-
-
-
     }
 
     private boolean checkifNameCorrect(String playerName) {
@@ -174,13 +163,11 @@ public class AppController implements Observer {
     }
 
     private void showAlertIfLobbyFull() {
-
             Alert alert = new Alert(AlertType.INFORMATION);
             alert.setTitle("Lobby Full");
             alert.setHeaderText(null);
             alert.setContentText("The lobby is now full.");
             alert.showAndWait();
-
     }
 
 
@@ -213,9 +200,7 @@ public class AppController implements Observer {
 
             int no = result.get();
             minimumplayer = no;
-            System.out.println(minimumplayer);
             addPlayersToBoard(board, no);
-
             gameController.startProgrammingPhase();
             roboRally.createBoardView(gameController);
 
