@@ -132,7 +132,7 @@ public class AppController implements Observer {
        board= LoadBoard.upDateBoard(template, board);
         System.out.println(board.getPlayer(0).getName());
        ProductClient.setCompleteMove("false");
-       //roboRally.createBoardView(gameController);
+       //roboRally.createBoardView(gameController);00
 
     }
     public void handleJoinGame(String playerName) {

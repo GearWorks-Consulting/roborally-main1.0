@@ -352,10 +352,19 @@ return result;
     public static void UpdateMoveToServer (Board board,int currentPlayer){
 
         BoardTemplate templateFromServer = boardFromServer("serverGame");
-        if(templateFromServer.spaces[board.getPlayer(currentPlayer).getSpace().x][board.getPlayer(currentPlayer).getSpace().y]!=null){
-            PlayerTemplate playerAmount = templateFromServer.getPlayer(currentPlayer);
+        Boolean isThereCollision= false;
+        PlayerTemplate playerAmount = templateFromServer.getPlayer(currentPlayer);
+        playerAmount.heading = board.getPlayer(currentPlayer).getHeading();
+        for (int i=0;i<board.getPlayersNumber();i++) {
+            if(templateFromServer.players.get(i).space.x==board.getPlayer(currentPlayer).getSpace().x &&templateFromServer.players.get(i).space.y==board.getPlayer(currentPlayer).getSpace().y)
+                isThereCollision=true;
+        }
+        if (!isThereCollision){
+
+
+
             playerAmount.tokens = board.getPlayer(currentPlayer).getTokens();
-            playerAmount.heading = board.getPlayer(currentPlayer).getHeading();
+
 
 
             playerAmount.space = templateFromServer.spaces[board.getPlayer(currentPlayer).getSpace().x][board.getPlayer(currentPlayer).getSpace().y];
@@ -376,9 +385,12 @@ return result;
         templateFromServer.phase = board.getPhase();
         templateFromServer.step = board.getStep();
         templateFromServer.stepMode = board.stepMode;
+
+}
         boardToServer(templateFromServer,"serverGame");
         upDateBoard(templateFromServer,board);
-}
+
+        isThereCollision=false;
 
     }
 
