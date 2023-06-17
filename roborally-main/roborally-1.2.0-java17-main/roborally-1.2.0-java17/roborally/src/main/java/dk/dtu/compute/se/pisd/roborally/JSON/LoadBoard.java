@@ -26,6 +26,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
+import dk.dtu.compute.se.pisd.roborally.client.IBoardTemplate;
 import dk.dtu.compute.se.pisd.roborally.client.ProductClient;
 import dk.dtu.compute.se.pisd.roborally.model.*;
 
@@ -90,7 +91,7 @@ public class LoadBoard {
         return ProductClient.loadBoard(boardname);
     }
 
-    public static void upDateBoard(BoardTemplate template, Board result){
+    public static Board upDateBoard(BoardTemplate template, Board result){
         if (result != null) {
 
 
@@ -128,7 +129,7 @@ public class LoadBoard {
             result.setPhase(template.phase);
             result.setStep(template.step);
             result.setStepMode(template.stepMode);
-
+return result;
 
         }
         else
@@ -196,7 +197,7 @@ public class LoadBoard {
             result.setStep(template.step);
             result.setStepMode(template.stepMode);
 
-
+return result;
         }
 
     }
