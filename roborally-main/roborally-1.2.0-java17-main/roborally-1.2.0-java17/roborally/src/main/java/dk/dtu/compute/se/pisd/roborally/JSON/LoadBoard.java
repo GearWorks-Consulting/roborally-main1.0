@@ -90,7 +90,7 @@ public class LoadBoard {
         return ProductClient.loadBoard(boardname);
     }
 
-    public static Board upDateBoard(BoardTemplate template, Board result){
+    public static void upDateBoard(BoardTemplate template, Board result){
         if (result != null) {
 
 
@@ -129,7 +129,7 @@ public class LoadBoard {
             result.setStep(template.step);
             result.setStepMode(template.stepMode);
 
-return  result;
+
         }
         else
         {
@@ -196,7 +196,7 @@ return  result;
             result.setStep(template.step);
             result.setStepMode(template.stepMode);
 
-return result;
+
         }
 
     }
