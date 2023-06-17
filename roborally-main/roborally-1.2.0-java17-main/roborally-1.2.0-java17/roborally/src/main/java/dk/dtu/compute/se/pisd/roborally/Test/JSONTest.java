@@ -5,7 +5,13 @@ import dk.dtu.compute.se.pisd.roborally.model.Board;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-
+/**
+ *
+ * @author Moiz H. Khalil, s215617@dtu.dk
+ *@version 1.8 QA.
+ * @since 17-6-2023
+ *
+ */
 public class JSONTest {
 
     @Test

@@ -7,7 +7,13 @@ import dk.dtu.compute.se.pisd.roborally.JSON.SpaceTemplate;
 import dk.dtu.compute.se.pisd.roborally.model.*;
 
 import java.util.*;
-
+/**
+ *
+ * @author Abdi, Mathias, & Moiz H. Khalil
+ * @version 2.0 Release.
+ *  @since 17-6-2023
+ *
+ */
 public class Main {
 
     public static void main(String[] args) throws Exception {

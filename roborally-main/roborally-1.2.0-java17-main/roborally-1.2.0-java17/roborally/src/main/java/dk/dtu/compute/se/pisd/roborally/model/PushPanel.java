@@ -1,12 +1,12 @@
 package dk.dtu.compute.se.pisd.roborally.model;
 
 /**
- * ...
  *
- * @author Moiz H. Khalil, s215617@dtu.dk
+ * @author Abdi, Mathias, & Moiz H. Khalil
+ * @version 2.0 Release.
+ *  @since 17-6-2023
  *
  */
-
 public class PushPanel {
     private final Heading direction;
 

@@ -11,9 +11,10 @@ import dk.dtu.compute.se.pisd.roborally.model.Gear;
 
 import dk.dtu.compute.se.pisd.roborally.model.PushPanel;
 /**
- * ...
  *
  * @author Moiz H. Khalil, s215617@dtu.dk
+ *@version 1.8 QA.
+ * @since 17-6-2023
  *
  */
 

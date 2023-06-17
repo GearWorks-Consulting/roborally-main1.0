@@ -29,7 +29,9 @@ package dk.dtu.compute.se.pisd.roborally;
  *   https://stackoverflow.com/questions/52569724/javafx-11-create-a-jar-file-with-gradle/52571719#52571719
  *F
  * @author Ekkart Kindler,Mathias Schrader, Abid Samad, Moiz H. Khalil
- * @version 2.0 Prototype.
+ * @version 2.0 Release.
+ *  @since 17-6-2023
+ *
  */
 public class StartRoboRally {
 //IT WORKS

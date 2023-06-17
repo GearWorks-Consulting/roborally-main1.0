@@ -30,11 +30,11 @@ import java.util.List;
 import static dk.dtu.compute.se.pisd.roborally.model.Phase.INITIALISATION;
 
 /**
- * ...
  *
- * @author Ekkart Kindler, ekki@dtu.dk med et twist fra Mathias og Abdi fra gruppe 21
- * @version 1.0 prototype
- * @since 2023-04-16
+ * @author Abdi, Mathias, & Moiz H. Khalil
+ * @version 2.0 Release.
+ *  @since 17-6-2023
+ *
  */
 public class Board extends Subject {
 

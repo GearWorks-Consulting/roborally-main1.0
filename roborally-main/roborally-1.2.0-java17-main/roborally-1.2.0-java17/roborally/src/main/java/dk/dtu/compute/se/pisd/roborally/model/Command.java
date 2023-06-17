@@ -26,10 +26,11 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * ...
  *
- * @author Ekkart Kindler, with Abid and Mathias build on top.
- * @version 1.0
+ * @author Abdi, Mathias, & Moiz H. Khalil
+ * @version 2.0 Release.
+ *  @since 17-6-2023
+ *
  */
 public enum Command {
 
@@ -40,7 +41,6 @@ public enum Command {
     LEFT("Turn Left"),
     FAST_FORWARD("Fast Fwd"),
     UTURN("UTURN"),
-
     // XXX Assignment P3
     OPTION_LEFT_RIGHT("Left OR Right", LEFT, RIGHT);
 
