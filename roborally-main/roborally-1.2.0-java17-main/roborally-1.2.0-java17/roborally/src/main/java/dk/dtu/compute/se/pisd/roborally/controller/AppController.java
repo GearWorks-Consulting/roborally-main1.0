@@ -74,7 +74,7 @@ public class AppController implements Observer {
         this.roboRally = roboRally;
     }
 
-    private String enteredText = "App";
+    private String enteredText = "";
     private BoardTemplate hostBoardTemplate;
 
     public void HostGame() {
@@ -85,15 +85,10 @@ public class AppController implements Observer {
         openButton.setOnAction(event -> {
             playerCount = 1;
             ProductClient.updatePlayerJoinedCounter(""+ playerCount);
-            System.out.println(enteredText);
                 startGame();
             gameController.updateServer();
-            //boolean updateMaxPlayersResult = ProductClient.updateMaxPlayers("" + minimumplayer);
-            //ProductClient.updateMaxPlayers(""+ minimumplayer);
-                //gameController.updateServer();
             ProductClient.updateMaxPlayers(""+ minimumplayer);
             int maxPlayers = Integer.parseInt(ProductClient.getMaxPlayers());
-            //System.out.println("Max Players: " + maxPlayers);
                 primaryStage.close();
         });
         // Create a layout and add the text field and button
@@ -102,10 +97,9 @@ public class AppController implements Observer {
 
         // Create a scene and set it on the stage
         Scene scene = new Scene(root, 250, 100);
-        primaryStage.setTitle("Input dit navn");
+        primaryStage.setTitle("Customize Password");
         primaryStage.setScene(scene);
         primaryStage.show();
-
     }
 
 
@@ -117,11 +111,12 @@ public class AppController implements Observer {
         Button openButton = new Button("Open");
         openButton.setOnAction(event -> {
             String playerName = nameTextFieldGet.getText();
+            BoardTemplate template = LoadBoard.boardFromServer("serverGame");
+            LoadBoard.upDateBoard(template, board);
             handleJoinGame(playerName);
-            roboRally.createBoardView(gameController);
-
 
             primaryStage.close();
+
         });
 
         // Create a layout and add the text field and button
@@ -130,14 +125,11 @@ public class AppController implements Observer {
 
         // Create a scene and set it on the stage
         Scene scene = new Scene(root, 400, 100);
-        primaryStage.setTitle("Input the host's name");
+        primaryStage.setTitle("Welcome to roborally, want to join?");
         primaryStage.setScene(scene);
         primaryStage.show();
 
-        BoardTemplate template = LoadBoard.boardFromServer("serverGame");
-
-
-        LoadBoard.upDateBoard(template, board);
+    ;
         //gameController.setTurn(1);
        ProductClient.setCompleteMove("false");
       // chooseMap("Map 1 - Small");
@@ -145,28 +137,25 @@ public class AppController implements Observer {
     }
     public void handleJoinGame(String playerName) {
         boolean isNameCorrect = checkifNameCorrect(playerName);
+        int playerCounter = Integer.parseInt(ProductClient.getPlayerCounter());
+        if (isNameCorrect && playerCounter < board.getPlayersNumber()) {
 
-        int playerCounter = playerCount;
-        if (isNameCorrect &&  hostBoardTemplate != null) {
-            if(playerCount < minimumplayer) {
+            playerCounter++;
+            System.out.println(playerCounter);
+            ProductClient.updatePlayerJoinedCounter(String.valueOf(playerCounter));
+            System.out.println("enters the game");
+            roboRally.createBoardView(gameController);
 
-
-                ProductClient.updatePlayerJoinedCounter(""+ playerCounter +1);
-            }
+        } else {
+            System.out.println("no space for your buddy, better learn chinese");
             showAlertIfLobbyFull();
-
-            // Increment the player count
-            if (playerCount < minimumplayer) {
-                playerCount++;
-
-            }
-
-            System.out.println("Player Count: " + playerCount);
-
-
         }
 
+
+
+
     }
+
     private boolean checkifNameCorrect(String playerName) {
         boolean isNameCorrect = playerName.equals(enteredText);
         if (!isNameCorrect) {
@@ -180,13 +169,13 @@ public class AppController implements Observer {
     }
 
     private void showAlertIfLobbyFull() {
-        if (playerCount >= minimumplayer) {
+
             Alert alert = new Alert(AlertType.INFORMATION);
             alert.setTitle("Lobby Full");
             alert.setHeaderText(null);
             alert.setContentText("The lobby is now full.");
             alert.showAndWait();
-        }
+
     }
 
 
