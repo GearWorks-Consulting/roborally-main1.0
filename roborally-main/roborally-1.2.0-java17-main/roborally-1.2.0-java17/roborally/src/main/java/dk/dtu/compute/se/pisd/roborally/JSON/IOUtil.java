@@ -28,10 +28,13 @@ import com.google.common.io.ByteSource;
 
 import java.io.*;
 
+
 /**
- * A utility class reading strings from resources and arbitrary input streams.
  *
- * @author Ekkart Kindler, ekki@dtu.dk
+ * @author Abdi, Mathias, & Moiz H. Khalil
+ * @version 2.0 Release.
+ *  @since 17-6-2023
+ *
  */
 public class IOUtil {
 

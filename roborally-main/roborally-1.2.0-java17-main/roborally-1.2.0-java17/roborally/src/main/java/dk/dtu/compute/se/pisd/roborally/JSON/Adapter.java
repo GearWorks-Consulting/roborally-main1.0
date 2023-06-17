@@ -45,7 +45,7 @@ import com.google.gson.JsonSerializer;
  * in the structure. Note that this solution does not work if instances of
  * E itself need to be serialized (typically E would be abstract).
  *
- * @author Menelaos Perdikeas, https://github.com/mperdikeas
+ * @author Menelaos Perdikeas, https://github.com/mperdikeas, Moiz H. Khalil
  * @author Ekkart Kindler, ekki@dtu.dk
  *
  * @param <E> The top of the class hierarchy

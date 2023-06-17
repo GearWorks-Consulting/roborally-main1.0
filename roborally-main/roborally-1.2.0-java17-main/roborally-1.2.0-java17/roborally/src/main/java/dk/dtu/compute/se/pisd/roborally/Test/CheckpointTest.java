@@ -8,7 +8,13 @@ import static org.testng.AssertJUnit.assertNull;
 
 import dk.dtu.compute.se.pisd.roborally.model.*;
 import dk.dtu.compute.se.pisd.roborally.controller.GameController;
-
+/**
+ *
+ * @author Moiz H. Khalil, s215617@dtu.dk
+ *@version 1.8 QA.
+ * @since 17-6-2023
+ *
+ */
 public class CheckpointTest {
     private GameController gameController;
     private Player player;

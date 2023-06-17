@@ -5,7 +5,13 @@ import dk.dtu.compute.se.pisd.roborally.JSON.LoadBoard;
 import dk.dtu.compute.se.pisd.roborally.client.ProductClient;
 
 import java.util.*;
-
+/**
+ *
+ * @author Abdi, Mathias, & Moiz H. Khalil
+ * @version 2.0 Release.
+ *  @since 17-6-2023
+ *
+ */
 public class Main {
 
     public static void main(String[] args) throws Exception {
