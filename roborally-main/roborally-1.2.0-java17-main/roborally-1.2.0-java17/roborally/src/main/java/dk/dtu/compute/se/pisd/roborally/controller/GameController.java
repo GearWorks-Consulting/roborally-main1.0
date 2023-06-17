@@ -345,6 +345,7 @@ public class GameController {
                     GearRotation(player);
                     conveyerTransport(player);
                     CheckPointTokener(player);
+                    PushPanel(player);
                 }
             }
 
@@ -514,7 +515,15 @@ public class GameController {
 
         }
     }
-
+    public void PushPanel(Player player) {
+        Space space5 = player.getSpace();
+        PushPanel pushPanel = space5.getPushPanel();
+        if(pushPanel != null) {
+            Heading heading5 = pushPanel.getDirection();
+            player.setHeading(heading5);
+            this.moveForward(player);
+        }
+    }
     public boolean robotCollide(Space target, Heading heading) {
         if (target.getPlayer() != null && !target.getPlayer().getHeading().next().next().equals(heading)) {
             Player old = target.getPlayer();

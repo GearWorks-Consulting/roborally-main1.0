@@ -19,7 +19,7 @@ public class JSONTest {
         Board board = new Board(5, 5);
 
         String boardName = "savedBoard";
-        LoadBoard.saveBoard(board, boardName);
+        //LoadBoard.saveBoard(board, boardName);
 
     }
 }
