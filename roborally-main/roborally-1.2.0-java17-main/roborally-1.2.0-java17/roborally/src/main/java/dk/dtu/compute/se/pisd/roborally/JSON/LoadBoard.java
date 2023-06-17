@@ -90,39 +90,16 @@ public class LoadBoard {
         return ProductClient.loadBoard(boardname);
     }
 
-    public static void upDateBoard(BoardTemplate template, Board result){
+    public static Board upDateBoard(BoardTemplate template, Board result){
         if (result != null) {
 
-            for (int i = 0; i < result.width; i++) {
-                for (int j = 0; j < result.height; j++) {
-                    Space space = result.getSpace(i, j);
-                    SpaceTemplate temSpace = template.spaces[i][j];
-                    if (temSpace.Conveyor != null) {
-                        space.setConveyor(temSpace.Conveyor);
-                    }
-                    if (temSpace.checkPoint != null) {
-                        space.setCheckPoint(temSpace.checkPoint);
-                    }
-                    if (temSpace.wallHeading != null) {
-                        space.addWall(temSpace.wallHeading);
-                        space.setWall();
-                        space.setWallFacing(temSpace.wallHeading);
-                    }
-                    if (temSpace.gearRotation != null) {
-                        space.setGear(temSpace.gearRotation);
-                    }
 
-
-                }
-            }
-
-
-            if (template.gameId != null)
-                result.setGameId(template.gameId);
             for (int i = 0; i < result.getPlayersNumber(); i++) {
 
                 result.getPlayer(i).setTokens(template.getPlayer(i).tokens);
+
                 result.getPlayer(i).setSpace(result.getSpace(template.getPlayer(i).space.x, template.getPlayer(i).space.y));
+                result.spaces[template.getPlayer(i).space.x][template.getPlayer(i).space.y].setPlayer(result.getPlayer(i));
                 result.getPlayer(i).setHeading(template.getPlayer(i).heading);
                 result.getPlayer(i).getSpace().setPlayer(result.getPlayer(i));
                 result.getPlayer(i).setName(template.getPlayer(i).name);
@@ -152,7 +129,7 @@ public class LoadBoard {
             result.setStep(template.step);
             result.setStepMode(template.stepMode);
 
-
+return  result;
         }
         else
         {
@@ -189,6 +166,7 @@ public class LoadBoard {
 
                 result.getPlayer(i).setTokens(template.getPlayer(i).tokens);
                 result.getPlayer(i).setSpace(result.getSpace(template.getPlayer(i).space.x, template.getPlayer(i).space.y));
+                result.spaces[template.getPlayer(i).space.x][template.getPlayer(i).space.y].setPlayer(result.getPlayer(i));
                 result.getPlayer(i).setHeading(template.getPlayer(i).heading);
                 result.getPlayer(i).getSpace().setPlayer(result.getPlayer(i));
                 result.getPlayer(i).setName(template.getPlayer(i).name);
@@ -218,7 +196,7 @@ public class LoadBoard {
             result.setStep(template.step);
             result.setStepMode(template.stepMode);
 
-
+return result;
         }
 
     }
@@ -334,10 +312,6 @@ public class LoadBoard {
 
     public static void saveGameToFile(BoardTemplate template, String name) {
 
-
-
-
-
         ClassLoader classLoader = LoadBoard.class.getClassLoader();
         // TODO: this is not very defensive, and will result in a NullPointerException
         //       when the folder "resources" does not exist! But, it does not need
@@ -375,6 +349,51 @@ public class LoadBoard {
 
 
     }
+    public static void UpdateMoveToServer (Board board,int currentPlayer){
+
+        BoardTemplate templateFromServer = boardFromServer("serverGame");
+        Boolean isThereCollision= false;
+        PlayerTemplate playerAmount = templateFromServer.getPlayer(currentPlayer);
+        playerAmount.heading = board.getPlayer(currentPlayer).getHeading();
+        for (int i=0;i<board.getPlayersNumber();i++) {
+            if(templateFromServer.players.get(i).space.x==board.getPlayer(currentPlayer).getSpace().x &&templateFromServer.players.get(i).space.y==board.getPlayer(currentPlayer).getSpace().y)
+                isThereCollision=true;
+        }
+        if (!isThereCollision){
+
+
+
+            playerAmount.tokens = board.getPlayer(currentPlayer).getTokens();
+
+
+
+            playerAmount.space = templateFromServer.spaces[board.getPlayer(currentPlayer).getSpace().x][board.getPlayer(currentPlayer).getSpace().y];
+
+
+            for (int k = 0; k < board.getPlayer(currentPlayer).getCards().length; k++) {
+                playerAmount.cards[k].card = board.getPlayer(currentPlayer).getCardField(k).getCard();
+                playerAmount.cards[k].visible = board.getPlayer(currentPlayer).getCardField(k).isVisible();
+            }
+            for (int k = 0; k < board.getPlayer(currentPlayer).getProgram().length; k++) {
+                playerAmount.program[k].card = board.getPlayer(currentPlayer).getProgramField(k).getCard();
+                playerAmount.program[k].visible = board.getPlayer(currentPlayer).getProgramField(k).isVisible();
+            }
+
+
+        templateFromServer.current = templateFromServer.getPlayer(board.getPlayerNumber(board.getCurrentPlayer()));
+
+        templateFromServer.phase = board.getPhase();
+        templateFromServer.step = board.getStep();
+        templateFromServer.stepMode = board.stepMode;
+
+}
+        boardToServer(templateFromServer,"serverGame");
+        upDateBoard(templateFromServer,board);
+
+        isThereCollision=false;
+
+    }
+
     public static void boardToServer(BoardTemplate template,String fileName) {
         ProductClient.saveBoard(template,fileName);
     }
