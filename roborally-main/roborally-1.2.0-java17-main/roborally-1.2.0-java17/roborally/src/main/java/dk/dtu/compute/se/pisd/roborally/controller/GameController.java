@@ -37,8 +37,8 @@ import static dk.dtu.compute.se.pisd.roborally.model.Heading.*;
  * ...
  *
  * @author Abdi og Mathias
- * @version 1.0 prototype.
- *  @since 2023-04-16
+ * @version 2.0
+ *  @since 2023-06-17
  */
 public class GameController {
     /**
@@ -46,6 +46,14 @@ public class GameController {
      */
      public Board board;
     final private List<String> OPTIONS_Interactive = Arrays.asList("Left", "Right");
+
+    public void setPlayerNumber(int playerNumber) {
+        this.playerNumber = playerNumber;
+    }
+    
+
+    private int playerNumber;
+
 
     public int getTurn() {
         return turn;
