@@ -37,9 +37,11 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * ...
  *
- * @author Ekkart Kindler, ekki@dtu.dk
+ * @author Abdi, Mathias, & Moiz H. Khalil
+ * @version 2.0 Release.
+ *  @since 17-6-2023
+ *
  */
 public class LoadBoard {
 
@@ -153,7 +155,9 @@ return result;
                     if (temSpace.gearRotation != null) {
                         space.setGear(temSpace.gearRotation);
                     }
-
+                    if (temSpace.pushPanel != null) {
+                        space.setPushPanel(temSpace.pushPanel);
+                    }
 
                 }
             }
@@ -243,7 +247,9 @@ return result;
                     if (temSpace.gearRotation != null) {
                         space.setGear(temSpace.gearRotation);
                     }
-
+                    if (temSpace.pushPanel != null) {
+                        space.setPushPanel(temSpace.pushPanel);
+                    }
 
                 }
             }
@@ -273,6 +279,10 @@ return result;
                 if (space.getGear() != null) {
                     tempSpace.gearRotation = space.getGear();
                 }
+                if(space.getPushPanel()!=null){
+                    tempSpace.pushPanel=space.getPushPanel();
+                }
+
             }
         }
         for (int i = 0; i < board.getPlayersNumber(); i++) {

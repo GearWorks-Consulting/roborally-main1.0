@@ -25,19 +25,32 @@ import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * ...
  *
- * @author Ekkart Kindler, ekki@dtu.dk
+ * The CommandCard class represents a command card in the game.
+ * It is associated with a specific command.
  *
+ * @author Abdi, Mathias, & Moiz H. Khalil
+ * @version 2.0 Release.
+ *  @since 17-6-2023
+ *,
  */
 public class CommandCard extends Subject {
 
     final public Command command;
-
+    /**
+     * Constructs a CommandCard object with the specified command.
+     *
+     * @param command the associated command for the card
+     */
     public CommandCard(@NotNull Command command) {
         this.command = command;
     }
 
+    /**
+     * Retrieves the name of the command card.
+     *
+     * @return the name of the command card
+     */
     public String getName() {
         return command.displayName;
     }

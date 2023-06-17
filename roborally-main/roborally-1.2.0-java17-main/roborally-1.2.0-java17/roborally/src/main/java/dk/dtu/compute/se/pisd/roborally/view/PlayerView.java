@@ -35,34 +35,36 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 
 /**
- * ...
  *
- * @author Ekkart Kindler, ekki@dtu.dk
- *
+ * @author Abdi, Mathias, & Moiz H. Khalil
+ * @version 2.0 Release.
+ *  @since 17-6-2023
+ *,
+ */
+
+/**
+ * The PlayerView class represents the graphical view of a player's status and actions in the game.
+ * It extends the JavaFX Tab class and implements the ViewObserver interface.
+ * It observes changes in the associated Player object and updates its view accordingly.
  */
 public class PlayerView extends Tab implements ViewObserver {
 
-    private Player player;
-
-    private VBox top;
-
-    private Label programLabel;
-    private GridPane programPane;
-    private Label cardsLabel;
-    private GridPane cardsPane;
-
-    private CardFieldView[] programCardViews;
-    private CardFieldView[] cardViews;
-
-    private VBox buttonPanel;
-
-    private Button finishButton;
-    private Button executeButton;
-    private Button stepButton;
-
-    private VBox playerInteractionPanel;
-
-    private GameController gameController;
+    //Player attributes
+    private final Player player;
+    // UI elements
+    private final VBox top;
+    private final Label programLabel;
+    private final GridPane programPane;
+    private final Label cardsLabel;
+    private final GridPane cardsPane;
+    private final CardFieldView[] programCardViews;
+    private final CardFieldView[] cardViews;
+    private final VBox buttonPanel;
+    private final Button finishButton;
+    private final Button executeButton;
+    private final Button stepButton;
+    private final VBox playerInteractionPanel;
+    private final GameController gameController;
     /**
 
  *  Constructs a PlayerView constructor for the class imported specified GameController and Player instances.
@@ -99,9 +101,7 @@ public class PlayerView extends Tab implements ViewObserver {
             }
         }
 
-        // XXX  the following buttons should actually not be on the tabs of the individual
-        //      players, but on the PlayersView (view for all players). This should be
-        //      refactored.
+
 
         finishButton = new Button("Finish Programming");
         finishButton.setOnAction( e -> gameController.finishProgrammingPhase());
@@ -115,7 +115,6 @@ public class PlayerView extends Tab implements ViewObserver {
         buttonPanel = new VBox(finishButton, executeButton, stepButton);
         buttonPanel.setAlignment(Pos.CENTER_LEFT);
         buttonPanel.setSpacing(3.0);
-        // programPane.add(buttonPanel, Player.NO_REGISTERS, 0); done in update now
 
         playerInteractionPanel = new VBox();
         playerInteractionPanel.setAlignment(Pos.CENTER_LEFT);
@@ -133,24 +132,29 @@ public class PlayerView extends Tab implements ViewObserver {
                 cardsPane.add(cardViews[i], i, 0);
             }
         }
-
+        // Add UI elements to the layout
         top.getChildren().add(programLabel);
         top.getChildren().add(programPane);
         top.getChildren().add(cardsLabel);
         top.getChildren().add(cardsPane);
 
+        // Attach this view as an observer to the player's board
         if (player.board != null) {
             player.board.attach(this);
             update(player.board);
         }
     }
+
     /**
-     Updates the view for the given subject. Specifically, this method updates the view of the program cards for the player's board and retrives the currentplayer in terms of doing the update.
-     @param subject the subject to update the view for
-     */
+     * Updates the view for the given subject.
+     * This method updates the view of the program cards for the player's board
+     * and retrieves the current player for the update.
+     *
+     * */
     @Override
     public void updateView(Subject subject) {
         if (subject == player.board) {
+            // Update the program card views based on the board's phase and current step
             for (int i = 0; i < Player.NO_REGISTERS; i++) {
                 CardFieldView cardFieldView = programCardViews[i];
                 if (cardFieldView != null) {
@@ -173,7 +177,7 @@ public class PlayerView extends Tab implements ViewObserver {
                     }
                 }
             }
-
+            // Update the button panel and button states based on the board's phase
             if (player.board.getPhase() != Phase.PLAYER_INTERACTION) {
                 if (!programPane.getChildren().contains(buttonPanel)) {
                     programPane.getChildren().remove(playerInteractionPanel);
@@ -182,8 +186,7 @@ public class PlayerView extends Tab implements ViewObserver {
                 switch (player.board.getPhase()) {
                     case INITIALISATION:
                         finishButton.setDisable(true);
-                        // XXX just to make sure that there is a way for the player to get
-                        //     from the initialization phase to the programming phase somehow!
+
                         executeButton.setDisable(false);
                         stepButton.setDisable(true);
                         break;
@@ -230,8 +233,9 @@ public class PlayerView extends Tab implements ViewObserver {
                     CommandCard card = player.getProgramField(step).getCard();
                     List list = card.command.getOptions();
 
-
+                    // Iterate over the options and create a button for each option
                     for (int i =0; i< list.size();i++){
+                        // Set the action for the button to execute the selected option and continue
                         Button optionButton = new Button(list.get(i).toString());
                         Command co = (Command) list.get(i);
                         optionButton.setOnAction( e -> gameController.executeCommandOptionAndContinue(player,co));
@@ -239,15 +243,9 @@ public class PlayerView extends Tab implements ViewObserver {
                         playerInteractionPanel.getChildren().add(optionButton);
 
                     }
-
-
                     }
-
-
-
                 }
         }
         }
     }
-
 

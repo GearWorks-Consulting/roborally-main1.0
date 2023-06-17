@@ -21,7 +21,11 @@
  */
 package dk.dtu.compute.se.pisd.roborally.controller;
 
+//For End credits scrolling in Information tab in MenuBar
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextArea;
 
+//Observer pattern
 import dk.dtu.compute.se.pisd.designpatterns.observer.Observer;
 import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
 
@@ -50,9 +54,10 @@ import java.util.List;
 import java.util.Optional;
 import dk.dtu.compute.se.pisd.roborally.JSON.LoadBoard;
 /**
- * ...
  *
- * @author Ekkart Kindler, ekki@dtu.dk
+ * @author Abdi, Mathias, & Moiz H. Khalil
+ * @version 2.0 Release.
+ *  @since 17-6-2023
  *
  */
 public class AppController implements Observer {
@@ -304,6 +309,77 @@ public class AppController implements Observer {
             alert.showAndWait();
         }
     }
+
+    public void showInformation() {
+        List<String> rules = Arrays.asList("How To Play", "RoboRally - Awards Won", "Credits", "...");
+
+        ChoiceDialog<String> ruleDialog = new ChoiceDialog<>(null, rules);
+        ruleDialog.setTitle("Information Details");
+        ruleDialog.setHeaderText("Select an info");
+        ruleDialog.setContentText("Select an info to view:");
+
+        Optional<String> selectedRule = ruleDialog.showAndWait();
+        selectedRule.ifPresent(this::displayRule);
+    }
+
+    private void displayRule(String rule) {
+        Alert alert = new Alert(AlertType.INFORMATION);
+        alert.setTitle("Information Details");
+        alert.setHeaderText("Information Details");
+
+        if (rule.equals("How To Play")) {
+            alert.setContentText("Here is a short summary of the setup of the actual game: \n" +
+                    "-\tThe players choose a board to compete in.\n" +
+                    "-\tEach players choose a robot and its corresponding colour figure and programming deck. Furthermore, each player gets a player mat.\n" +
+                    "-\tThere are six special programming cards not associated with any specific robots meaning it’s for all.\n" +
+                    "-\tCheckpoint tokens for the players. The checkpoint tokens are acquired for each checkpoint the tokens are displayed in the bottom left corner.\n" +
+                    "-\tGoal of the game is for an individual player to get all checkpoint tokens.\n" +
+                    "Each game is comprised of multiple rounds with each rounds having two phases.\n" +
+                    "1.\tThe programming phase.\n" +
+                    "2.\tThe activation phase.\n" +
+                    "Each phase has their own rules and progressions. As it is called a race, the game ends when one of the players reaches the final checkpoint. \n");
+        } else if (rule.equals("RoboRally - Awards Won")){
+            alert.setContentText("-\tAt the 1995 Origins Awards, RoboRally won awards in two categories: \n" +
+                    "\"Best Fantasy or Science Fiction Boardgame of 1994\"\n" +
+                    "\"Best Graphic Presentation of a Boardgame of 1994\"\n" +
+                    "-\tAt the 1996 Origins Awards, the Armed and Dangerous expansion won \"Best Graphic Presentation of a Boardgame of 1995”\n" +
+                    "-\tAt the 1997 Origins Awards, RoboRally Grand Prix won \"Best Fantasy or Science Fiction Boardgame of 1996”\n");
+        } else if (rule.equals("Credits")){
+            ScrollPane scrollPane = new ScrollPane();
+            scrollPane.setPrefSize(400, 200);
+
+            TextArea textArea = new TextArea();
+            textArea.setEditable(false);
+            textArea.setWrapText(true);
+            textArea.setText("Thanks to our professor:\n" +
+                    "- Professor Siniša Neškovic \n\n" +
+                    "- Anne Ringsted\n" +
+                    "- Ekkart Kindler \n" +
+                    "- Hubert Baumeister\n" +
+                    "- Censor Standing Infront of me \n" +
+                    "\n"+
+                    "Teaching Assistents:\n" +
+                    "- Christian Francesco Notarmaso Pone \n" +
+                    "- Camila Santos Celes \n" +
+                    "- Ioannis Orestis Zamanis Dimitroulas \n" +
+                    "- Christian Juul Lund Andersen \n" +
+                    "-  Frederik Emil Schibelfeldt \n");
+
+            scrollPane.setContent(textArea);
+            alert.getDialogPane().setContent(scrollPane);
+        }
+
+
+        else {
+            alert.setContentText(rule);
+        }
+
+        alert.showAndWait();
+    }
+
+
+
+
 
     /**
      * Stop playing the current game, giving the user the option to save
