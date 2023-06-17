@@ -86,6 +86,7 @@ public class AppController implements Observer {
             playerCount = 1;
             ProductClient.updatePlayerJoinedCounter(""+ playerCount);
                 startGame();
+                gameController.setPlayerNumber(0);
             gameController.updateServer();
             ProductClient.updateMaxPlayers(""+ minimumplayer);
             int maxPlayers = Integer.parseInt(ProductClient.getMaxPlayers());
@@ -139,6 +140,7 @@ public class AppController implements Observer {
         boolean isNameCorrect = checkifNameCorrect(playerName);
         int playerCounter = Integer.parseInt(ProductClient.getPlayerCounter());
         if (isNameCorrect && playerCounter < board.getPlayersNumber()) {
+            gameController.setPlayerNumber(playerCounter);
 
             playerCounter++;
             System.out.println(playerCounter);
