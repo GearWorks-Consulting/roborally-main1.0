@@ -112,9 +112,10 @@ public class AppController implements Observer {
         Button openButton = new Button("Open");
         openButton.setOnAction(event -> {
             String playerName = nameTextFieldGet.getText();
-            BoardTemplate template = LoadBoard.boardFromServer("serverGame");
+            int playerCounter = Integer.parseInt(ProductClient.getPlayerCounter());
+            BoardTemplate template = LoadBoard.boardFromServer("serverGame, you will be playing as player " + playerCounter);
             board=LoadBoard.upDateBoard(template, board);
-            handleJoinGame(playerName,board);
+            handleJoinGame(playerName,board,playerCounter);
             primaryStage.close();
 
         });
@@ -135,9 +136,8 @@ public class AppController implements Observer {
       // chooseMap("Map 1 - Small");
       // addPlayersToBoard(board,2);
     }
-    public void handleJoinGame(String playerName,Board board) {
+    public void handleJoinGame(String playerName,Board board,int playerCounter) {
         boolean isNameCorrect = checkifNameCorrect(playerName);
-        int playerCounter = Integer.parseInt(ProductClient.getPlayerCounter());
         if (isNameCorrect && playerCounter < board.getPlayersNumber()) {
             gameController = new GameController(board);
             gameController.setPlayerNumber(playerCounter);
