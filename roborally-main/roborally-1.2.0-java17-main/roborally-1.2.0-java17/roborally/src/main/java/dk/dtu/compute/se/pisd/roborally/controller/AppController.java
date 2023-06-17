@@ -145,6 +145,7 @@ public class AppController implements Observer {
             gameController.setOnline(1);
             playerCounter++;
             ProductClient.updatePlayerJoinedCounter(String.valueOf(playerCounter));
+
             gameController.startProgrammingPhase();
             roboRally.createBoardView(gameController);
         } else {

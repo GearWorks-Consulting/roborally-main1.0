@@ -442,7 +442,7 @@
         },
         {
           "card": {
-            "command": "RIGHT",
+            "command": "OPTION_LEFT_RIGHT",
             "observers": []
           },
           "visible": true
@@ -450,20 +450,6 @@
         {
           "card": {
             "command": "FAST_FORWARD",
-            "observers": []
-          },
-          "visible": true
-        },
-        {
-          "card": {
-            "command": "RIGHT",
-            "observers": []
-          },
-          "visible": true
-        },
-        {
-          "card": {
-            "command": "RIGHT",
             "observers": []
           },
           "visible": true
@@ -477,7 +463,14 @@
         },
         {
           "card": {
-            "command": "FAST_FORWARD",
+            "command": "UTURN",
+            "observers": []
+          },
+          "visible": true
+        },
+        {
+          "card": {
+            "command": "OPTION_LEFT_RIGHT",
             "observers": []
           },
           "visible": true
@@ -485,6 +478,13 @@
         {
           "card": {
             "command": "FAST_FORWARD",
+            "observers": []
+          },
+          "visible": true
+        },
+        {
+          "card": {
+            "command": "RIGHT",
             "observers": []
           },
           "visible": true
@@ -527,20 +527,6 @@
         },
         {
           "card": {
-            "command": "FORWARD",
-            "observers": []
-          },
-          "visible": true
-        },
-        {
-          "card": {
-            "command": "FAST_FORWARD",
-            "observers": []
-          },
-          "visible": true
-        },
-        {
-          "card": {
             "command": "LEFT",
             "observers": []
           },
@@ -548,21 +534,35 @@
         },
         {
           "card": {
-            "command": "FAST_FORWARD",
+            "command": "OPTION_LEFT_RIGHT",
             "observers": []
           },
           "visible": true
         },
         {
           "card": {
-            "command": "RIGHT",
+            "command": "OPTION_LEFT_RIGHT",
             "observers": []
           },
           "visible": true
         },
         {
           "card": {
-            "command": "RIGHT",
+            "command": "UTURN",
+            "observers": []
+          },
+          "visible": true
+        },
+        {
+          "card": {
+            "command": "UTURN",
+            "observers": []
+          },
+          "visible": true
+        },
+        {
+          "card": {
+            "command": "UTURN",
             "observers": []
           },
           "visible": true
@@ -613,7 +613,7 @@
       },
       {
         "card": {
-          "command": "RIGHT",
+          "command": "OPTION_LEFT_RIGHT",
           "observers": []
         },
         "visible": true
@@ -621,20 +621,6 @@
       {
         "card": {
           "command": "FAST_FORWARD",
-          "observers": []
-        },
-        "visible": true
-      },
-      {
-        "card": {
-          "command": "RIGHT",
-          "observers": []
-        },
-        "visible": true
-      },
-      {
-        "card": {
-          "command": "RIGHT",
           "observers": []
         },
         "visible": true
@@ -648,7 +634,14 @@
       },
       {
         "card": {
-          "command": "FAST_FORWARD",
+          "command": "UTURN",
+          "observers": []
+        },
+        "visible": true
+      },
+      {
+        "card": {
+          "command": "OPTION_LEFT_RIGHT",
           "observers": []
         },
         "visible": true
@@ -656,6 +649,13 @@
       {
         "card": {
           "command": "FAST_FORWARD",
+          "observers": []
+        },
+        "visible": true
+      },
+      {
+        "card": {
+          "command": "RIGHT",
           "observers": []
         },
         "visible": true

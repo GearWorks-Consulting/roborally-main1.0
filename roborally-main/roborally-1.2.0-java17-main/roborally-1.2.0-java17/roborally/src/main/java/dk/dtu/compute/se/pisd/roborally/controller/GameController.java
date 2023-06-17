@@ -223,7 +223,7 @@ public class GameController {
                         board.setCurrentPlayer(board.getPlayer(turn));
                     } else {
                         turn = (turn + 1) % board.getPlayersNumber();
-                        winGame();
+
 
                         if(online==1) {
                             int savedServerNumber = Integer.parseInt(ProductClient.getPlayerTurn());
@@ -240,6 +240,7 @@ public class GameController {
                                 LoadBoard.upDateBoard(templateFromServer, board);
                             }
                         }
+                        winGame();
                         startProgrammingPhase();
 
                     }
