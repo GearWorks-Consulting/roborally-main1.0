@@ -27,10 +27,13 @@ import java.util.List;
 
 /**
  *
+ * The Command enumeration represents different commands that can be used in the game.
+ * Each command has a display name and may have options associated with it.
+ *
  * @author Abdi, Mathias, & Moiz H. Khalil
  * @version 2.0 Release.
  *  @since 17-6-2023
- *
+ *,
  */
 public enum Command {
 
@@ -47,29 +50,32 @@ public enum Command {
 
     final public String displayName;
 
-    // XXX Assignment P3
-    // Command(String displayName) {
-    //     this.displayName = displayName;
-    // }
-    //
-    // replaced by the code below:
-
     final private List<Command> options;
     /**
-
-     Constructs a new Command enum with the given display name Using the previous created Enu sentenced with Forward,Right,Left,Fast,Forward.
-     @param displayName the display name of the command
+     * Constructs a new Command enum with the given display name and optional sub-commands.
+     *
+     * @param displayName the display name of the command
+     * @param options     the optional sub-commands associated with the command
      */
     Command(String displayName, Command... options) {
         this.displayName = displayName;
         this.options = Collections.unmodifiableList(Arrays.asList(options));
     }
-
+    /**
+     * Checks if the command has options associated with it.
+     *
+     * @return true if the command has options, false otherwise
+     */
     public boolean isInteractive() {
         return !options.isEmpty();
 
     }
 
+    /**
+     * Retrieves the list of options associated with the command.
+     *
+     * @return the list of options associated with the command
+     */
     public List<Command> getOptions() {
         return options;
     }

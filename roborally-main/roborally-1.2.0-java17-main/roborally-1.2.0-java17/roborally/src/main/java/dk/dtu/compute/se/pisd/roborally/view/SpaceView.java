@@ -48,6 +48,10 @@ import java.io.FileNotFoundException;
  *  @since 17-6-2023
  *
  */
+
+/**
+ * This class represents the graphical view of a Space in the RoboRally game.
+ */
 public class SpaceView extends StackPane implements ViewObserver {
 
     final public static int SPACE_HEIGHT = 60; // 75;
@@ -59,13 +63,15 @@ public class SpaceView extends StackPane implements ViewObserver {
 
     public final Space space;
 
-
+    /**
+     * Constructs a SpaceView object with the given Space model object.
+     *
+     * @param space The Space model object associated with this view.
+     */
     public SpaceView(@NotNull Space space) {
         this.space = space;
-        //ImageView imageView = new ImageView(image);
 
-
-        // XXX the following styling should better be done with styles
+        //space settings set to string attributes
         this.setPrefWidth(SPACE_WIDTH);
         this.setMinWidth(SPACE_WIDTH);
         this.setMaxWidth(SPACE_WIDTH);
@@ -96,7 +102,7 @@ public class SpaceView extends StackPane implements ViewObserver {
     }
 
 
-
+    //Updates the graphical representation of the player and other elements in the Space.
     private void updatePlayer() {
         this.getChildren().clear();
 
@@ -125,7 +131,7 @@ public class SpaceView extends StackPane implements ViewObserver {
             // Uncomment the next line to set a black background color for the container
             //this.setStyle("-fx-background-color: black;");
         }
-
+        // Display the corresponding checkpoint image based on the order number
         if(space.getCheckPoint()!=null &&space.getCheckPoint().getOrderNo()==0){
             ImageView imageView = new ImageView();
             Image image = new Image("cp1.png",60,60,false,false);
@@ -165,6 +171,7 @@ public class SpaceView extends StackPane implements ViewObserver {
             imageView.setImage(image);
             this.getChildren().add(imageView);
         }
+        // Display the corresponding action field image based on the direction
             if (space.getConveyor() != null && space.getConveyor().getColour().equals("blue")) {
             ImageView imageView = new ImageView();
             Image image = null;
@@ -178,13 +185,10 @@ public class SpaceView extends StackPane implements ViewObserver {
                 image = new Image("Blue.png", 60, 60, false, false);
             }
             imageView.setImage(image);
-            //if (space.getConveyor().getDirection() == Heading.EAST) {
-            //   ImageView.setRotate((90*space.getConveyor().getDirection().ordinal())%360);
 
             this.getChildren().add(imageView);
-            //}
         }
-
+            // Display the corresponding action field image based on the direction
         else if (space.getConveyor() != null && space.getConveyor().getColour().equals("green")) {
             ImageView imageView = new ImageView();
             Image image = null;
@@ -202,7 +206,7 @@ public class SpaceView extends StackPane implements ViewObserver {
 
 
         }
-
+            // Display the corresponding action field image based on the direction
             else if (space.getPushPanel() != null) {
                 ImageView imageView = new ImageView();
                 Image image = null;
@@ -221,7 +225,7 @@ public class SpaceView extends StackPane implements ViewObserver {
 
             }
 
-
+            // Display the corresponding action field image
       else  if(space.getGear()!=null) {
             ImageView imageView = new ImageView();
             Image image = null;
@@ -236,7 +240,7 @@ public class SpaceView extends StackPane implements ViewObserver {
 
         Player player = space.getPlayer();
 
-
+        // Display the player arrow based on the player's heading
         if (player != null) {
             Polygon arrow = new Polygon(0.0, 0.0,
                     10.0, 20.0,

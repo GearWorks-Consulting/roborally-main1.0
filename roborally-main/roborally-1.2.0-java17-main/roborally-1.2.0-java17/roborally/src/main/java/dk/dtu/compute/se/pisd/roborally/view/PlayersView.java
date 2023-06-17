@@ -28,37 +28,49 @@ import dk.dtu.compute.se.pisd.roborally.model.Player;
 import javafx.scene.control.TabPane;
 
 /**
+ * The view class that represents the players in the game.
+ * It extends TabPane and implements the ViewObserver interface.
+ * It displays individual PlayerViews for each player in the game.
+ * It observes changes in the game board and updates accordingly.
  *
  * @author Abdi, Mathias, & Moiz H. Khalil
  * @version 2.0 Release.
  *  @since 17-6-2023
- *
+ *,
  */
 public class PlayersView extends TabPane implements ViewObserver {
 
     private final Board board;
 
     private final PlayerView[] playerViews;
-
+    /**
+     * Constructs a PlayersView object with the given game controller.
+     *
+     * @param gameController the game controller instance.
+     */
     public PlayersView(GameController gameController) {
         board = gameController.board;
-
+        // Set tab closing policy to unavailable
         this.setTabClosingPolicy(TabClosingPolicy.UNAVAILABLE);
 
+        // Create PlayerView instances for each player and add them as tabs
         playerViews = new PlayerView[board.getPlayersNumber()];
         for (int i = 0; i < board.getPlayersNumber();  i++) {
             playerViews[i] = new PlayerView(gameController, board.getPlayer(i));
             this.getTabs().add(playerViews[i]);
         }
+        // Attach this PlayersView as an observer to the board
         board.attach(this);
-        update(board);
 
+        // Update the view with the initial state of the board
+        update(board);
 
     }
 
     @Override
     public void updateView(Subject subject) {
         if (subject == board) {
+            // Select the tab corresponding to the current player
             Player current = board.getCurrentPlayer();
             this.getSelectionModel().select(board.getPlayerNumber(current));
         }

@@ -10,7 +10,7 @@ import java.util.Vector;
  * ...
  *
  * @author Moiz H. Khalil, s215617@dtu.dk
- *
+ *,
  */
 public class Gear {
     private final Heading direction;
