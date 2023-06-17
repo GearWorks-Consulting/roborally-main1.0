@@ -138,7 +138,7 @@ public class AppController implements Observer {
 
     ;
         //gameController.setTurn(1);
-       ProductClient.setCompleteMove("false");
+
       // chooseMap("Map 1 - Small");
       // addPlayersToBoard(board,2);
     }
@@ -148,8 +148,9 @@ public class AppController implements Observer {
             gameController = new GameController(board);
             gameController.setOnline(1);
             playerIdMessage(playerCounter+1);
-            playerCounter++;
             gameController.setPlayerNumber(playerCounter);
+            playerCounter++;
+
             ProductClient.updatePlayerJoinedCounter(String.valueOf(playerCounter));
             gameController.startProgrammingPhase();
             roboRally.createBoardView(gameController);
