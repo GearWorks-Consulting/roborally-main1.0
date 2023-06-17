@@ -350,7 +350,9 @@ return result;
 
     }
     public static void UpdateMoveToServer (Board board,int currentPlayer){
+
         BoardTemplate templateFromServer = boardFromServer("serverGame");
+        if(templateFromServer.spaces[board.getPlayer(currentPlayer).getSpace().x][board.getPlayer(currentPlayer).getSpace().y]!=null){
             PlayerTemplate playerAmount = templateFromServer.getPlayer(currentPlayer);
             playerAmount.tokens = board.getPlayer(currentPlayer).getTokens();
             playerAmount.heading = board.getPlayer(currentPlayer).getHeading();
@@ -376,7 +378,7 @@ return result;
         templateFromServer.stepMode = board.stepMode;
         boardToServer(templateFromServer,"serverGame");
         upDateBoard(templateFromServer,board);
-
+}
 
     }
 
