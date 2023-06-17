@@ -218,11 +218,24 @@ public class GameController {
                     } else {
                         turn = (turn + 1) % board.getPlayersNumber();
                         winGame();
+                        int savedServerNumber = Integer.parseInt(ProductClient.getPlayerTurn());
 
-                        LoadBoard.UpdateMoveToServer(board,playerNumber);
+                        if(savedServerNumber %board.getPlayersNumber()== playerNumber){
+                            LoadBoard.UpdateMoveToServer(board, playerNumber);
+                            updateServer();
+                            savedServerNumber++;
+
+
+                            ProductClient.setPlayerTurn(String.valueOf(savedServerNumber));
+                        }
+                        else
+                        {
+                            BoardTemplate templateFromServer = LoadBoard.boardFromServer("serverGame");
+                            LoadBoard.boardToServer(templateFromServer,"serverGame");
+                            LoadBoard.upDateBoard(templateFromServer,board);
+                        }
+
                         startProgrammingPhase();
-
-
 
                     }
                 }

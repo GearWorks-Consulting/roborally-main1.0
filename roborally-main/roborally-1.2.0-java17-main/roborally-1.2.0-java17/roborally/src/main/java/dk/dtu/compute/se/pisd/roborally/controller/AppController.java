@@ -80,6 +80,7 @@ public class AppController implements Observer {
     public void HostGame() {
         Stage primaryStage = new Stage();
         TextField nameTextFieldGet = new TextField();
+        ProductClient.setPlayerTurn("0");
         // Create a button to open a new screen
         Button openButton = new Button("Open");
         openButton.setOnAction(event -> {
@@ -88,8 +89,7 @@ public class AppController implements Observer {
                 startGame();
                 gameController.setPlayerNumber(0);
             gameController.updateServer();
-            ProductClient.updateMaxPlayers(""+ minimumplayer);
-            int maxPlayers = Integer.parseInt(ProductClient.getMaxPlayers());
+
                 primaryStage.close();
         });
         // Create a layout and add the text field and button

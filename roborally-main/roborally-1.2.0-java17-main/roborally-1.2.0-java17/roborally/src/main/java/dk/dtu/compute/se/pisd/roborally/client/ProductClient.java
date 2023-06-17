@@ -130,12 +130,12 @@ public class ProductClient implements IBoardTemplate {
             return null;
         }
     }
-    public static boolean updateMaxPlayers(String p) {
+    public static boolean setPlayerTurn(String p) {
         try{
             String productJSON =p;
             HttpRequest request = HttpRequest.newBuilder()
                     .POST(HttpRequest.BodyPublishers.ofString(productJSON))
-                    .uri(URI.create("http://10.209.211.14:8080/updateMaxPlayers/"))
+                    .uri(URI.create("http://10.209.211.14:8080/setPlayerTurn/"))
                     .setHeader("User-Agent", "Product Client")
                     .header("Content-Type", "application/json")
                     .build();
@@ -150,11 +150,11 @@ public class ProductClient implements IBoardTemplate {
             return false;
         }
     }
-    public static String getMaxPlayers() {
+    public static String getPlayerTurn() {
         try {
             HttpRequest request = HttpRequest.newBuilder()
                     .GET()
-                    .uri(URI.create("http://10.209.211.14:8080/getMaxPlayers"))
+                    .uri(URI.create("http://10.209.211.14:8080/getPlayerTurn"))
                     .setHeader("User-Agent", "Product Client")
                     .build();
 

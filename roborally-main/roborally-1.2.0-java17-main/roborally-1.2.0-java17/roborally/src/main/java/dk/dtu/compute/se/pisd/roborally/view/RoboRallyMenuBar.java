@@ -58,27 +58,28 @@ public class RoboRallyMenuBar extends MenuBar {
         controlMenu = new Menu("File");
         this.getMenus().add(controlMenu);
 
-        joinGame = new MenuItem("Join Game");
-        joinGame.setOnAction( e -> this.appController.JoinGame());
-        controlMenu.getItems().add(joinGame);
+
 
 
         hostGame = new MenuItem("Host Game");
         hostGame.setOnAction( e -> this.appController.HostGame());
         controlMenu.getItems().add(hostGame);
 
+        joinGame = new MenuItem("Join Game");
+        joinGame.setOnAction( e -> this.appController.JoinGame());
+        controlMenu.getItems().add(joinGame);
 
         localGame = new MenuItem("Local Game");
         localGame.setOnAction(e -> this.appController.localGame());
         controlMenu.getItems().add(localGame);
 
-        stopGame = new MenuItem("Stop Game");
-        stopGame.setOnAction( e -> this.appController.stopGame());
-        controlMenu.getItems().add(stopGame);
-
         saveGame = new MenuItem("Save Game");
         saveGame.setOnAction( e -> this.appController.saveGame());
         controlMenu.getItems().add(saveGame);
+
+        stopGame = new MenuItem("Stop Game");
+        stopGame.setOnAction( e -> this.appController.stopGame());
+        controlMenu.getItems().add(stopGame);
 
         loadGame = new MenuItem("Load Game");
         loadGame.setOnAction( e -> this.appController.loadGame());
@@ -100,8 +101,8 @@ public class RoboRallyMenuBar extends MenuBar {
         boolean isOtherItemsVisible = true; // Set the visibility of other menu items based on Load Game visibility
 
         localGame.setVisible(isOtherItemsVisible);
-        stopGame.setVisible(isOtherItemsVisible && isGameRunning);
         saveGame.setVisible(isOtherItemsVisible && isGameRunning);
+        stopGame.setVisible(isOtherItemsVisible && isGameRunning);
         hostGame.setVisible(isOtherItemsVisible);
         loadGame.setVisible(isLoadGameVisible);
     }
