@@ -21,6 +21,9 @@
  */
 package dk.dtu.compute.se.pisd.roborally.controller;
 
+import dk.dtu.compute.se.pisd.roborally.JSON.BoardTemplate;
+import dk.dtu.compute.se.pisd.roborally.JSON.LoadBoard;
+import dk.dtu.compute.se.pisd.roborally.client.ProductClient;
 import dk.dtu.compute.se.pisd.roborally.model.*;
 import javafx.application.Platform;
 import org.jetbrains.annotations.NotNull;
@@ -31,34 +34,44 @@ import java.util.List;
 import static dk.dtu.compute.se.pisd.roborally.model.Heading.*;
 
 /**
+ * ...
  *
- * @author Abdi, Mathias, & Moiz H. Khalil
- * @version 2.0 Release.
- *  @since 17-6-2023
- *
+ * @author Abdi og Mathias
+ * @version 2.0
+ *  @since 2023-06-17
  */
 public class GameController {
     /**
      * Creates an empty gameboard which the game controller is associated with.
      */
+     public Board board;
 
-    //The game board associated with the game controller.
-    final public Board board;
-    //The list of options for interactive commands.
+    public void setOnline(int online) {
+        this.online = online;
+    }
+
+    private int online;
     final private List<String> OPTIONS_Interactive = Arrays.asList("Left", "Right");
-    //The current turn number.
-    int turn = 0;
 
-    /**
-     * The GameController class manages the game logic and controls the interactions
-     * between the Board, Players, and other components of the game.
-     */
+    public void setPlayerNumber(int playerNumber) {
+        this.playerNumber = playerNumber;
+    }
+    
 
-    /**
-            * Creates a GameController instance associated with the given game board.
-            *
-            * @param board the game board
-     */
+    private int playerNumber;
+
+
+    public int getTurn() {
+        return turn;
+    }
+
+    public void setTurn(int turn) {
+        this.turn = turn;
+    }
+
+    private int turn = 0;
+
+
     public GameController(@NotNull Board board) {
         this.board = board;
     }
@@ -87,24 +100,22 @@ public class GameController {
 
     // XXX: V2
     public void startProgrammingPhase() {
-        // Set the game phase to Programming
+
+
+
+
         board.setPhase(Phase.PROGRAMMING);
-        // Set the current player to the player at the current turn
         board.setCurrentPlayer(board.getPlayer(turn));
-        // Set the current step to the current turn
         board.setStep(turn);
 
-        // Reset the command card fields for all players
         for (int i = 0; i < board.getPlayersNumber(); i++) {
             Player player = board.getPlayer(i);
             if (player != null) {
-                // Reset the program fields
                 for (int j = 0; j < Player.NO_REGISTERS; j++) {
                     CommandCardField field = player.getProgramField(j);
                     field.setCard(null);
                     field.setVisible(true);
                 }
-                // Generate random command cards for the card fields
                 for (int j = 0; j < Player.NO_CARDS; j++) {
                     CommandCardField field = player.getCardField(j);
                     field.setCard(generateRandomCommandCard());
@@ -116,33 +127,35 @@ public class GameController {
 
     // XXX: V2
     private CommandCard generateRandomCommandCard() {
-        // Get all available commands
         Command[] commands = Command.values();
-        // Generate a random index within the range of available commands
         int random = (int) (Math.random() * commands.length);
-
-        // Create a new command card with the randomly selected command
         return new CommandCard(commands[random]);
     }
 
     /**
-     * This method handles the button click event for finishing the programming phase.
-     * It hides the program fields and makes the first field visible for each player.
-     * It sets the game phase to Activation and updates the current player and step.
+     * This is the method for the button of FinishProgrammignPhase. It hides the fields, and  makes the first field visible for each player,
+     * It will set the games phase to activationPhase after Clicked(input).It will also set the current player to the first player, and setting the current step to zero.
      */
     public void finishProgrammingPhase() {
+
         makeProgramFieldsInvisible();
         makeProgramFieldsVisible(turn);
         board.setPhase(Phase.ACTIVATION);
         board.setCurrentPlayer(board.getPlayer(turn));
         board.setStep(turn);
+
+
     }
+    public void updateServer(){
+       BoardTemplate boardTemplate = LoadBoard.NormalBoardToTemplate(board);
+        LoadBoard.boardToServer(boardTemplate,"serverGame");
+    }
+
+
 
     // XXX: V2
     private void makeProgramFieldsVisible(int register) {
-        // Check if the register is within a valid range
         if (register >= 0 && register < Player.NO_REGISTERS) {
-            // Make the program field visible for each player
             for (int i = 0; i < board.getPlayersNumber(); i++) {
                 Player player = board.getPlayer(i);
                 CommandCardField field = player.getProgramField(register);
@@ -153,7 +166,6 @@ public class GameController {
 
     // XXX: V2
     private void makeProgramFieldsInvisible() {
-        // Hide all program fields for each player
         for (int i = 0; i < board.getPlayersNumber(); i++) {
             Player player = board.getPlayer(i);
             for (int j = 0; j < Player.NO_REGISTERS; j++) {
@@ -165,10 +177,9 @@ public class GameController {
 
     // XXX: V2
     public void executePrograms() {
-        // Disable step mode
         board.setStepMode(false);
-        // Continue executing the programs
         continuePrograms();
+
     }
 
     // XXX: V2
@@ -179,7 +190,6 @@ public class GameController {
 
     // XXX: V2
     private void continuePrograms() {
-        // Execute the next step repeatedly until the activation phase ends or step mode is disabled
         do {
             executeNextStep();
         } while (board.getPhase() == Phase.ACTIVATION && !board.isStepMode());
@@ -188,119 +198,132 @@ public class GameController {
     // XXX: V2
     private void executeNextStep() {
 
-        // Get the current player
         Player currentPlayer = board.getCurrentPlayer();
 
-        // Check if the game is in the activation phase and the current player is valid
         if (board.getPhase() == Phase.ACTIVATION && currentPlayer != null) {
             int step = board.getStep();
-
-            // Check if the step is within a valid range
             if (step >= 0 && step < Player.NO_REGISTERS) {
-                // Get the command card for the current step
                 CommandCard card = currentPlayer.getProgramField(step).getCard();
-
-                // Check if the card is not null
                 if (card != null) {
                     Command command = card.command;
-                    // Check if the command requires player interaction
                     if (command.isInteractive()) {
                         board.setPhase(Phase.PLAYER_INTERACTION);
                         return;
-
                     }
-                    // Execute the command for the current player
                     executeCommand(currentPlayer, command);
                 }
-                // Update the next player and step
                 int nextPlayerNumber = board.getPlayerNumber(currentPlayer) + 1;
-                // Set the current player to the next player
                 if (nextPlayerNumber < board.getPlayersNumber()) {
                     board.setCurrentPlayer(board.getPlayer(nextPlayerNumber));
                 } else {
                     step++;
                     if (step < Player.NO_REGISTERS) {
-                        // Make the program fields visible for the next step
                         makeProgramFieldsVisible(step);
-
-                        // Set the step and current player to the first player
                         board.setStep(step);
                         board.setCurrentPlayer(board.getPlayer(turn));
                     } else {
-                        // Go to the next turn
                         turn = (turn + 1) % board.getPlayersNumber();
-
-                        // Check for a winning condition and restart the programming phase
                         winGame();
+
+                        if(online==1) {
+                            int savedServerNumber = Integer.parseInt(ProductClient.getPlayerTurn());
+                            if (savedServerNumber % board.getPlayersNumber() == playerNumber) {
+                                LoadBoard.UpdateMoveToServer(board, playerNumber);
+                                updateServer();
+                                savedServerNumber++;
+
+
+                                ProductClient.setPlayerTurn(String.valueOf(savedServerNumber));
+                            } else {
+                                BoardTemplate templateFromServer = LoadBoard.boardFromServer("serverGame");
+                                LoadBoard.boardToServer(templateFromServer, "serverGame");
+                                LoadBoard.upDateBoard(templateFromServer, board);
+                            }
+                        }
                         startProgrammingPhase();
+
                     }
                 }
             } else {
-                // Invalid step value, assert false
+                // this should not happen
                 assert false;
             }
         } else {
-            // Invalid game phase or current player, assert false
+            // this should not happen
             assert false;
         }
 
     }
 
     /**
-     * Executes the specified command for the given player.
-     * Checks the player and command, and uses a switch statement to determine the form of CommandCards.
+     * ExecuteCommand Checks the player and command and then uses a switch statement to determine the form's of Commandcards.
      */
-
     private void executeCommand(@NotNull Player player, Command command) {
         if (player != null && player.board == board && command != null) {
 
 
             switch (command) {
                 case FORWARD:
-                    // Execute forward movement command
                     this.moveForward(player);
                     break;
                 case RIGHT:
-                    // Execute right turn command
                     this.turnRight(player);
                     break;
                 case LEFT:
-                    // Execute left turn command
                     this.turnLeft(player);
                     break;
                 case UTURN:
-                    // Execute U-turn command
                     this.uTurn(player);
                     break;
                 case FAST_FORWARD:
-                    // Execute fast forward command
                     this.fastForward(player);
                     break;
+                default:
 
-                // Handle left-right option command (implementation missing)
                 case OPTION_LEFT_RIGHT:
+                   /* command.getOptions();
+                    ChoiceDialog<String> dialog = new ChoiceDialog<>(OPTIONS_Interactive.get(0), OPTIONS_Interactive);
+                    dialog.setTitle("Player choice");
+                    Optional<String> result = dialog.showAndWait();
+                    if(result == OPTIONS_Interactive.get(0).describeConstable()){ //Issue is here. (Take the correct string to turn).
+                        this.turnLeft(player);
+                    }
+                    else if(result.equals("Optional[Right]")) {
+                        this.turnRight(player);
+                        System.out.println(result);
+
+                    */
+                    //  }
                     break;
 
+
+                // DO NOTHING (for now)
             }
         }
     }
 
     /**
-     * Represents the movement functionality of a player in the game.
      * Moves the player 1 vector direction forward, depending on the heading.
      */
     public void moveForward(@NotNull Player player) {
+
         Space space = player.getSpace();
         Space playerSpace = player.getSpace();
 
 
+        //moveForward(playerSpace.getPlayer(), player.getHeading(),check);
+
+        //}
+        //if(spaceTaken(playerSpace)) {
+        // return;
+        //}
+        //player.setSpace(playerSpace);
         Heading heading = player.getHeading();
         Space target = board.getNeighbour(space, heading);
 
-        // Check if player, board, and spaces are valid
+
         if (player != null && player.board == board && space != null && playerSpace.wallFace(player.getHeading())) {
 
-            // Check the heading and target space coordinates for movement
             if ((space.x < target.x) && (player.getHeading() == WEST)) {
 
             } else if ((space.x > target.x) && (player.getHeading() == EAST)) {
@@ -310,10 +333,11 @@ public class GameController {
             } else if ((space.y < target.y) && (player.getHeading() == NORTH)) {
 
             }
+            // dfsd
 
             else if (target != null) {
 
-                // Perform player movement and trigger associated actions
+
                 if (robotCollide(target, heading)) {
 
                     target.setPlayer(player);
@@ -333,18 +357,16 @@ public class GameController {
             int check = 1;
             //int check =1;
             for (int i = 0; i < check; i++) {
-                // Check if there is no wall in front of the player or if the heading is north
                 if (!playerSpace.PlacedWall(player.getHeading()) || this.Checkheading(player) == Heading.NORTH) {
                     continue;
                 }
                 playerSpace = player.board.getNeighbour(playerSpace, player.getHeading());
-                // If there is a player in the target space without a wall, recursively call moveForward
                 if (playerSpace.getPlayer() != null && !playerSpace.PlacedWall(player.getHeading())) {
                     moveForward(player);
                 }
             }
 
-            // Handle invalid player, board, or space
+
         } else {
 
         }
@@ -362,8 +384,12 @@ public class GameController {
      * Moves the player's heading direction 90 degress, or right and checks for the current phasing direction.
      */
     public void turnRight(@NotNull Player player) {
+       /* if (player != null && player.board == board) {
+            player.setHeading(player.getHeading().next());
+        }
 
-        // Update player's heading based on the current heading
+        */
+
         if (board.getCurrentPlayer().getHeading() == Heading.NORTH)
             player.setHeading(Heading.EAST);
 
@@ -380,7 +406,13 @@ public class GameController {
      * Moves the player's heading direction 90 degress, or left and checks for the current phasing direction.
      */
     public void turnLeft(@NotNull Player player) {
-        // Update player's heading based on the current heading
+       /* if (player != null && player.board == board) {
+
+            player.setHeading(player.getHeading().prev());
+        }
+
+        */
+
         if (board.getCurrentPlayer().getHeading() == Heading.NORTH)
             player.setHeading(Heading.WEST);
         else if (board.getCurrentPlayer().getHeading() == Heading.EAST)
@@ -391,9 +423,7 @@ public class GameController {
             player.setHeading(Heading.SOUTH);
     }
 
-    /**
-     * Executes a U-turn by turning the player 180 degrees, equivalent to two left turns.
-     */
+
     public void uTurn(@NotNull Player player) {
         turnLeft(player);
         turnLeft(player);
@@ -419,12 +449,11 @@ public class GameController {
         }
     }
 
-    /**
-     * Returns the opposite heading direction of the player's current heading.
-     *
-     * @param player the player for which to check the heading
-     * @return the opposite heading direction
-     */
+    public void notImplemented() {
+        // XXX just for now to indicate that the actual method is not yet implemented
+        assert false;
+    }
+
     public Heading Checkheading(Player player) {
         Heading playerDirection = player.getHeading();
         Heading newDirect;
@@ -462,11 +491,7 @@ public class GameController {
         continuePrograms();
     }
 
-    /**
-     * Executes a gear rotation for the player if the current space contains a gear.
-     *
-     * @param player the player for whom to check and execute gear rotation
-     */
+
     public void GearRotation(Player player) {
         Space space3 = player.getSpace();
         Gear gear = space3.getGear();
@@ -475,12 +500,6 @@ public class GameController {
         }
     }
 
-    /**
-     * Transports the player using a conveyor belt if present on their current space.
-     * The player's heading is set to the conveyor's direction, and the player is moved forward.
-     *
-     * @param player the player to be transported
-     */
     public void conveyerTransport(Player player) {
         Space space3 = player.getSpace();
         conveyorBelt conveyor = space3.getConveyor();
@@ -494,16 +513,8 @@ public class GameController {
                 this.moveForward(player);
             }
 
-
         }
     }
-
-    /**
-     * Pushes the player forward if a push panel is present on their current space.
-     * The player's heading is set to the push panel's direction before moving forward.
-     *
-     * @param player the player to be pushed
-     */
     public void PushPanel(Player player) {
         Space space5 = player.getSpace();
         PushPanel pushPanel = space5.getPushPanel();
@@ -512,34 +523,18 @@ public class GameController {
             player.setHeading(heading5);
             this.moveForward(player);
         }
-
     }
-
-    /**
-     * Checks if the target space is occupied by another player and their heading does not oppose the specified heading.
-     * If a collision occurs, the other player is moved forward.
-     *
-     * @param target  the target space to check for collision
-     * @param heading the heading direction to compare with other player's heading
-     * @return true if a collision occurs, false otherwise
-     */
     public boolean robotCollide(Space target, Heading heading) {
         if (target.getPlayer() != null && !target.getPlayer().getHeading().next().next().equals(heading)) {
             Player old = target.getPlayer();
             moveForward(old);
 
-        } else return target.getPlayer() == null || !target.getPlayer().getHeading().next().next().equals(heading);
+        } else if (target.getPlayer() != null && target.getPlayer().getHeading().next().next().equals(heading))
+            return false;
         return true;
 
     }
 
-    /**
-     * Checks if the player is on a checkpoint space.
-     * If the player's token count matches the checkpoint's order number, the player's token count is incremented.
-     * Otherwise, a message is set for the player.
-     *
-     * @param player the player to check for checkpoint tokenization
-     */
     public void CheckPointTokener(Player player) {
         Space space = player.getSpace();
 
@@ -551,10 +546,6 @@ public class GameController {
         }
     }
 
-    /**
-     * Checks if the current player has won the game based on the game's ID and token count.
-     * If the conditions are met, the winning player's name is printed and the game is exited.
-     */
     public void winGame() {
         if (board.getGameId().equals(3)) {
             if (board.getCurrentPlayer().getTokens() == 6) {
@@ -567,12 +558,5 @@ public class GameController {
                 Platform.exit();
             }
         }
-    }
-    /**
-     * Sets the board for unit testing purposes.
-     *
-     * @param board the board to set
-     */
-    public void setBoard(Board board) {
     }
 }
