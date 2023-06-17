@@ -146,9 +146,10 @@ public class AppController implements Observer {
         boolean isNameCorrect = checkifNameCorrect(playerName);
         if (isNameCorrect && playerCounter < board.getPlayersNumber()) {
             gameController = new GameController(board);
-            gameController.setPlayerNumber(playerCounter);
             gameController.setOnline(1);
+            playerIdMessage(playerCounter);
             playerCounter++;
+            gameController.setPlayerNumber(playerCounter+1);
             ProductClient.updatePlayerJoinedCounter(String.valueOf(playerCounter));
             gameController.startProgrammingPhase();
             roboRally.createBoardView(gameController);
@@ -175,6 +176,14 @@ public class AppController implements Observer {
             alert.setHeaderText(null);
             alert.setContentText("The lobby is now full.");
             alert.showAndWait();
+    }
+
+
+    public void playerIdMessage(int playerID){
+        Alert ID = new Alert(AlertType.INFORMATION);
+        ID.setTitle("Your Player ID");
+        ID.setContentText("Your player ID is : " + playerID);
+        ID.showAndWait();
     }
 
 
