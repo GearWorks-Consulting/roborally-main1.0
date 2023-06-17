@@ -93,32 +93,7 @@ public class LoadBoard {
     public static Board upDateBoard(BoardTemplate template, Board result){
         if (result != null) {
 
-            for (int i = 0; i < result.width; i++) {
-                for (int j = 0; j < result.height; j++) {
-                    Space space = result.getSpace(i, j);
-                    SpaceTemplate temSpace = template.spaces[i][j];
-                    if (temSpace.Conveyor != null) {
-                        space.setConveyor(temSpace.Conveyor);
-                    }
-                    if (temSpace.checkPoint != null) {
-                        space.setCheckPoint(temSpace.checkPoint);
-                    }
-                    if (temSpace.wallHeading != null) {
-                        space.addWall(temSpace.wallHeading);
-                        space.setWall();
-                        space.setWallFacing(temSpace.wallHeading);
-                    }
-                    if (temSpace.gearRotation != null) {
-                        space.setGear(temSpace.gearRotation);
-                    }
 
-
-                }
-            }
-
-
-            if (template.gameId != null)
-                result.setGameId(template.gameId);
             for (int i = 0; i < result.getPlayersNumber(); i++) {
 
                 result.getPlayer(i).setTokens(template.getPlayer(i).tokens);
