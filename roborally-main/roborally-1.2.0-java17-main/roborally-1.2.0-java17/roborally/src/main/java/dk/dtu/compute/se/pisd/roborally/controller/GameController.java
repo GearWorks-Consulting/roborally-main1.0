@@ -219,7 +219,7 @@ public class GameController {
                         turn = (turn + 1) % board.getPlayersNumber();
                         winGame();
 
-                        LoadBoard.UpdateMoveToServer(board,0);
+                        LoadBoard.UpdateMoveToServer(board,playerNumber);
                         startProgrammingPhase();
 
 
